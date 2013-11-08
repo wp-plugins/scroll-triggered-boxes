@@ -30,6 +30,11 @@ Scroll triggered boxes are the best non-obtrusive way to ask your visitors to do
 
 If the box fits, it will. If the box width does not fit on the screen, it will be hidden.
 
+== Screenshots ==
+
+1. A scroll triggered box in action.
+2. Configuring a box is easy.
+
 == Installation ==
 
 = Installing the plugin =
