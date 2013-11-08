@@ -34,10 +34,9 @@ class STB_Frontend {
 					$value = array_filter( array_map( 'trim', explode( ',', $value ) ) );
 				}
 
-
 				switch ( $condition ) {
 				case 'is_post_type':
-					$matched = ( get_post_type() == $value );
+					$matched = in_array(get_post_type(), $value);
 					break;
 
 				case 'is_single':
@@ -62,6 +61,7 @@ class STB_Frontend {
 			}
 
 		}
+
 	}
 
 	public function load_assets() {
@@ -101,7 +101,7 @@ class STB_Frontend {
 					<?php if ( !empty( $css['border_color'] ) && !empty($css['border_width'])) { ?>border: <?php echo $css['border_width'] . 'px' ?> solid <?php echo $css['border_color']; ?>;<?php } ?>
 					width: <?php echo ( !empty( $css['width'] ) ) ? $css['width'] . 'px': 'auto'; ?>;
 				}
-				
+
 				@media(max-width: <?php echo (!empty($css['width'])) ? $css['width'] : '480'; ?>px) {
 					#stb-<?php echo $box->ID; ?> { display: none !important; }	
 				}

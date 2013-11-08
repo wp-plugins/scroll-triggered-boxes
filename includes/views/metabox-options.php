@@ -28,10 +28,8 @@
 	} ?>
 	<tr>
 		<th></th>
-		<td colspan="4"><button type="button" class="button stb-add-rule">Add rule</button></td>
+		<td colspan="3"><button type="button" class="button stb-add-rule">Add rule</button></td>
 	</tr>
-</table>
-<table class="form-table">
 	<tr valign="top">
 		<th><label for="stb_position">Box Position</label></th>
 		<td>
@@ -39,10 +37,10 @@
 				<option value="top-left" <?php selected($opts['css']['position'], 'top-left'); ?>>Top Left</option>
 				<option value="top-right" <?php selected($opts['css']['position'], 'top-right'); ?>>Top Right</option>
 				<option value="bottom-left" <?php selected($opts['css']['position'], 'bottom-left'); ?>>Bottom Left</option>
-				<option value="bottom-left" <?php selected($opts['css']['position'], 'bottom-right'); ?>>Bottom Right</option>
+				<option value="bottom-right" <?php selected($opts['css']['position'], 'bottom-right'); ?>>Bottom Right</option>
 			</select>
 		</td>
-		<td></td>
+		<td colspan="2"></td>
 	</tr>
 	<?php /*<tr valign="top">
 		<th><label for="stb_trigger">Trigger Point</label></th>
@@ -62,7 +60,7 @@
 		<td>
 			<input type="number" id="stb_cookie" name="stb[cookie]" min="0" step="1" value="<?php echo esc_attr($opts['cookie']); ?>" />
 		</td>
-		<td><small class="help">After closing the box, how many days should it stay hidden?</small></td>
+		<td  colspan="2"><small class="help">After closing the box, how many days should it stay hidden?</small></td>
 	</tr>
 </table>
 

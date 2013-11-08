@@ -11,11 +11,11 @@
 table .stb-rule-row:first-child .stb-close{ visibility: hidden; }
 
 .stb-sm { 
-	width: 200px; 
+	width:150px;
 }
 
 .stb-xsm {
-	width:20px; 
+	width: 15px;
 }
 
 .stb-title{ 
@@ -43,3 +43,7 @@ table .stb-rule-row:first-child .stb-close{ visibility: hidden; }
 	opacity: .6;
 	filter: alpha(opacity=60);
 }
+
+#stb-options .form-table{ table-layout:fixed; }
+#stb-options .form-table th{ width:150px; }
+#stb-options .wp-picker-container{ white-space: nowrap; }

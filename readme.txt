@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter
 Requires at least: 3.5
 Tested up to: 3.7.1
-Stable tag: 1.0-beta
+Stable tag: 1.0-beta2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,7 +47,13 @@ If the box fits, it will. If the box width does not fit on the screen, it will b
 
 == Changelog ==
 
-= 0.1-beta - October 21, 2013 =
+= 1.0-beta2 - November 8, 2013 =
+
+- Fixed: Box position bottom right is now selectable
+- Fixed: Post type filter now works.
+- Improved: Box settings on small screens
+
+= 1.0-beta1 - November 6, 2013 =
 
 - Initial release, things like settings might still change without backwards compatibility.
 

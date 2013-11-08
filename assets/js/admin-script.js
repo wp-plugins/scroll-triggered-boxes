@@ -93,7 +93,8 @@ STB = (function($) {
 			'display': "inline-block",
 			'width': getPxValue($("#stb-width"), 'auto'),
 			'color': getColor($("#stb-color")),
-			'height': 'auto'
+			'height': 'auto',
+			'min-width': '200px'
 		});
 	}
 
