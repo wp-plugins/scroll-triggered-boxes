@@ -1,0 +1,45 @@
+#stb-options .no-top-margin{ 
+	margin-top:0 !important; 
+}
+
+#stb-options .wp-picker-clear, #stb-options div.wp-picker-holder, #stb-options .wp-picker-input-wrap { 
+	background:white; 
+	z-index: 999 !important; 
+	position: absolute !important; 
+}
+
+table .stb-rule-row:first-child .stb-close{ visibility: hidden; }
+
+.stb-sm { 
+	width: 200px; 
+}
+
+.stb-xsm {
+	width:20px; 
+}
+
+.stb-title{ 
+	margin-top:2em !important; 
+}
+
+.stb-close{ 
+	padding: 0;
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+	-webkit-appearance: none;
+	font-size: 21px;
+	font-weight: bold;
+	line-height: 26px;
+	text-shadow: 0 1px 0 #fff;
+	opacity: .3;
+	filter: alpha(opacity=30);
+}
+
+.stb-close:hover, .stb-close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+	opacity: .6;
+	filter: alpha(opacity=60);
+}
