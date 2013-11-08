@@ -14,8 +14,7 @@ function stb_get_box_options($id)
 		'rules' => array(
 			array('condition' => '', 'value' => '')
 		),
-		'cookie_days' => 0,
-		'cookie_suffix' => '',
+		'cookie' => 0,
 		'trigger' => 'percentage',
 		'trigger_percentage' => 0,
 		'trigger_element' => ''
