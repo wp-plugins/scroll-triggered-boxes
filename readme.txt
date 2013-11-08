@@ -17,20 +17,23 @@ The best non-obtrusive call-to-actions possible: Scroll Triggered Boxes.
 Scroll triggered boxes are the best non-obtrusive way to ask your visitors to do something. Whether you want to ask them to subscribe to your newsletter, share the post they just read or do something entirely different: this plugin makes it easy.
 
 **Features**
+
 - Create an unlimited amount of scroll triggered boxes
 - Control where and when the box should show-up
 - Designing your boxes is simple yet effective.
 - Use anything as the box its content. Text, images, shortcodes, you decide!
 - Option to hide the box for users who closed it previously.
 
-== FAQ ==
+== Frequently Asked Questions ==
 
-= Will the scroll triggered box be shown on mobile devices or small screens? =
+= Will a box be shown on mobile devices or small screens? =
+
 If the box fits, it will. If the box width does not fit on the screen, it will be hidden.
 
 == Installation ==
 
 = Installing the plugin =
+
 1. In your WordPress admin panel, go to *Plugins > New Plugin*, search for *Scroll Triggered Boxes* and click "Install now"
 1. Alternatively, download the plugin and upload the contents of `scroll-triggered-boxes.zip` to your plugins directory, which usually is `/wp-content/plugins/`.
 1. Activate the plugin. 
@@ -40,5 +43,6 @@ If the box fits, it will. If the box width does not fit on the screen, it will b
 == Changelog ==
 
 = 0.1-beta - October 21, 2013 =
-* Initial release, things like settings might still change without backwards compatibility.
+
+- Initial release, things like settings might still change without backwards compatibility.
 
