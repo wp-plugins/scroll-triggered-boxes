@@ -16,7 +16,7 @@ function stb_get_box_options($id)
 		),
 		'cookie' => 0,
 		'trigger' => 'percentage',
-		'trigger_percentage' => 0,
+		'trigger_percentage' => 65,
 		'trigger_element' => ''
 	);
 	

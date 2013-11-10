@@ -20,12 +20,17 @@ STB = (function($) {
 	{
 		$context = $(this).parents('tr');
 		$valueInput = $context.find('.stb-rule-value');
+		$valueInput.show();
 
 		// change placeholder for textual help
 		switch($(this).val()) {
 			case '':
 			default:
 				$valueInput.attr('placeholder', 'Leave empty to match anything or enter a comma-separated list of IDs or slugs')
+			break;
+
+			case 'everywhere':
+				$valueInput.hide();
 			break;
 
 			case 'is_single':
@@ -50,7 +55,7 @@ STB = (function($) {
 	{
 		var $row = $("#stb-options .stb-rule-row").last();
 		var $newRow = $row.clone();
-		$newRow.find('th > label').text("Or if");
+		$newRow.find('th > label').text("Or");
 		$newRow.insertAfter($row).find(":input").val('').each(function(){
             this.name = this.name.replace(/\[(\d+)\]/, function(str,p1){
                 return '[' + (parseInt(p1, 10) + 1) + ']';

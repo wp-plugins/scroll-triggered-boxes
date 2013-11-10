@@ -1,30 +1,53 @@
 (function($) {
 
+	$(".scroll-triggered-box > *").last().css({
+		'margin-bottom': 0,
+		'padding-bottom': 0
+	});
+
 	// loop through boxes
 	$(".scroll-triggered-box").each(function() {
 
 		var $box = $(this);
+		var triggerPoint = $box.data('trigger');
+		var triggerPercentage = (triggerPoint == 'percentage') ? ($box.data('trigger-percentage') / 100) : 0.8;
+		var triggerElement = $box.data('trigger-element');
 
 		var checkBoxCriteria = function() {
+			console.log("Checking..");
+
 			var scrollY = $(window).scrollTop();
+			var $triggerElement;
+			var triggered = false;
+
+			if(triggerPoint == 'element' && ($triggerElement = $(triggerElement)) && $triggerElement.length > 0) {
+				triggered = ((scrollY + $(window).height()) >= triggerElement.offset().top);
+			} else {
+				triggered = ((scrollY + $(window).height()) >= (triggerPercentage * $("body").height()));
+			}
 
 			// show box when criteria for this box is matched
-			if((scrollY + $(window).height()) > (0.8 * $("body").height()) && $box.is(":hidden")) {
+			if(triggered) {
+				// remove listen event
+				$(window).unbind('scroll', onScrollEvent);
+
+				// show box
 				$box.fadeIn();
 			}
 
 		}
 
+		var onScrollEvent = function() {
+			poll(checkBoxCriteria, 100);
+		}
+
 		// listen to scroll event
-		$(window).bind('scroll', checkBoxCriteria);
+		$(window).bind('scroll', onScrollEvent);
 
 		// listen to close button
 		$box.find(".stb-close").click(function() {
 			// hide box
 			$box.fadeOut();
-
-			// remove listen event
-			$(window).unbind('scroll', checkBoxCriteria);
 
 			// set cookie
 			if($box.data('cookie') > 0) {
@@ -34,9 +57,15 @@
 			
 		});
 
-
-		// set cookie for box
 	});
+
+	var poll = (function(){
+	    var timer = 0;
+	    return function(callback, ms){
+	        clearTimeout(timer);
+	        timer = setTimeout(callback, ms);
+	    };
+	})();
 
 })(jQuery);
 

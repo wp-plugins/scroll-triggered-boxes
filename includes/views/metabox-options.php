@@ -6,13 +6,14 @@
 	$key = 0;
 	foreach($opts['rules'] as $rule) { ?>
 		<tr valign="top" class="stb-rule-row">
-			<th><label>Show this box if</label></th>
+			<th><label>Show this box</label></th>
 			<td class="stb-sm">
 				<select class="widefat stb-rule-condition" name="stb[rules][<?php echo $key; ?>][condition]">
 					<optgroup label="Basic">
-						<option value="is_post_type" <?php selected($rule['condition'], 'is_post_type'); ?>>Post Type is</option>
-						<option value="is_page" <?php selected($rule['condition'], 'is_page'); ?>>Page is</option>
-						<option value="is_single" <?php selected($rule['condition'], 'is_single'); ?>>Post is</option>
+						<option value="everywhere" <?php selected($rule['condition'], 'everywhere')?>>Everywhere</option>
+						<option value="is_post_type" <?php selected($rule['condition'], 'is_post_type'); ?>>if Post Type is</option>
+						<option value="is_page" <?php selected($rule['condition'], 'is_page'); ?>>if Page is</option>
+						<option value="is_single" <?php selected($rule['condition'], 'is_single'); ?>>if Post is</option>
 					</optgroup>
 					<optgroup label="Advanced">
 						<option value="manual" <?php selected($rule['condition'], 'manual'); ?>>Manual conditonal tag</option>
@@ -42,19 +43,23 @@
 		</td>
 		<td colspan="2"></td>
 	</tr>
-	<?php /*<tr valign="top">
+	<tr valign="top">
 		<th><label for="stb_trigger">Trigger Point</label></th>
 		<td class="stb-sm">
 			<select id="stb_trigger" name="stb[trigger]" class="widefat">
-				<option value="percentage" <?php selected($opts['trigger'], 'percentage'); ?>>Percentage (%) of page height</option>
-				<option value="element" <?php selected($opts['trigger'], 'element'); ?>>Element #ID</option>
+				<optgroup label="Basic">
+					<option value="percentage" <?php selected($opts['trigger'], 'percentage'); ?>>% of page height</option>
+				</optgroup>
+				<optgroup label="Advanced">
+					<option value="element" <?php selected($opts['trigger'], 'element'); ?>>Element Selector</option>
+				</optgroup>
 			</select>
 		</td>
 		<td>
 			<input type="number" class="stb-trigger-percentage" name="stb[trigger_percentage]" min="0" max="100" value="<?php echo esc_attr($opts['trigger_percentage']); ?>" />
 			<input type="text" class="stb-trigger-element widefat" name="stb[trigger_element]" value="<?php echo esc_attr($opts['trigger_element']); ?>" placeholder="Example: #comments" style="display: none;" />
 		</td>
-	</tr> */ ?>
+	</tr>
 	<tr valign="top">
 		<th><label for="stb_cookie">Cookie expiration days</label></th>
 		<td>
