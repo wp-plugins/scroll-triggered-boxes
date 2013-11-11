@@ -4,21 +4,25 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp
 Requires at least: 3.5
 Tested up to: 3.7.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The best non-obtrusive call-to-actions possible: Scroll Triggered Boxes.
+The best non-obtrusive call-to-action: Scroll Triggered Boxes. Show social media sharing options or sign-up forms in conversion boosting boxes.
 
 == Description ==
 
 = Scroll Triggered Boxes =
 
-Scroll triggered boxes are the best non-obtrusive way to ask your visitors to do something. Whether you want to ask them to subscribe to your newsletter, share the post they just read or do something entirely different: this plugin makes it easy.
-
 Scroll Triggered Boxes are boxes that fade in when a user reach certain points on your pages. 
 
 By then you can be sure those visitors are interested in your content, making this the perfect place to ask them something. A box that fades in at a corner of your visitors screen is a non obtrusive way to do so. 
+
+Scroll triggered boxes are the best non-obtrusive way to ask your visitors to do something. Whether you want to ask them to subscribe to your newsletter, share the post they just read or do something entirely different: this plugin makes it easy.
+
+**What to show in the box?**
+
+You can use anything as the box its content: from social media sharing options to sign-up or contact forms. The plugin is designed to work with *any* other plugin that uses shortcodes.
 
 **Features**
 
@@ -34,9 +38,37 @@ Check out more useful plugins by [code to the chase](http://codetothechase.com/)
 
 == Frequently Asked Questions ==
 
+= How to display a form in the box? =
+
+The plugin is tested with the plugins below but will work with any plugin that uses shortcodes.
+
+- [MailChimp for WordPress](http://wordpress.org/plugins/mailchimp-for-wp/)
+- [Contact Form 7](http://wordpress.org/plugins/contact-form-7/)
+- [Newsletter Sign-Up](http://wordpress.org/plugins/newsletter-sign-up/)
+
+= How to display sharing options in the box? =
+
+The plugin is tested with the plugins below but will work with any plugin that uses shortcodes.
+
+- [Shareaholic](http://wordpress.org/plugins/shareaholic/)
+- [Social Media Feather](http://wordpress.org/plugins/social-media-feather/)
+- [WP Socializer](http://wordpress.org/plugins/wp-socializer/)
+- [Tweet, Like, Google +1 and Share](http://wordpress.org/plugins/only-tweet-like-share-and-google-1/)
+
+= How to set more advanced styling rules =
+
+You can use CSS to style the boxes. Every box gets its own unique #id as well as various CSS classes.
+
+`
+#box-{id} { } /* 1 particular box */
+.stb { } /* all boxes */
+.stb-content { } /* the contents of the box */
+.stb-close{ } /* the close button of the box */
+`
+
 = Will a box be shown on mobile devices or small screens? =
 
-If the box fits, it will. If the box width does not fit on the screen, it will be hidden.
+If the box fits, it will. If the box width does not fit on the screen, it will be automatically hidden.
 
 == Screenshots ==
 
@@ -58,6 +90,10 @@ If the box fits, it will. If the box width does not fit on the screen, it will b
 1. (Optional) customize the appearance of the box by changing the *Appearance Settings*
 
 == Changelog ==
+
+= 1.0.1 - November 11, 2013 =
+
+- Improved: fix that removes unwanted linebreaks from shortcode output
 
 = 1.0 - November 10, 2013 =
 

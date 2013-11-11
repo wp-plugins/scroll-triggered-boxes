@@ -94,6 +94,7 @@ class STB_Frontend {
 			// run filters
 			$content = wpautop( $content );
 			$content = do_shortcode( $content );
+			$content = shortcode_unautop($content);
 			$content = apply_filters( 'stb_content', $content, $box );
 
 ?>
