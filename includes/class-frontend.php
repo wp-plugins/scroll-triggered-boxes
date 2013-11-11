@@ -7,6 +7,13 @@ class STB_Frontend {
 		add_action( 'wp', array( $this, 'filter_boxes' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'load_assets' ) );
 		add_action( 'wp_footer', array( $this, 'load_boxes' ), 1 );
+
+		add_filter( 'stb_content', 'wptexturize') ;
+		add_filter( 'stb_content', 'convert_smilies' );
+		add_filter( 'stb_content', 'convert_chars' );
+		add_filter( 'stb_content', 'wpautop' );
+		add_filter( 'stb_content', 'do_shortcode' );
+		add_filter( 'stb_content', 'shortcode_unautop' );
 	}
 
 	public function filter_boxes() {
@@ -81,6 +88,8 @@ class STB_Frontend {
 	public function load_boxes() {
 		if ( empty( $this->matched_box_ids ) ) { return; }
 
+		?><!-- Scroll Triggered Boxes v<?php echo STB_VERSION; ?> - http://wordpress.org/plugins/scroll-triggered-boxes/--><?php
+
 		foreach ( $this->matched_box_ids as $box_id ) {
 
 			$box = get_post( $box_id );
@@ -92,9 +101,6 @@ class STB_Frontend {
 			$content = $box->post_content;
 
 			// run filters
-			$content = wpautop( $content );
-			$content = do_shortcode( $content );
-			$content = shortcode_unautop($content);
 			$content = apply_filters( 'stb_content', $content, $box );
 
 ?>
@@ -112,13 +118,15 @@ class STB_Frontend {
 				}
 			</style>
 			<div class="scroll-triggered-box stb stb-<?php echo esc_attr( $opts['css']['position'] ); ?>" id="stb-<?php echo $box->ID; ?>" style="display: none;" <?php
-			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>" data-trigger-percentage="<?php echo esc_attr( $opts['trigger_percentage'] ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" data-cookie="<?php echo esc_attr( $opts['cookie'] ); ?>">
+			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>" data-trigger-percentage="<?php echo esc_attr( $opts['trigger_percentage'] ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" data-animation="<?php echo esc_attr($opts['animation']); ?>" data-cookie="<?php echo esc_attr( $opts['cookie'] ); ?>">
 
 				<div class="stb-content"><?php echo $content; ?></div>
 				<span class="stb-close">&times;</span>
 			</div>
 			<?php
 		}
+
+		?><!-- / Scroll Triggered Box --><?php
 	}
 
 

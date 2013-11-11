@@ -70,8 +70,9 @@ class STB_Admin {
 		// store rules in option
 		$rules = get_option('stb_rules', array());
 		$rules[$post_id] = $opts['rules'];
-		
 		update_option('stb_rules', $rules);
+
+		// save box settings
 		update_post_meta( $post_id, 'stb_options', $opts );
 	}
 

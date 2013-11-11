@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Scroll Triggered Boxes
-Version: 1.0.1
+Version: 1.0.2
 Plugin URI: http://codetothechase.com/
 Description: Add beautiful scroll triggered boxes to your WordPress website with ease.
 Author: Danny van Kooten
@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define("STB_VERSION", "1.0.1");
+define("STB_VERSION", "1.0.2");
 define("STB_PLUGIN_DIR", plugin_dir_path(__FILE__)); 
 define("STB_PLUGIN_URL", plugins_url( '/' , __FILE__ ));
 

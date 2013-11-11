@@ -61,6 +61,14 @@
 		</td>
 	</tr>
 	<tr valign="top">
+	<th><label>Animation</label></th>
+		<td>
+			<label><input type="radio" name="stb[animation]" value="fade" <?php checked($opts['animation'], 'fade'); ?> /> Fade In</label> &nbsp; 
+			<label><input type="radio" name="stb[animation]" value="slide" <?php checked($opts['animation'], 'slide'); ?> /> Slide In</label>
+		</td>
+		<td  colspan="2"><small class="help">Which animation type should be used to show the box when triggered?</small></td>
+	</tr>
+	<tr valign="top">
 		<th><label for="stb_cookie">Cookie expiration days</label></th>
 		<td>
 			<input type="number" id="stb_cookie" name="stb[cookie]" min="0" step="1" value="<?php echo esc_attr($opts['cookie']); ?>" />

@@ -1,4 +1,6 @@
-(function($) {
+var STB = (function($) {
+
+	var windowHeight = $(window).height();
 
 	$(".scroll-triggered-box > *").last().css({
 		'margin-bottom': 0,
@@ -8,46 +10,61 @@
 	// loop through boxes
 	$(".scroll-triggered-box").each(function() {
 
+		// vars
 		var $box = $(this);
-		var triggerPoint = $box.data('trigger');
-		var triggerPercentage = (triggerPoint == 'percentage') ? ($box.data('trigger-percentage') / 100) : 0.8;
-		var triggerElement = $box.data('trigger-element');
+		var triggerMethod = $box.data('trigger');
+		var $triggerElement = $($box.data('trigger-element'));
+		var animation = $box.data('animation');
+		var didScroll = false;
 
-		var checkBoxCriteria = function() {
-			console.log("Checking..");
+		// calculate trigger height
+		if(triggerMethod == 'element' && $triggerElement.length > 0) {
+			var triggerHeight = triggerElement.offset().top;
+		} else {
+			var triggerPercentage = (triggerMethod == 'percentage') ? ($box.data('trigger-percentage') / 100) : 0.8;
+			var triggerHeight = (triggerPercentage * $("body").height());
+		}
+
+		// functions
+		var checkBoxCriteria = function() 
+		{
+			if(!didScroll) { return false; }
 
 			var scrollY = $(window).scrollTop();
-			var $triggerElement;
-			var triggered = false;
-
-			if(triggerPoint == 'element' && ($triggerElement = $(triggerElement)) && $triggerElement.length > 0) {
-				triggered = ((scrollY + $(window).height()) >= triggerElement.offset().top);
-			} else {
-				triggered = ((scrollY + $(window).height()) >= (triggerPercentage * $("body").height()));
-			}
+			var triggered = ((scrollY + windowHeight) >= triggerHeight);
 
 			// show box when criteria for this box is matched
 			if(triggered) {
 				// remove listen event
-				$(window).unbind('scroll', onScrollEvent);
+				$(window).unbind('scroll', checkBoxCriteria);
+				window.clearInterval(interval);
 
-				// show box
-				$box.fadeIn();
+				toggleBox();
 			}
 
+			didScroll = false;
 		}
 
-		var onScrollEvent = function() {
-			poll(checkBoxCriteria, 100);
+		var toggleBox = function() 
+		{
+			// show box
+			if(animation == 'fade') {
+				$box.fadeToggle('slow');
+			} else {
+				$box.slideToggle('slow');
+			}
 		}
 
-		// listen to scroll event
-		$(window).bind('scroll', onScrollEvent);
+		var setDidScroll = function() { didScroll = true; }
 
-		// listen to close button
+		// events
+		$(window).bind('scroll', setDidScroll);
+		var interval = window.setInterval(checkBoxCriteria, 250);
+
 		$box.find(".stb-close").click(function() {
+
 			// hide box
-			$box.fadeOut();
+			toggleBox();
 
 			// set cookie
 			if($box.data('cookie') > 0) {
@@ -57,15 +74,17 @@
 			
 		});
 
+		// init
+
+		// shows the box when hash refers an element inside the box
+		$(window).load(function() {
+			if(window.location.hash && ($element = $box.find(window.location.hash)) && $element.length > 0) {
+				setTimeout(function() { toggleBox(); }, 100);
+			}
+		});
+
 	});
 
-	var poll = (function(){
-	    var timer = 0;
-	    return function(callback, ms){
-	        clearTimeout(timer);
-	        timer = setTimeout(callback, ms);
-	    };
-	})();
 
 })(jQuery);
 

@@ -27,7 +27,8 @@ class STB
 			    'menu_name'          => 'Scroll Triggered Boxes'
 			  ),
       		'show_ui' => true,
-      		'menu_position' => 100
+      		'menu_position' => 100,
+      		'menu_icon' => STB_PLUGIN_URL . '/assets/img/menu-icon.png'
     	);
 
     	register_post_type( 'scroll-triggered-box', $args );

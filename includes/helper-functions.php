@@ -17,7 +17,8 @@ function stb_get_box_options($id)
 		'cookie' => 0,
 		'trigger' => 'percentage',
 		'trigger_percentage' => 65,
-		'trigger_element' => ''
+		'trigger_element' => '',
+		'animation' => 'fade'
 	);
 	
 	$opts = get_post_meta($id, 'stb_options', true);
