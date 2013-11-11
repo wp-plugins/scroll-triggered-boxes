@@ -35,7 +35,7 @@ You can use anything as the box its content: from social media sharing options t
 
 **More information**
 
-Check out more useful [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by [Danny van Kooten](http://dannyvankooten.com/).
+Check out more information about the [Scroll Triggered Boxes plugin for WordPress](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/) or have a look at the other [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by [Danny van Kooten](http://dannyvankooten.com/).
 
 == Frequently Asked Questions ==
 
@@ -100,8 +100,12 @@ If the box fits, it will. If the box width does not fit on the screen, it will b
 
 == Screenshots ==
 
-1. A scroll triggered box in action.
-2. Configuring a box is easy.
+1. A scroll triggered box with a newsletter sign-up form.
+2. Another scroll triggered box, this time with social media sharing options.
+3. A differently styled social triggered box.
+4. Configuring and customizing your boxes is easy.
+
+Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
 
