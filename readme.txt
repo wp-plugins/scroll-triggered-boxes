@@ -33,6 +33,9 @@ You can use anything as the box its content: from social media sharing options t
 - Set the number of days for which a box should stay hidden for users who closed it
 - Set the animation to use when a box is triggered
 
+**Demo**
+I'm using the plugin myself on [the website for one of my other plugins: MailChimp for WordPress](http://dannyvankooten.com/mailchimp-for-wordpress/). Scroll down a bit and you'll see a box slide in in the bottom right corner, asking you to sign-up to the plugin newsletter.
+
 **More information**
 
 Check out more information about the [Scroll Triggered Boxes plugin for WordPress](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/) or have a look at the other [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by [Danny van Kooten](http://dannyvankooten.com/).
