@@ -14,17 +14,22 @@ The best non-obtrusive call-to-action: Scroll Triggered Boxes. Show social media
 
 = Scroll Triggered Boxes =
 
-Scroll Triggered Boxes are boxes that fade in when a user reach certain points on your pages. 
+Scroll Triggered Boxes are boxes that become visible after visitors have scrolled down far enough. 
 
-By then you can be sure those visitors are interested in your content, making this the perfect place to ask them something. A box that fades in at a corner of your visitors screen is a non obtrusive way to do so. 
+The visitors that scroll down far enough have engaged with your content and most likely got some value out of it, making them more receptive to any offer. Also, human eyes react to movement. Having a box "appear" is a sure way to get their attention while staying relatively unobtrusive and certainly less annoying than a pop-up.
 
-Scroll triggered boxes are the best non-obtrusive way to ask your visitors to do something. Whether you want to ask them to subscribe to your newsletter, share the post they just read or do something entirely different: this plugin makes it easy.
+**Highly Converting Call To Actions**
 
-**What to show in the box?**
+This plugin is a sure way to get more visitors to take a certain action, whether this action is..
 
-You can use anything as the box its content: from social media sharing options to sign-up or contact forms. The plugin is designed to work with *any* other plugin that uses shortcodes.
+- .. subscribing to your newsletter
+- .. sharing a post
+- .. submitting a contact form
+- .. or something entirely different, you decide!
 
-**Features**
+You can really use anything as the box its content: from social media sharing options to sign-up or contact forms. The plugin is designed to work with *any* other plugin that uses shortcodes.
+
+**Plugin Features**
 
 - Create an unlimited amount of boxes
 - Control where and when a box should show-up
@@ -34,11 +39,13 @@ You can use anything as the box its content: from social media sharing options t
 - Set the animation to use when a box is triggered
 
 **Demo**
+
 I'm using the plugin myself on [the website for one of my other plugins: MailChimp for WordPress](http://dannyvankooten.com/mailchimp-for-wordpress/). Scroll down a bit and you'll see a box slide in in the bottom right corner, asking you to sign-up to the plugin newsletter.
 
-**More information**
+**Other Links**
 
-Check out more information about the [Scroll Triggered Boxes plugin for WordPress](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/) or have a look at the other [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by [Danny van Kooten](http://dannyvankooten.com/).
+- More information about the [Scroll Triggered Boxes plugin for WordPress](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/)
+- Have a look at some other [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by [Danny van Kooten](http://dannyvankooten.com/).
 
 == Frequently Asked Questions ==
 
