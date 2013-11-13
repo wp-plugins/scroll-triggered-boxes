@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
-Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp
+Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.5
 Tested up to: 3.7.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,15 +66,31 @@ The plugin is tested with the plugins below but will work with any plugin that u
 - [WP Socializer](http://wordpress.org/plugins/wp-socializer/)
 - [Tweet, Like, Google +1 and Share](http://wordpress.org/plugins/only-tweet-like-share-and-google-1/)
 
-= How to set more advanced styling rules =
+= How do I set more advanced rules for on which pages to show a box? =
 
-If you want more advanced styling, you can use CSS to further style the boxes. Every box gets its own unique #id as well as various CSS classes.
+You can use [conditional tags](http://codex.wordpress.org/Conditional_Tags) to set super-customized rules.
 
+*Example (only shows a box on posts in the category `cars`)*
 `
-#box-{id} { } /* 1 particular box */
-.stb { } /* all boxes */
-.stb-content { } /* the contents of the box */
-.stb-close{ } /* the close button of the box */
+is_single() && in_category('cars')
+`
+
+= Can I have a box to open after clicking a certain link or button? =
+
+Sure, just link to the box element.
+
+*Example (box ID is 94 in this example)*
+`
+<a href="#stb-94">Open Box</a>
+`
+
+= Can I have a box to open right after opening a page? =
+
+Sure, just include `stb-` followed by the box ID in the URL.
+
+*Example (box ID is 94 in this example)*
+`
+http://your-wordpress-site.com/some-page/#stb-94
 `
 
 = I want to disable auto-paragraphs in the box content =
@@ -89,6 +105,18 @@ remove_filter( 'stb_content', 'wpautop' );
 remove_filter( 'stb_content', 'do_shortcode' );
 remove_filter( 'stb_content', 'shortcode_unautop' );
 `
+
+= How to set more advanced styling rules =
+
+If you want more advanced styling, you can use CSS to further style the boxes. Every box gets its own unique #id as well as various CSS classes.
+
+`
+#box-{id} { } /* 1 particular box */
+.stb { } /* all boxes */
+.stb-content { } /* the contents of the box */
+.stb-close{ } /* the close button of the box */
+`
+
 
 = Will a box be shown on mobile devices or small screens? =
 
@@ -119,6 +147,12 @@ Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on
 
 == Changelog ==
 
+= 1.0.3 - November 13, 2013 =
+
+- Fixed: incorrect calculating of page height for some themes, which made the box show up right away
+- Improved: better polling for listener to scroll event
+- Added: you can now link to a box element to have it open. 
+
 = 1.0.2 - November 12, 2013 =
 
 - Fixed: Script now checks trigger criteria for multiple boxes at once.
@@ -146,3 +180,7 @@ Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on
 
 - Initial release, things like settings might still change without backwards compatibility.
 
+== Upgrade Notice ==
+
+= 1.0.3 =
+Fixed incorrect calculation of page height for some themes.

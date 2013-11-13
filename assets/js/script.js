@@ -16,33 +16,43 @@ var STB = (function($) {
 		var $triggerElement = $($box.data('trigger-element'));
 		var animation = $box.data('animation');
 		var didScroll = false;
+		var timer = 0;
 
 		// calculate trigger height
 		if(triggerMethod == 'element' && $triggerElement.length > 0) {
 			var triggerHeight = triggerElement.offset().top;
 		} else {
 			var triggerPercentage = (triggerMethod == 'percentage') ? ($box.data('trigger-percentage') / 100) : 0.8;
-			var triggerHeight = (triggerPercentage * $("body").height());
+			var triggerHeight = (triggerPercentage * $(document).height());
 		}
 
 		// functions
 		var checkBoxCriteria = function() 
 		{
-			if(!didScroll) { return false; }
-
-			var scrollY = $(window).scrollTop();
-			var triggered = ((scrollY + windowHeight) >= triggerHeight);
-
-			// show box when criteria for this box is matched
-			if(triggered) {
-				// remove listen event
-				$(window).unbind('scroll', checkBoxCriteria);
-				window.clearInterval(interval);
-
-				toggleBox();
+			if(timer) { 
+				clearTimeout(timer); 
 			}
 
-			didScroll = false;
+			timer = window.setTimeout(function() { 
+				var scrollY = $(window).scrollTop();
+				var triggered = ((scrollY + windowHeight) >= triggerHeight);
+
+				// show box when criteria for this box is matched
+				if(triggered) {
+					// remove listen event
+					$(window).unbind('scroll', checkBoxCriteria);
+
+					toggleBox();
+				}
+
+			}, 100);
+		}
+
+		var showBox = function() 
+		{
+			if($box.is(":hidden")) {
+				toggleBox();
+			}
 		}
 
 		var toggleBox = function() 
@@ -58,8 +68,7 @@ var STB = (function($) {
 		var setDidScroll = function() { didScroll = true; }
 
 		// events
-		$(window).bind('scroll', setDidScroll);
-		var interval = window.setInterval(checkBoxCriteria, 250);
+		$(window).bind('scroll', checkBoxCriteria);
 
 		$box.find(".stb-close").click(function() {
 
@@ -78,10 +87,13 @@ var STB = (function($) {
 
 		// shows the box when hash refers an element inside the box
 		$(window).load(function() {
-			if(window.location.hash && ($element = $box.find(window.location.hash)) && $element.length > 0) {
-				setTimeout(function() { toggleBox(); }, 100);
+			if(window.location.hash && ($box.attr('id') == window.location.hash.substring(1) || (($element = $box.find(window.location.hash)) && $element.length > 0))) {
+				setTimeout(function() { showBox(); }, 100);
 			}
 		});
+
+		// add link listener for this box
+		$('a[href="#' + $box.attr('id') +'"]').click(function() { showBox(); return false; });
 
 	});
 

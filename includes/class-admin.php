@@ -43,7 +43,7 @@ class STB_Admin {
 			array( $this, 'show_meta_options' ),
 			'scroll-triggered-box',
 			'normal',
-			'high'
+			'core'
 		);
 	}
 
