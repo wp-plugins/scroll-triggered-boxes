@@ -27,16 +27,19 @@ This plugin is a sure way to get more visitors to take a certain action, whether
 - .. submitting a contact form
 - .. or something entirely different, you decide!
 
-You can really use anything as the box its content: from social media sharing options to sign-up or contact forms. The plugin is designed to work with *any* other plugin that uses shortcodes.
+Really anything is possible, from social media sharing options to sign-up or contact forms. The plugin is designed to work with *any* other plugin that uses shortcodes.
 
 **Plugin Features**
 
-- Create an unlimited amount of boxes
-- Control where and when a box should show-up
-- Designing your boxes is simple yet effective.
-- Use anything as the box content. Text, images, forms, shortcodes, you decide!
-- Set the number of days for which a box should stay hidden for users who closed it
-- Set the animation to use when a box is triggered
+- Create multiple scroll triggered boxes
+- Choose when a box should display: at a certain percentage of the page height or after scrolling past a certain element (like the comments section).
+- Control on which pages each box should show up to create extremely relevant boxes (uses conditonal tags)
+- Choose between a fading or sliding animation
+- Use anything as the box content: text, images, forms, shortcodes, etc. You decide!
+- Set the number of days a box should not be shown if a visitor closes it
+- Open a box right after loading a page or have it open when clicking a link or button
+
+Have a look at the [frequently asked questions](http://wordpress.org/plugins/scroll-triggered-boxes/faq/) as well, this plugin is really flexible.
 
 **Demo**
 
@@ -135,6 +138,10 @@ If the box fits, it will. If the box width does not fit on the screen, it will b
 1. Go to *Scroll Triggered Boxes > Add New*
 1. Add some content to the box
 1. (Optional) customize the appearance of the box by changing the *Appearance Settings*
+
+= Additional Customization =
+
+Have a look at the [frequently asked questions](http://wordpress.org/plugins/scroll-triggered-boxes/faq/) section for some examples of additional customization.
 
 == Screenshots ==
 
