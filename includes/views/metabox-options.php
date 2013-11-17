@@ -21,7 +21,7 @@
 				</select>
 			</td>
 			<td>
-				<input class="stb-rule-value widefat" name="stb[rules][<?php echo $key; ?>][value]" type="text" value="<?php echo esc_attr($rule['value']); ?>" placeholder="Leave empty for any or enter (comma-separated) names or ID's" />
+				<input class="stb-rule-value widefat" name="stb[rules][<?php echo $key; ?>][value]" type="text" value="<?php echo esc_attr($rule['value']); ?>" placeholder="Leave empty for any or enter (comma-separated) names or ID's" <?php if($rule['condition'] == 'everywhere') { echo 'style="display: none;"'; } ?> />
 			</td>
 			<td class="stb-xsm" width="1"><span class="stb-close stb-remove-rule">×</span></td>
 		</tr>
@@ -56,8 +56,8 @@
 			</select>
 		</td>
 		<td>
-			<input type="number" class="stb-trigger-percentage" name="stb[trigger_percentage]" min="0" max="100" value="<?php echo esc_attr($opts['trigger_percentage']); ?>" />
-			<input type="text" class="stb-trigger-element widefat" name="stb[trigger_element]" value="<?php echo esc_attr($opts['trigger_element']); ?>" placeholder="Example: #comments" style="display: none;" />
+			<input type="number" class="stb-trigger-percentage" name="stb[trigger_percentage]" min="0" max="100" value="<?php echo esc_attr($opts['trigger_percentage']); ?>" <?php if($opts['trigger'] != 'percentage') {  echo 'style="display: none;"'; } ?> />
+			<input type="text" class="stb-trigger-element widefat" name="stb[trigger_element]" value="<?php echo esc_attr($opts['trigger_element']); ?>" placeholder="Example: #comments" <?php if($opts['trigger'] != 'element') { echo 'style="display: none;"'; } ?> />
 		</td>
 	</tr>
 	<tr valign="top">

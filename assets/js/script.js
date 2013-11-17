@@ -20,7 +20,7 @@ var STB = (function($) {
 
 		// calculate trigger height
 		if(triggerMethod == 'element' && $triggerElement.length > 0) {
-			var triggerHeight = triggerElement.offset().top;
+			var triggerHeight = $triggerElement.offset().top;
 		} else {
 			var triggerPercentage = (triggerMethod == 'percentage') ? ($box.data('trigger-percentage') / 100) : 0.8;
 			var triggerHeight = (triggerPercentage * $(document).height());

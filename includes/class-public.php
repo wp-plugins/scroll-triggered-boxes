@@ -1,6 +1,6 @@
 <?php
 
-class STB_Frontend {
+class STB_Public {
 	private $matched_box_ids = array();
 
 	public function __construct() {

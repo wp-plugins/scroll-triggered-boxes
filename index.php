@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Scroll Triggered Boxes
-Version: 1.0.3
+Version: 1.0.4
 Plugin URI: http://codetothechase.com/
 Description: Add highly conversing scroll triggered boxes to your WordPress website with ease.
 Author: Danny van Kooten
@@ -27,7 +27,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 define("STB_VERSION", "1.0.3");
 define("STB_PLUGIN_DIR", plugin_dir_path(__FILE__)); 
@@ -41,16 +43,13 @@ new STB();
 if(!is_admin()) {
 
 	// FRONTEND
-	require STB_PLUGIN_DIR . 'includes/class-frontend.php';
-	new STB_Frontend();
+	require STB_PLUGIN_DIR . 'includes/class-public.php';
+	new STB_Public();
 
 } elseif(!defined("DOING_AJAX") || !DOING_AJAX) {
 	
 	// BACKEND (NOT AJAX)
 	require STB_PLUGIN_DIR . 'includes/class-admin.php';
 	new STB_Admin();
-
-} else {
-	// BACKEND (AJAX)
 
 }

@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.5
 Tested up to: 3.7.1
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,11 @@ Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on
 
 == Changelog ==
 
+= 1.0.4 - November 17, 2013 =
+
+* Fixed: element selector input field now appears in box settings
+* Fixed: script error when using element selector
+
 = 1.0.3 - November 13, 2013 =
 
 - Fixed: incorrect calculating of page height for some themes, which made the box show up right away
@@ -188,6 +193,9 @@ Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on
 - Initial release, things like settings might still change without backwards compatibility.
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+Two important bugfixes for when using an element as the trigger point.
 
 = 1.0.3 =
 Fixed incorrect calculation of page height for some themes.

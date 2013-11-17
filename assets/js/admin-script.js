@@ -7,14 +7,15 @@ STB = (function($) {
 	$("#stb-options .inside").show();
 
 	// events
+
 	$('#stb-options input.stb-color-field').wpColorPicker({ change: applyStyles, clear: applyStyles });
 	$("#stb-options :input").not(".stb-color-field").change(applyStyles);
 	$("#stb-options").delegate(".stb-add-rule", 'click', addRuleFields);
 	$("#stb-options").delegate(".stb-remove-rule", 'click', function() { $(this).parents('tr').remove(); });
 	$("#stb-options").delegate(".stb-rule-condition", 'change', setContextualHelpers);
-	/*$("#stb-option .stb-trigger").change(function() {
-
-	});*/
+	$("#stb_trigger").change(function() {
+		$(this).parents('tr').find('input').hide().end().find('input.stb-trigger-' + $(this).val()).show();
+	});
 
 	function setContextualHelpers()
 	{
