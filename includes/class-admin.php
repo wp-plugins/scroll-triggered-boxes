@@ -13,11 +13,6 @@ class STB_Admin {
 		add_filter( 'tiny_mce_before_init', array($this, 'tinymce_init') );
 	}
 	
-	/*public function add_menu_items()
-	{
-		add_submenu_page( 'edit.php?post_type=scroll-triggered-box', "Settings - Scroll Triggered Boxes", "Settings", 'manage_options', 'settings', array($this, 'show_settings_page') );
-	}*/
-
 	public function tinymce_init($args) {
 		if(get_post_type() != 'scroll-triggered-box') { return $args; }
 

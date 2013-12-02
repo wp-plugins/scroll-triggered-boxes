@@ -8,6 +8,7 @@ html, body{ min-height: 100%; }
 	-moz-box-shadow: 0 0 10px 1px #888;
 	-webkit-box-shadow: 0 0 10px 1px #888;
 	box-shadow: 0 0 10px 1px #888;
+	padding: 25px;
 }
 
 .stb.stb-top-left{ 
@@ -36,8 +37,11 @@ html, body{ min-height: 100%; }
 
 .stb-close{ 
 	position:absolute; 
-	right:10px; 
-	top:10px;
+	right:5px; 
+	top:5px;
+	height:20px;
+	width:20px;
+	text-align:center;
 	padding: 0;
 	cursor: pointer;
 	background: transparent;

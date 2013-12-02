@@ -86,11 +86,13 @@ STB = (function($) {
 
 	function applyStyles() 
 	{		
-		$("#content_ifr").contents().find('html').css({
+		var $editor = $("#content_ifr").contents().find('html');
+
+		$editor.css({
 			'background': 'white'
 		});
 
-		$("#content_ifr").contents().find("#tinymce").css({
+		$editor.find("#tinymce").css({
 			'padding': '25px',
 			'background-color': getColor($("#stb-background-color")),
 			'border-color': getColor($("#stb-border-color")),

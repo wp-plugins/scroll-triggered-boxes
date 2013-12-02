@@ -106,7 +106,6 @@ class STB_Public {
 ?>
 			<style type="text/css">
 				#stb-<?php echo $box->ID; ?> {
-					padding: 25px;
 					background: <?php echo ( !empty( $css['background_color'] ) ) ? $css['background_color'] : 'white'; ?>;
 					<?php if ( !empty( $css['color'] ) ) { ?>color: <?php echo $css['color']; ?>;<?php } ?>
 					<?php if ( !empty( $css['border_color'] ) && !empty( $css['border_width'] ) ) { ?>border: <?php echo $css['border_width'] . 'px' ?> solid <?php echo $css['border_color']; ?>;<?php } ?>

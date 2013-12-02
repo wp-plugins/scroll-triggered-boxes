@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Scroll Triggered Boxes
-Version: 1.0.4
-Plugin URI: http://codetothechase.com/
-Description: Add highly conversing scroll triggered boxes to your WordPress website with ease.
+Version: 1.0.5
+Plugin URI: http://dannyvankooten.com/
+Description: Call-To-Action Boxes that display after visitors scroll down far enough. Highly conversing, not so annoying!
 Author: Danny van Kooten
-Author URI: http://codetothechase.com/
+Author URI: http://dannyvankooten.com/
 Text Domain: scroll-triggered-boxes
 Domain Path: /languages/
 License: GPL v3
@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define("STB_VERSION", "1.0.3");
+define("STB_VERSION", "1.0.5");
 define("STB_PLUGIN_DIR", plugin_dir_path(__FILE__)); 
 define("STB_PLUGIN_URL", plugins_url( '/' , __FILE__ ));
 

@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.5
 Tested up to: 3.7.1
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,7 +43,7 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 
 **Demo**
 
-I'm using the plugin myself on [the website for one of my other plugins: MailChimp for WordPress](http://dannyvankooten.com/mailchimp-for-wordpress/). Scroll down a bit and you'll see a box slide in in the bottom right corner, asking you to sign-up to the plugin newsletter.
+I'm using the plugin myself on [the website for one of my other plugins: MailChimp for WordPress](http://dannyvankooten.com/mailchimp-for-wordpress/). Scroll down to the bottom and you'll see a box slide in in the bottom right corner, asking you to sign-up to the plugin newsletter.
 
 **Other Links**
 
@@ -64,6 +64,7 @@ The plugin is tested with the plugins below but will work with any plugin that u
 
 The plugin is tested with the plugins below but will work with any plugin that uses shortcodes.
 
+- [Social Sharing By Danny](http://wordpress.org/plugins/dvk-social-sharing/)
 - [Shareaholic](http://wordpress.org/plugins/shareaholic/)
 - [Social Media Feather](http://wordpress.org/plugins/social-media-feather/)
 - [WP Socializer](http://wordpress.org/plugins/wp-socializer/)
@@ -153,6 +154,10 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
+
+= 1.0.5 - December 2, 2013 =
+* Improved: Cookie check now both server + client side to work with pages from browser cache.
+* Improved: Minor JavaScript and CSS improvements
 
 = 1.0.4 - November 17, 2013 =
 
