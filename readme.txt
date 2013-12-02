@@ -199,6 +199,9 @@ Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on
 
 == Upgrade Notice ==
 
+= 1.0.5 =
+Improvement to the script to check for the (box closed) cookie as well, to work with pages from browser cache.
+
 = 1.0.4 =
 Two important bugfixes for when using an element as the trigger point.
 
