@@ -82,6 +82,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</td>
 		
 	</tr>
+
+	<tr valign="top">
+		<th><label for="stb_test_mode">Enable test mode?</label></th>
+		<td colspan="3">
+			<label><input type="radio" id="stb_test_mode_1" name="stb[test_mode]" value="1" <?php checked($opts['test_mode'], 1); ?> /> Yes</label> &nbsp; 
+			<label><input type="radio" id="stb_test_mode_0" name="stb[test_mode]" value="0" <?php checked($opts['test_mode'], 0); ?> /> No</label> &nbsp; 
+			<p class="help">If test mode is enabled, the cookie will show up regardless of whether a cookie has been set.</p>
+		</td>
+		
+	</tr>
 </table>
 
 <h3 class="stb-title">Appearance</h3>

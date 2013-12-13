@@ -77,7 +77,7 @@ class STB_Public {
 		wp_enqueue_style( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/css/styles.css', array(), STB_VERSION );
 
 		// load scripts
-		wp_enqueue_script( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/js/script.min.js', array( 'jquery' ), STB_VERSION, true );
+		wp_enqueue_script( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/js/script.js', array( 'jquery' ), STB_VERSION, true );
 	}
 
 	public function load_boxes() {
@@ -89,7 +89,7 @@ class STB_Public {
 
 			$box = get_post( $box_id );
 
-			if ( !$box ) { continue; }
+			if ( !$box || $box->post_status != 'publish' ) { continue; }
 
 			$opts = stb_get_box_options( $box->ID );
 			$css = $opts['css'];
@@ -112,7 +112,7 @@ class STB_Public {
 				}
 			</style>
 			<div class="scroll-triggered-box stb stb-<?php echo esc_attr( $opts['css']['position'] ); ?>" id="stb-<?php echo $box->ID; ?>" style="display: none;" <?php
-			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>" data-trigger-percentage="<?php echo esc_attr( $opts['trigger_percentage'] ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" data-animation="<?php echo esc_attr($opts['animation']); ?>" data-cookie="<?php echo esc_attr( $opts['cookie'] ); ?>">
+			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>" data-trigger-percentage="<?php echo esc_attr( $opts['trigger_percentage'] ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" data-animation="<?php echo esc_attr($opts['animation']); ?>" data-cookie="<?php echo esc_attr( $opts['cookie'] ); ?>" data-test-mode="<?php echo esc_attr($opts['test_mode']); ?>">
 				<div class="stb-content"><?php echo $content; ?></div>
 				<span class="stb-close">&times;</span>
 			</div>

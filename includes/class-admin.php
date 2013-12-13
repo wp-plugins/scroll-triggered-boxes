@@ -98,6 +98,13 @@ class STB_Admin {
 
 		$opts = $_POST['stb'];
 
+		// sanitize settings
+		$opts['css']['width'] = absint($opts['css']['width']);
+		$opts['css']['border_width'] = absint($opts['css']['border_width']);
+		$opts['cookie'] = absint($opts['cookie']);
+		$opts['trigger_percentage'] = absint($opts['trigger_percentage']);
+		$opts['trigger_element'] = trim($opts['trigger_element']);
+
 		// store rules in option
 		$rules = get_option('stb_rules', array());
 		$rules[$post_id] = $opts['rules'];

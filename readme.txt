@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 1.0.6
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,11 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
+
+= 1.1 - December 13, 2013 =
+* Added: test mode option to box settings
+* Improved: Only published boxes will now be shown
+* Improved: Added sanitizing of settings
 
 = 1.0.6 - December 9, 2013 =
 * Fixed: Box showing up on devices where it didn't fit.

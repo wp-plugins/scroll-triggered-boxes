@@ -130,6 +130,8 @@ var STB = (function($) {
 		var $triggerElement = $($box.data('trigger-element'));
 		var animation = $box.data('animation');
 		var timer = 0;
+		var testMode = $box.data('test-mode');
+		var id = $box.data('box-id');
 
 		// calculate trigger height
 		if(triggerMethod == 'element' && $triggerElement.length > 0) {
@@ -175,8 +177,8 @@ var STB = (function($) {
 
 		// events
 
-		// check for cookie to work with pages from cache
-		if(isLoggedIn || !$.cookie('stb_box_' + $box.data('box-id'))) {
+		// show box if cookie not set or if in test mode
+		if($.cookie('stb_box_' + id) == false || (isLoggedIn && testMode)) {
 			$(window).bind('scroll', checkBoxCriteria);
 		}		
 
@@ -186,9 +188,9 @@ var STB = (function($) {
 			toggleBox(false);
 
 			// set cookie
-			if($box.data('cookie') > 0) {
-				var cookie_expiration_time = parseInt($box.data('cookie'));
-				$.cookie('stb_box_' + $box.data('box-id'), true, { expires: cookie_expiration_time, path: '/' });
+			var boxCookieTime = parseInt($box.data('cookie'));
+			if(boxCookieTime > 0) {
+				$.cookie('stb_box_' + id, true, { expires: boxCookieTime, path: '/' });
 			}
 			
 		});
