@@ -18,7 +18,8 @@ function stb_get_box_options($id)
 		'trigger' => 'percentage',
 		'trigger_percentage' => 65,
 		'trigger_element' => '',
-		'animation' => 'fade'
+		'animation' => 'fade',
+		'test_mode' => 0
 	);
 	
 	$opts = get_post_meta($id, 'stb_options', true);

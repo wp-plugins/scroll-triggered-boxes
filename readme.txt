@@ -3,8 +3,8 @@ Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.5
-Tested up to: 3.7.1
-Stable tag: 1.0.5
+Tested up to: 3.8
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,23 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
+
+= 1.1.1 - December 13, 2013 =
+* Fixed: box not showing up when test mode is disabled
+
+= 1.1 - December 13, 2013 =
+* Added: test mode option to box settings
+* Improved: Only published boxes will now be shown
+* Improved: Added sanitizing of settings
+
+= 1.0.6 - December 9, 2013 =
+* Fixed: Box showing up on devices where it didn't fit.
+* Fixed: Box cookie not working.
+* Improved: Cookie check now JS only, to make it possible to open box from button.
+* Improved: Minified JavaScript file.
+* Improved: Settings pages now compatible with WP 3.8 styles
+* Improved: Other minor CSS and JS improvements.
+* Improved: Prevented search engines indexing plugin files.
 
 = 1.0.5 - December 2, 2013 =
 * Improved: Cookie check now both server + client side to work with pages from browser cache.

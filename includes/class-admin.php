@@ -40,11 +40,47 @@ class STB_Admin {
 			'normal',
 			'core'
 		);
+
+		add_meta_box(
+			'stb-dvk-info-support',
+			__( 'Need support?', 'scroll-triggered-boxes' ),
+			array( $this, 'show_dvk_info_support' ),
+			'scroll-triggered-box',
+			'side'
+		);
+
+		add_meta_box(
+			'stb-dvk-info-donate',
+			__( 'Donate $10, $20 or $50', 'scroll-triggered-boxes' ),
+			array( $this, 'show_dvk_info_donate' ),
+			'scroll-triggered-box',
+			'side'
+		);
+
+		add_meta_box(
+			'stb-dvk-info-links',
+			__( 'About the developer', 'scroll-triggered-boxes' ),
+			array( $this, 'show_dvk_info_links' ),
+			'scroll-triggered-box',
+			'side'
+		);
 	}
 
 	public function show_meta_options( $post, $metabox ) {
 		$opts = stb_get_box_options($post->ID);
 		include STB_PLUGIN_DIR . 'includes/views/metabox-options.php';
+	}
+
+	public function show_dvk_info_donate( $post, $metabox ) {
+		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-donate.php';
+	}
+
+	public function show_dvk_info_support( $post, $metabox ) {
+		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-support.php';
+	}
+
+	public function show_dvk_info_links( $post, $metabox ) {
+		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-links.php';
 	}
 
 	public function save_meta_options( $post_id ) {		
@@ -61,6 +97,13 @@ class STB_Admin {
 			return $post_id;
 
 		$opts = $_POST['stb'];
+
+		// sanitize settings
+		$opts['css']['width'] = absint($opts['css']['width']);
+		$opts['css']['border_width'] = absint($opts['css']['border_width']);
+		$opts['cookie'] = absint($opts['cookie']);
+		$opts['trigger_percentage'] = absint($opts['trigger_percentage']);
+		$opts['trigger_element'] = trim($opts['trigger_element']);
 
 		// store rules in option
 		$rules = get_option('stb_rules', array());
