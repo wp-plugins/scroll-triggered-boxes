@@ -178,7 +178,8 @@ var STB = (function($) {
 		// events
 
 		// show box if cookie not set or if in test mode
-		if($.cookie('stb_box_' + id) == false || (isLoggedIn && testMode)) {
+		var cookieValue = $.cookie('stb_box_' + id);
+		if(cookieValue == undefined || cookieValue == false || (isLoggedIn && testMode)) {
 			$(window).bind('scroll', checkBoxCriteria);
 		}		
 
