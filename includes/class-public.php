@@ -59,6 +59,10 @@ class STB_Public {
 					break;
 
 				}
+
+				// no need to run through the other rules
+				// if criteria has already been met by this rule
+				if($matched) { break; }
 			}
 
 			// if matched, box should be loaded on this page

@@ -16,7 +16,7 @@ class STB_Admin {
 	public function tinymce_init($args) {
 		if(get_post_type() != 'scroll-triggered-box') { return $args; }
 
-		$args['setup'] = 'function(ed) { ed.onInit.add(STB.onTinyMceInit); }';
+		$args['setup'] = 'function(ed) { if(typeof STB === \'undefined\') { return; } ed.onInit.add(STB.onTinyMceInit); }';
 
 		return $args;
 	}
@@ -85,16 +85,31 @@ class STB_Admin {
 
 	public function save_meta_options( $post_id ) {		
 		// Verify that the nonce is set and valid.
-		if ( !isset( $_POST['stb_options_nonce'] ) || !wp_verify_nonce( $_POST['stb_options_nonce'], 'stb_options' ) )
+		if ( !isset( $_POST['stb_options_nonce'] ) || !wp_verify_nonce( $_POST['stb_options_nonce'], 'stb_options' ) ) {
 			return $post_id;
+		}
 
 		// If this is an autosave, our form has not been submitted, so we don't want to do anything.
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return $post_id;
+		}
+
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+        	return $post_id;
+		}
+
+    	if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
+       	 	return $post_id;
+    	}
+
+    	if ( wp_is_post_revision( $post_id ) ) {
+        	return $post_id; 
+    	}
 
 		// can user edit this post?
-		if ( ! current_user_can( 'edit_post', $post_id ) )
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return $post_id;
+		}
 
 		$opts = $_POST['stb'];
 

@@ -196,7 +196,8 @@ var STB = (function($) {
 			
 		});
 
-		// init
+		// init, check box criteria once
+		checkBoxCriteria();
 
 		// shows the box when hash refers an element inside the box
 		$(window).load(function() {
