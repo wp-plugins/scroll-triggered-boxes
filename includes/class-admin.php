@@ -16,7 +16,7 @@ class STB_Admin {
 	public function tinymce_init($args) {
 		if(get_post_type() != 'scroll-triggered-box') { return $args; }
 
-		$args['setup'] = 'function(ed) { ed.onInit.add(STB.onTinyMceInit); }';
+		$args['setup'] = 'function(ed) { if(typeof STB === \'undefined\') { return; } ed.onInit.add(STB.onTinyMceInit); }';
 
 		return $args;
 	}
@@ -40,6 +40,30 @@ class STB_Admin {
 			'normal',
 			'core'
 		);
+
+		add_meta_box(
+			'stb-dvk-info-support',
+			__( 'Need support?', 'scroll-triggered-boxes' ),
+			array( $this, 'show_dvk_info_support' ),
+			'scroll-triggered-box',
+			'side'
+		);
+
+		add_meta_box(
+			'stb-dvk-info-donate',
+			__( 'Donate $10, $20 or $50', 'scroll-triggered-boxes' ),
+			array( $this, 'show_dvk_info_donate' ),
+			'scroll-triggered-box',
+			'side'
+		);
+
+		add_meta_box(
+			'stb-dvk-info-links',
+			__( 'About the developer', 'scroll-triggered-boxes' ),
+			array( $this, 'show_dvk_info_links' ),
+			'scroll-triggered-box',
+			'side'
+		);
 	}
 
 	public function show_meta_options( $post, $metabox ) {
@@ -47,20 +71,54 @@ class STB_Admin {
 		include STB_PLUGIN_DIR . 'includes/views/metabox-options.php';
 	}
 
+	public function show_dvk_info_donate( $post, $metabox ) {
+		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-donate.php';
+	}
+
+	public function show_dvk_info_support( $post, $metabox ) {
+		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-support.php';
+	}
+
+	public function show_dvk_info_links( $post, $metabox ) {
+		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-links.php';
+	}
+
 	public function save_meta_options( $post_id ) {		
 		// Verify that the nonce is set and valid.
-		if ( !isset( $_POST['stb_options_nonce'] ) || !wp_verify_nonce( $_POST['stb_options_nonce'], 'stb_options' ) )
+		if ( !isset( $_POST['stb_options_nonce'] ) || !wp_verify_nonce( $_POST['stb_options_nonce'], 'stb_options' ) ) {
 			return $post_id;
+		}
 
 		// If this is an autosave, our form has not been submitted, so we don't want to do anything.
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return $post_id;
+		}
+
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+        	return $post_id;
+		}
+
+    	if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
+       	 	return $post_id;
+    	}
+
+    	if ( wp_is_post_revision( $post_id ) ) {
+        	return $post_id; 
+    	}
 
 		// can user edit this post?
-		if ( ! current_user_can( 'edit_post', $post_id ) )
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return $post_id;
+		}
 
 		$opts = $_POST['stb'];
+
+		// sanitize settings
+		$opts['css']['width'] = absint($opts['css']['width']);
+		$opts['css']['border_width'] = absint($opts['css']['border_width']);
+		$opts['cookie'] = absint($opts['cookie']);
+		$opts['trigger_percentage'] = absint($opts['trigger_percentage']);
+		$opts['trigger_element'] = trim($opts['trigger_element']);
 
 		// store rules in option
 		$rules = get_option('stb_rules', array());
