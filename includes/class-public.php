@@ -12,8 +12,8 @@ class STB_Public {
 		add_filter( 'stb_content', 'convert_smilies' );
 		add_filter( 'stb_content', 'convert_chars' );
 		add_filter( 'stb_content', 'wpautop' );
-		add_filter( 'stb_content', 'do_shortcode' );
 		add_filter( 'stb_content', 'shortcode_unautop' );
+		add_filter( 'stb_content', 'do_shortcode', 11 );
 	}
 
 	public function filter_boxes() {
