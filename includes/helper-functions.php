@@ -1,5 +1,12 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	header( 'HTTP/1.0 403 Forbidden' );
+	header( 'X-Robots-Tag: noindex' );
+	exit;
+}
+
+
 function stb_get_box_options($id)
 {
 	static $defaults = array(
@@ -18,7 +25,8 @@ function stb_get_box_options($id)
 		'trigger' => 'percentage',
 		'trigger_percentage' => 65,
 		'trigger_element' => '',
-		'animation' => 'fade'
+		'animation' => 'fade',
+		'test_mode' => 0
 	);
 	
 	$opts = get_post_meta($id, 'stb_options', true);

@@ -1,4 +1,9 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	header( 'HTTP/1.0 403 Forbidden' );
+	header( 'X-Robots-Tag: noindex' );
+	exit;
+}
 
 class STB_Public {
 	private $matched_box_ids = array();
@@ -12,8 +17,8 @@ class STB_Public {
 		add_filter( 'stb_content', 'convert_smilies' );
 		add_filter( 'stb_content', 'convert_chars' );
 		add_filter( 'stb_content', 'wpautop' );
-		add_filter( 'stb_content', 'do_shortcode' );
 		add_filter( 'stb_content', 'shortcode_unautop' );
+		add_filter( 'stb_content', 'do_shortcode', 11 );
 	}
 
 	public function filter_boxes() {
@@ -24,11 +29,6 @@ class STB_Public {
 		global $post;
 
 		foreach ( $rules as $box_id => $box_rules ) {
-
-			// check if cookie is set for this box
-			if ( !current_user_can( 'edit_post', $box_id ) && isset( $_COOKIE['stb_box_' . $box_id] ) ) {
-				continue;
-			}
 
 			$matched = false;
 
@@ -58,13 +58,23 @@ class STB_Public {
 					$matched = is_page( $value );
 					break;
 
+				case 'is_not_page':
+					$matched = !is_page( $value );
+					break;
+
 				case 'manual':
 					// eval for now...
 					$matched = eval( "return (" . $value . ");" );
 					break;
 
 				}
+
+				// no need to run through the other rules
+				// if criteria has already been met by this rule
+				if($matched) { break; }
 			}
+
+			$matched = apply_filters('stb_show_box', $matched, $box_id);
 
 			// if matched, box should be loaded on this page
 			if ( $matched ) {
@@ -94,7 +104,7 @@ class STB_Public {
 
 			$box = get_post( $box_id );
 
-			if ( !$box ) { continue; }
+			if ( !$box || $box->post_status != 'publish' ) { continue; }
 
 			$opts = stb_get_box_options( $box->ID );
 			$css = $opts['css'];
@@ -112,13 +122,12 @@ class STB_Public {
 					width: <?php echo ( !empty( $css['width'] ) ) ? $css['width'] . 'px': 'auto'; ?>;
 				}
 
-				@media(max-width: <?php echo ( !empty( $css['width'] ) ) ? $css['width'] : '480'; ?>px) {
+				@media(max-width: <?php echo ( !empty( $css['width'] ) ) ? ($css['width'] + 150): '719'; ?>px) {
 					#stb-<?php echo $box->ID; ?> { display: none !important; }
 				}
 			</style>
 			<div class="scroll-triggered-box stb stb-<?php echo esc_attr( $opts['css']['position'] ); ?>" id="stb-<?php echo $box->ID; ?>" style="display: none;" <?php
-			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>" data-trigger-percentage="<?php echo esc_attr( $opts['trigger_percentage'] ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" data-animation="<?php echo esc_attr($opts['animation']); ?>" data-cookie="<?php echo esc_attr( $opts['cookie'] ); ?>">
-
+			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>" data-trigger-percentage="<?php echo esc_attr( $opts['trigger_percentage'] ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" data-animation="<?php echo esc_attr($opts['animation']); ?>" data-cookie="<?php echo esc_attr( $opts['cookie'] ); ?>" data-test-mode="<?php echo esc_attr($opts['test_mode']); ?>">
 				<div class="stb-content"><?php echo $content; ?></div>
 				<span class="stb-close">&times;</span>
 			</div>
