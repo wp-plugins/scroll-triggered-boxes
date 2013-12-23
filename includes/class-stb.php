@@ -1,4 +1,9 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	header( 'HTTP/1.0 403 Forbidden' );
+	header( 'X-Robots-Tag: noindex' );
+	exit;
+}
 
 class STB
 {
@@ -27,7 +32,7 @@ class STB
 			    'menu_name'          => 'Scroll Triggered Boxes'
 			  ),
       		'show_ui' => true,
-      		'menu_position' => 100,
+      		'menu_position' => 108,
       		'menu_icon' => STB_PLUGIN_URL . '/assets/img/menu-icon.png'
     	);
 

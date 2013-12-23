@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<option value="everywhere" <?php selected($rule['condition'], 'everywhere')?>>Everywhere</option>
 						<option value="is_post_type" <?php selected($rule['condition'], 'is_post_type'); ?>>if Post Type is</option>
 						<option value="is_page" <?php selected($rule['condition'], 'is_page'); ?>>if Page is</option>
+						<option value="is_not_page" <?php selected($rule['condition'], 'is_not_page'); ?>>if Page is not</option>
 						<option value="is_single" <?php selected($rule['condition'], 'is_single'); ?>>if Post is</option>
 					</optgroup>
 					<optgroup label="Advanced">
@@ -36,6 +37,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<tr>
 		<th></th>
 		<td colspan="3"><button type="button" class="button stb-add-rule">Add rule</button></td>
+	</tr>
+	<tr class="stb-manual-tip" style="display: none;">
+		<td></td><td></td><td colspan="2"><p class="help">For using advanced (manual) rules, have a look at <a href="http://codex.wordpress.org/Conditional_Tags">the WordPress Conditional Tags Codex page</a>.</p></td>
 	</tr>
 	<tr valign="top">
 		<th><label for="stb_position">Box Position</label></th>

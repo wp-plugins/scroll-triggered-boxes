@@ -20,6 +20,7 @@ STB = (function($) {
 	function setContextualHelpers()
 	{
 		$context = $(this).parents('tr');
+		$("tr.stb-manual-tip").hide();
 		$valueInput = $context.find('.stb-rule-value');
 		$valueInput.show();
 
@@ -42,12 +43,17 @@ STB = (function($) {
 				$valueInput.attr('placeholder', 'Leave empty to match any page or enter a comma-separated list of page IDs or slugs')
 			break;
 
+			case 'is_page':
+				$valueInput.attr('placeholder', 'Leave empty to match any page or enter a comma-separated list of page IDs or slugs')
+			break;
+
 			case 'is_post_type':
 				$valueInput.attr('placeholder', 'Leave empty to match any post type or enter a comma-separated list of post type names')
 			break;
 
 			case 'manual':
 				$valueInput.attr('placeholder', 'Example: is_single(1, 3)');
+				$('tr.stb-manual-tip').show();
 			break;
 		}
 	}

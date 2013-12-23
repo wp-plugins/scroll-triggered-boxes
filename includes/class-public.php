@@ -1,4 +1,9 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	header( 'HTTP/1.0 403 Forbidden' );
+	header( 'X-Robots-Tag: noindex' );
+	exit;
+}
 
 class STB_Public {
 	private $matched_box_ids = array();
@@ -53,6 +58,10 @@ class STB_Public {
 					$matched = is_page( $value );
 					break;
 
+				case 'is_not_page':
+					$matched = !is_page( $value );
+					break;
+
 				case 'manual':
 					// eval for now...
 					$matched = eval( "return (" . $value . ");" );
@@ -64,6 +73,8 @@ class STB_Public {
 				// if criteria has already been met by this rule
 				if($matched) { break; }
 			}
+
+			$matched = apply_filters('stb_show_box', $matched, $box_id);
 
 			// if matched, box should be loaded on this page
 			if ( $matched ) {
