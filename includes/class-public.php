@@ -10,7 +10,8 @@ class STB_Public {
 
 	public function __construct() {
 		add_action( 'wp', array( $this, 'filter_boxes' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'load_assets' ) );
+		add_action( 'init', array( $this, 'register_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'load_styles' ) );
 		add_action( 'wp_footer', array( $this, 'load_boxes' ), 1 );
 
 		add_filter( 'stb_content', 'wptexturize') ;
@@ -25,8 +26,6 @@ class STB_Public {
 		$rules = get_option( 'stb_rules' );
 
 		if ( !$rules ) { return; }
-
-		global $post;
 
 		foreach ( $rules as $box_id => $box_rules ) {
 
@@ -85,19 +84,23 @@ class STB_Public {
 
 	}
 
-	public function load_assets() {
-		if ( empty( $this->matched_box_ids ) ) { return; }
+	public function register_scripts() {
 
-		// load stylesheets
-		wp_enqueue_style( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/css/styles.css', array(), STB_VERSION );
+		// stylesheets
+		wp_register_style( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/css/styles.css', array(), STB_VERSION );
 
-		// load scripts
-		wp_enqueue_script( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/js/script.js', array( 'jquery' ), STB_VERSION, true );
+		// scripts
+		wp_register_script( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/js/script.js', array( 'jquery' ), STB_VERSION, true );
+	}
+
+	public function load_styles() {
+		wp_enqueue_style('scroll-triggered-boxes');
 	}
 
 	public function load_boxes() {
 		if ( empty( $this->matched_box_ids ) ) { return; }
 
+		wp_enqueue_script('scroll-triggered-boxes');
 		?><!-- Scroll Triggered Boxes v<?php echo STB_VERSION; ?> - http://wordpress.org/plugins/scroll-triggered-boxes/--><?php
 
 		foreach ( $this->matched_box_ids as $box_id ) {
