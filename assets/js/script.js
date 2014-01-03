@@ -128,17 +128,21 @@ jQuery(window).load(function() {
 			// vars
 			var $box = $(this);
 			var triggerMethod = $box.data('trigger');
-			var $triggerElement = $box.data('trigger-element');
 			var animation = $box.data('animation');
 			var timer = 0;
 			var testMode = $box.data('test-mode');
 			var id = $box.data('box-id');
 
+			if(triggerMethod == 'element') {
+				var selector = $box.data('trigger-element');
+				var $triggerElement = $(selector);
+			}
+
 			// calculate trigger height
 			if(triggerMethod == 'element' && $triggerElement.length > 0) {
 				var triggerHeight = $triggerElement.offset().top;
 			} else {
-				var triggerPercentage = (triggerMethod == 'percentage') ? ($box.data('trigger-percentage') / 100) : 0.8;
+				var triggerPercentage = (triggerMethod == 'percentage') ? (parseInt($box.data('trigger-percentage')) / 100) : 0.8;
 				var triggerHeight = (triggerPercentage * $(document).height());
 			}
 
@@ -212,7 +216,6 @@ jQuery(window).load(function() {
 		});
 
 	return {}
-
 
 	})(window.jQuery);
 

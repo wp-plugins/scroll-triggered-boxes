@@ -115,22 +115,24 @@ class STB_Public {
 
 			// run filters
 			$content = apply_filters( 'stb_content', $content, $box );
-
+			$auto_hide_small_screens = apply_filters('stb_auto_hide_small_screens', true, $box );
 ?>
 			<style type="text/css">
 				#stb-<?php echo $box->ID; ?> {
 					background: <?php echo ( !empty( $css['background_color'] ) ) ? $css['background_color'] : 'white'; ?>;
 					<?php if ( !empty( $css['color'] ) ) { ?>color: <?php echo $css['color']; ?>;<?php } ?>
 					<?php if ( !empty( $css['border_color'] ) && !empty( $css['border_width'] ) ) { ?>border: <?php echo $css['border_width'] . 'px' ?> solid <?php echo $css['border_color']; ?>;<?php } ?>
-					width: <?php echo ( !empty( $css['width'] ) ) ? $css['width'] . 'px': 'auto'; ?>;
+					width: <?php echo ( !empty( $css['width'] ) ) ? absint( $css['width'] ) . 'px': 'auto'; ?>;
 				}
 
-				@media(max-width: <?php echo ( !empty( $css['width'] ) ) ? ($css['width'] + 150): '719'; ?>px) {
-					#stb-<?php echo $box->ID; ?> { display: none !important; }
-				}
+				<?php if($auto_hide_small_screens) { ?>
+					@media(max-width: <?php echo ( !empty( $css['width'] ) ) ? ( absint($css['width']) + 150): '719'; ?>px) {
+						#stb-<?php echo $box->ID; ?> { display: none !important; }
+					}
+				<?php } ?>
 			</style>
 			<div class="scroll-triggered-box stb stb-<?php echo esc_attr( $opts['css']['position'] ); ?>" id="stb-<?php echo $box->ID; ?>" style="display: none;" <?php
-			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>" data-trigger-percentage="<?php echo esc_attr( $opts['trigger_percentage'] ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" data-animation="<?php echo esc_attr($opts['animation']); ?>" data-cookie="<?php echo esc_attr( $opts['cookie'] ); ?>" data-test-mode="<?php echo esc_attr($opts['test_mode']); ?>">
+			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>" data-trigger-percentage="<?php echo esc_attr( absint( $opts['trigger_percentage'] ) ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" data-animation="<?php echo esc_attr($opts['animation']); ?>" data-cookie="<?php echo esc_attr( absint ( $opts['cookie'] ) ); ?>" data-test-mode="<?php echo esc_attr($opts['test_mode']); ?>">
 				<div class="stb-content"><?php echo $content; ?></div>
 				<span class="stb-close">&times;</span>
 			</div>
