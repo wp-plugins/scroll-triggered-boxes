@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 1.1.4
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,9 +74,14 @@ The plugin is tested with the plugins below but will work with any plugin that u
 
 You can use [conditional tags](http://codex.wordpress.org/Conditional_Tags) to set super-customized rules.
 
-*Example (only shows a box on posts in the category `cars`)*
+*Example: only show for posts in category 'cars'*
 `
 is_single() && in_category('cars')
+`
+
+*Example: show everywhere except on pages with slug 'contact' and 'checkout'
+`
+!is_page( array( 'contact', 'checkout') ) 
 `
 
 = Can I have a box to open after clicking a certain link or button? =
@@ -97,6 +102,25 @@ Sure, just include `stb-` followed by the box ID in the URL.
 http://your-wordpress-site.com/some-page/#stb-94
 `
 
+= How to set more advanced styling rules =
+
+If you want more advanced styling, you can use CSS to further style the boxes. Every box gets its own unique #id as well as various CSS classes.
+
+`
+#box-{id} { } /* 1 particular box */
+.stb { } /* all boxes */
+.stb-content { } /* the contents of the box */
+.stb-close{ } /* the close button of the box */
+`
+
+= Will a box be shown on mobile devices or small screens? =
+
+If the box width fits on the screen, the box will be shown. If the box width is larger than the screen size, the box will be automatically hidden. To disable automatic hiding of the box, add the following line to your theme its `functions.php` file.
+
+`
+add_filter('stb_auto_hide_small_screens', '__return_false');
+`
+
 = I want to disable auto-paragraphs in the box content =
 
 All default WordPress filters are added to the `stb_content` filter hook. If you want to remove any of them, add the respectable line to your theme its `functions.php` file.
@@ -109,22 +133,6 @@ remove_filter( 'stb_content', 'wpautop' );
 remove_filter( 'stb_content', 'do_shortcode' );
 remove_filter( 'stb_content', 'shortcode_unautop' );
 `
-
-= How to set more advanced styling rules =
-
-If you want more advanced styling, you can use CSS to further style the boxes. Every box gets its own unique #id as well as various CSS classes.
-
-`
-#box-{id} { } /* 1 particular box */
-.stb { } /* all boxes */
-.stb-content { } /* the contents of the box */
-.stb-close{ } /* the close button of the box */
-`
-
-
-= Will a box be shown on mobile devices or small screens? =
-
-If the box fits, it will. If the box width does not fit on the screen, it will be automatically hidden.
 
 == Installation ==
 
@@ -154,6 +162,13 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
+
+= 1.1.6 - January 6, 2013 =
+* Fixed: Issue with manual conditions where some servers added slashes (to escape quotes)
+
+= 1.1.5 - January 3, 2013 =
+* Fixed: JS eror when using a trigger element.
+* Added: `stb_auto_hide_small_screens` filter to disable automatically hiding the box on small screens.
 
 = 1.1.4 - December 24, 2013 =
 * Added: If page NOT is rule.
