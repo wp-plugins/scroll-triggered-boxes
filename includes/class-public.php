@@ -63,6 +63,7 @@ class STB_Public {
 
 				case 'manual':
 					// eval for now...
+					$value = stripslashes(trim($value));
 					$matched = eval( "return (" . $value . ");" );
 					break;
 
