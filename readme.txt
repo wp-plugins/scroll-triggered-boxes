@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -162,6 +162,10 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
+
+= 1.1.7 - January 8, 2013 =
+* Fixed: Issue with box showing up regardless of whether a cookie had been set
+* Improved: Box rules are now deleted when post_status is anything other than "publish"
 
 = 1.1.6 - January 6, 2013 =
 * Fixed: Issue with manual conditions where some servers added slashes (to escape quotes)

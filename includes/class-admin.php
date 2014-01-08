@@ -12,7 +12,6 @@ class STB_Admin {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
 		add_action( 'save_post', array( $this, 'save_meta_options' ) );
-		//add_action( 'admin_menu', array( $this, 'add_menu_items') );
 
 		// filter hooks
 		add_filter( 'tiny_mce_before_init', array($this, 'tinymce_init') );
@@ -88,6 +87,10 @@ class STB_Admin {
 		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-links.php';
 	}
 
+
+	/**
+	* Saves box options and rules
+	*/
 	public function save_meta_options( $post_id ) {		
 		// Verify that the nonce is set and valid.
 		if ( !isset( $_POST['stb_options_nonce'] ) || !wp_verify_nonce( $_POST['stb_options_nonce'], 'stb_options' ) ) {
@@ -116,6 +119,7 @@ class STB_Admin {
 			return $post_id;
 		}
 
+		$post = get_post($post_id);
 		$opts = $_POST['stb'];
 
 		// sanitize settings
@@ -127,11 +131,21 @@ class STB_Admin {
 
 		// store rules in option
 		$rules = get_option('stb_rules', array());
-		$rules[$post_id] = $opts['rules'];
+
+		// only save box rules if the status is publish
+		if($post->post_status != 'publish') {
+			if(isset($rules[$post_id])) {
+				unset($rules[$post_id]);
+			}
+		} else {
+			$rules[$post_id] = $opts['rules'];
+		}
+		
 		update_option('stb_rules', $rules);
 
 		// save box settings
 		update_post_meta( $post_id, 'stb_options', $opts );
 	}
+
 
 }

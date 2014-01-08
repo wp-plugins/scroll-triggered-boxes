@@ -117,7 +117,7 @@ jQuery(window).load(function() {
 			var triggerMethod = $box.data('trigger');
 			var animation = $box.data('animation');
 			var timer = 0;
-			var testMode = $box.data('test-mode');
+			var testMode = (parseInt($box.data('test-mode')) === 1);
 			var id = $box.data('box-id');
 
 			if(triggerMethod == 'element') {
@@ -171,8 +171,16 @@ jQuery(window).load(function() {
 
 			// show box if cookie not set or if in test mode
 			var cookieValue = $.cookie('stb_box_' + id);
-			if(cookieValue == undefined || cookieValue == false || (isLoggedIn && testMode)) {
+			if(cookieValue == undefined || (isLoggedIn && testMode)) {
 				$(window).bind('scroll', checkBoxCriteria);
+
+				// init, check box criteria once
+				checkBoxCriteria();
+
+				// shows the box when hash refers an element inside the box
+				if(window.location.hash && ($box.attr('id') == window.location.hash.substring(1) || (($element = $box.find(window.location.hash)) && $element.length > 0))) {
+					setTimeout(function() { toggleBox(true); }, 100);
+				}
 			}		
 
 			$box.find(".stb-close").click(function() {
@@ -187,15 +195,6 @@ jQuery(window).load(function() {
 				}
 				
 			});
-
-
-			// shows the box when hash refers an element inside the box
-			if(window.location.hash && ($box.attr('id') == window.location.hash.substring(1) || (($element = $box.find(window.location.hash)) && $element.length > 0))) {
-				setTimeout(function() { toggleBox(true); }, 100);
-			}
-			
-			// init, check box criteria once
-			checkBoxCriteria();
 			
 			// add link listener for this box
 			$('a[href="#' + $box.attr('id') +'"]').click(function() { toggleBox(true); return false; });
