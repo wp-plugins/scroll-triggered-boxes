@@ -111,7 +111,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</td>
 		<td>
 			<label class="stb-label" for="stb-width">Box width</label>
-			<input id="stb-width" name="stb[css][width]" id="stb-box-width" type="number" min="100" max="1600" value="<?php echo esc_attr($opts['css']['width']); ?>" />
+			<input id="stb-width" name="stb[css][width]" id="stb-box-width" type="number" min="0" max="1600" value="<?php echo esc_attr($opts['css']['width']); ?>" />
 		</td>
 	</tr>
 	<tr valign="top">
