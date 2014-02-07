@@ -163,6 +163,7 @@ Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on
 
 == Changelog ==
 
+
 = 1.1.9 - February 7, 2014 =
 * Added: option to auto-hide the box again
 * Improved: direct file access security
