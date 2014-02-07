@@ -27,14 +27,10 @@ jQuery(window).load(function() {
 
 		function parseCookieValue(s) {
 			if (s.indexOf('"') === 0) {
-				// This is a quoted cookie as according to RFC2068, unescape...
 				s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
 			}
 
 			try {
-				// Replace server-side written pluses with spaces.
-				// If we can't decode the cookie, ignore it, it's unusable.
-				// If we can't parse the cookie, ignore it, it's unusable.
 				s = decodeURIComponent(s.replace(pluses, ' '));
 				return config.json ? JSON.parse(s) : s;
 			} catch(e) {}
@@ -48,7 +44,6 @@ jQuery(window).load(function() {
 		var config = $.cookie = function (key, value, options) {
 
 			// Write
-
 			if (value !== undefined && !$.isFunction(value)) {
 				options = $.extend({}, config.defaults, options);
 
@@ -67,12 +62,7 @@ jQuery(window).load(function() {
 			}
 
 			// Read
-
 			var result = key ? undefined : {};
-
-			// To prevent the for loop in the first place assign an empty array
-			// in case there are no cookies at all. Also prevents odd result when
-			// calling $.cookie().
 			var cookies = document.cookie ? document.cookie.split('; ') : [];
 
 			for (var i = 0, l = cookies.length; i < l; i++) {
@@ -81,12 +71,10 @@ jQuery(window).load(function() {
 				var cookie = parts.join('=');
 
 				if (key && key === name) {
-					// If second argument (value) is a function it's a converter...
 					result = read(cookie, value);
 					break;
 				}
 
-				// Prevent storing a cookie that we couldn't decode.
 				if (!key && (cookie = read(cookie)) !== undefined) {
 					result[name] = cookie;
 				}
@@ -102,7 +90,6 @@ jQuery(window).load(function() {
 				return false;
 			}
 
-			// Must not alter options, thus extending a fresh object...
 			$.cookie(key, '', $.extend({}, options, { expires: -1 }));
 			return !$.cookie(key);
 		};
@@ -128,17 +115,22 @@ jQuery(window).load(function() {
 			// vars
 			var $box = $(this);
 			var triggerMethod = $box.data('trigger');
-			var $triggerElement = $box.data('trigger-element');
 			var animation = $box.data('animation');
 			var timer = 0;
-			var testMode = $box.data('test-mode');
+			var testMode = (parseInt($box.data('test-mode')) === 1);
 			var id = $box.data('box-id');
+			var autoHide = (parseInt($box.data('auto-hide')) === 1);
+
+			if(triggerMethod == 'element') {
+				var selector = $box.data('trigger-element');
+				var $triggerElement = $(selector);
+			}
 
 			// calculate trigger height
 			if(triggerMethod == 'element' && $triggerElement.length > 0) {
 				var triggerHeight = $triggerElement.offset().top;
 			} else {
-				var triggerPercentage = (triggerMethod == 'percentage') ? ($box.data('trigger-percentage') / 100) : 0.8;
+				var triggerPercentage = (triggerMethod == 'percentage') ? (parseInt($box.data('trigger-percentage')) / 100) : 0.8;
 				var triggerHeight = (triggerPercentage * $(document).height());
 			}
 
@@ -155,18 +147,24 @@ jQuery(window).load(function() {
 
 					// show box when criteria for this box is matched
 					if(triggered) {
+
 						// remove listen event
-						$(window).unbind('scroll', checkBoxCriteria);
+						if(!autoHide) {
+							$(window).unbind('scroll', checkBoxCriteria);
+						}
 
 						toggleBox(true);
+					} else {
+						toggleBox(false);
 					}
 
 				}, 100);
 			}
 
 			var toggleBox = function(show) 
-			{
-				if((show && $box.is(':hidden')) || (!show && $box.is(':visible'))) {
+			{	
+				if(!$box.is(':animated') && ( ( show && $box.is(':hidden') ) || ( ! show && $box.is(':visible') ) ) ) {
+					console.log("Actually doing anything");
 					// show box
 					if(animation == 'fade') {
 						$box.fadeToggle('slow');
@@ -180,8 +178,16 @@ jQuery(window).load(function() {
 
 			// show box if cookie not set or if in test mode
 			var cookieValue = $.cookie('stb_box_' + id);
-			if(cookieValue == undefined || cookieValue == false || (isLoggedIn && testMode)) {
+			if(cookieValue == undefined || (isLoggedIn && testMode)) {
 				$(window).bind('scroll', checkBoxCriteria);
+
+				// init, check box criteria once
+				checkBoxCriteria();
+
+				// shows the box when hash refers an element inside the box
+				if(window.location.hash && ($box.attr('id') == window.location.hash.substring(1) || (($element = $box.find(window.location.hash)) && $element.length > 0))) {
+					setTimeout(function() { toggleBox(true); }, 100);
+				}
 			}		
 
 			$box.find(".stb-close").click(function() {
@@ -196,15 +202,6 @@ jQuery(window).load(function() {
 				}
 				
 			});
-
-
-			// shows the box when hash refers an element inside the box
-			if(window.location.hash && ($box.attr('id') == window.location.hash.substring(1) || (($element = $box.find(window.location.hash)) && $element.length > 0))) {
-				setTimeout(function() { toggleBox(true); }, 100);
-			}
-			
-			// init, check box criteria once
-			checkBoxCriteria();
 			
 			// add link listener for this box
 			$('a[href="#' + $box.attr('id') +'"]').click(function() { toggleBox(true); return false; });
@@ -212,7 +209,6 @@ jQuery(window).load(function() {
 		});
 
 	return {}
-
 
 	})(window.jQuery);
 
