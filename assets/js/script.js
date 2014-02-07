@@ -119,6 +119,7 @@ jQuery(window).load(function() {
 			var timer = 0;
 			var testMode = (parseInt($box.data('test-mode')) === 1);
 			var id = $box.data('box-id');
+			var autoHide = (parseInt($box.data('auto-hide')) === 1);
 
 			if(triggerMethod == 'element') {
 				var selector = $box.data('trigger-element');
@@ -146,18 +147,24 @@ jQuery(window).load(function() {
 
 					// show box when criteria for this box is matched
 					if(triggered) {
+
 						// remove listen event
-						$(window).unbind('scroll', checkBoxCriteria);
+						if(!autoHide) {
+							$(window).unbind('scroll', checkBoxCriteria);
+						}
 
 						toggleBox(true);
+					} else {
+						toggleBox(false);
 					}
 
 				}, 100);
 			}
 
 			var toggleBox = function(show) 
-			{
-				if((show && $box.is(':hidden')) || (!show && $box.is(':visible'))) {
+			{	
+				if(!$box.is(':animated') && ( ( show && $box.is(':hidden') ) || ( ! show && $box.is(':visible') ) ) ) {
+					console.log("Actually doing anything");
 					// show box
 					if(animation == 'fade') {
 						$box.fadeToggle('slow');

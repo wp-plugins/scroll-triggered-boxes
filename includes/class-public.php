@@ -1,7 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	header( 'HTTP/1.0 403 Forbidden' );
-	header( 'X-Robots-Tag: noindex' );
+if( ! defined("STB_VERSION") ) {
+	header( 'Status: 403 Forbidden' );
+	header( 'HTTP/1.1 403 Forbidden' );
 	exit;
 }
 
@@ -133,7 +133,10 @@ class STB_Public {
 				<?php } ?>
 			</style>
 			<div class="scroll-triggered-box stb stb-<?php echo esc_attr( $opts['css']['position'] ); ?>" id="stb-<?php echo $box->ID; ?>" style="display: none;" <?php
-			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>" data-trigger-percentage="<?php echo esc_attr( absint( $opts['trigger_percentage'] ) ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" data-animation="<?php echo esc_attr($opts['animation']); ?>" data-cookie="<?php echo esc_attr( absint ( $opts['cookie'] ) ); ?>" data-test-mode="<?php echo esc_attr($opts['test_mode']); ?>">
+			?> data-box-id="<?php echo esc_attr( $box->ID ); ?>" data-trigger="<?php echo esc_attr( $opts['trigger'] ); ?>"
+			 data-trigger-percentage="<?php echo esc_attr( absint( $opts['trigger_percentage'] ) ); ?>" data-trigger-element="<?php echo esc_attr( $opts['trigger_element'] ); ?>" 
+			 data-animation="<?php echo esc_attr($opts['animation']); ?>" data-cookie="<?php echo esc_attr( absint ( $opts['cookie'] ) ); ?>" data-test-mode="<?php echo esc_attr($opts['test_mode']); ?>" 
+			 data-auto-hide="<?php echo esc_attr($opts['auto_hide']); ?>">
 				<div class="stb-content"><?php echo $content; ?></div>
 				<span class="stb-close">&times;</span>
 			</div>

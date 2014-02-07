@@ -1,7 +1,7 @@
 <?php 
-if ( ! defined( 'ABSPATH' ) ) {
-	header( 'HTTP/1.0 403 Forbidden' );
-	header( 'X-Robots-Tag: noindex' );
+if( ! defined("STB_VERSION") ) {
+	header( 'Status: 403 Forbidden' );
+	header( 'HTTP/1.1 403 Forbidden' );
 	exit;
 } ?>
 <p>My name is <a href="http://dannyvankooten.com/">Danny van Kooten</a>. I develop WordPress plugins which help you build your websites. I love simplicity, happy customers and clean code.</p>
