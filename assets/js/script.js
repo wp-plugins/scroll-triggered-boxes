@@ -146,16 +146,16 @@ jQuery(window).load(function() {
 					var triggered = ((scrollY + windowHeight) >= triggerHeight);
 
 					// show box when criteria for this box is matched
-					if(triggered) {
+					if( triggered ) {
 
-						// remove listen event
-						if(!autoHide) {
+						// remove listen event if box shouldn't be hidden again
+						if( ! autoHide ) {
 							$(window).unbind('scroll', checkBoxCriteria);
 						}
 
-						toggleBox(true);
+						toggleBox( true );
 					} else {
-						toggleBox(false);
+						toggleBox( false );
 					}
 
 				}, 100);
@@ -164,7 +164,6 @@ jQuery(window).load(function() {
 			var toggleBox = function(show) 
 			{	
 				if(!$box.is(':animated') && ( ( show && $box.is(':hidden') ) || ( ! show && $box.is(':visible') ) ) ) {
-					console.log("Actually doing anything");
 					// show box
 					if(animation == 'fade') {
 						$box.fadeToggle('slow');
@@ -191,6 +190,9 @@ jQuery(window).load(function() {
 			}		
 
 			$box.find(".stb-close").click(function() {
+
+				// unbind 
+				$(window).unbind('scroll', checkBoxCriteria);
 
 				// hide box
 				toggleBox(false);

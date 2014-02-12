@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.5
 Tested up to: 3.8.1
-Stable tag: 1.1.9
+Stable tag: 1.1.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -163,6 +163,8 @@ Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on
 
 == Changelog ==
 
+= 1.1.9.1 - February 12, 2014 =
+* Fixed: Box re-appearing after closing
 
 = 1.1.9 - February 7, 2014 =
 * Added: option to auto-hide the box again
