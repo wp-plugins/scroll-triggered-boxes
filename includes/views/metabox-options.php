@@ -1,7 +1,7 @@
 <?php 
-if ( ! defined( 'ABSPATH' ) ) {
-	header( 'HTTP/1.0 403 Forbidden' );
-	header( 'X-Robots-Tag: noindex' );
+if( ! defined("STB_VERSION") ) {
+	header( 'Status: 403 Forbidden' );
+	header( 'HTTP/1.1 403 Forbidden' );
 	exit;
 } ?>
 <h2 class="no-top-margin">Scroll Triggered Box Options</h2>
@@ -86,7 +86,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</td>
 		
 	</tr>
-
+	<tr valign="top">
+		<th><label for="stb_auto_hide">Auto-hide?</label></th>
+		<td colspan="3">
+			<label><input type="radio" id="stb_auto_hide_1" name="stb[auto_hide]" value="1" <?php checked($opts['auto_hide'], 1); ?> /> Yes</label> &nbsp; 
+			<label><input type="radio" id="stb_auto_hide_0" name="stb[auto_hide]" value="0" <?php checked($opts['auto_hide'], 0); ?> /> No</label> &nbsp; 
+			<p class="help">Hide box again when visitors scroll back up?</p>
+		</td>
+		
+	</tr>
 	<tr valign="top">
 		<th><label for="stb_test_mode">Enable test mode?</label></th>
 		<td colspan="3">
@@ -94,7 +102,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<label><input type="radio" id="stb_test_mode_0" name="stb[test_mode]" value="0" <?php checked($opts['test_mode'], 0); ?> /> No</label> &nbsp; 
 			<p class="help">If test mode is enabled, the cookie will show up regardless of whether a cookie has been set.</p>
 		</td>
-		
 	</tr>
 </table>
 
@@ -111,7 +118,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</td>
 		<td>
 			<label class="stb-label" for="stb-width">Box width</label>
-			<input id="stb-width" name="stb[css][width]" id="stb-box-width" type="number" min="100" max="1600" value="<?php echo esc_attr($opts['css']['width']); ?>" />
+			<input id="stb-width" name="stb[css][width]" id="stb-box-width" type="number" min="0" max="1600" value="<?php echo esc_attr($opts['css']['width']); ?>" />
 		</td>
 	</tr>
 	<tr valign="top">
