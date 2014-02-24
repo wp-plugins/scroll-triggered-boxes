@@ -162,7 +162,6 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
-
 = 1.1.9.2 - February 24, 2014 =
 * Fixed: Box rules not deleted when box was trashed
 * Changed: When using element selector and element doesn't exist, box won't be shown.
