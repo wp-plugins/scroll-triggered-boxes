@@ -11,7 +11,10 @@ class STB_Admin {
 		// action hooks
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
-		add_action( 'save_post', array( $this, 'save_meta_options' ) );
+
+		add_action( 'save_post', array( $this, 'save_meta_options' ), 20 );
+		add_action( 'trashed_post', array( $this, 'flush_rules') );
+		add_action( 'untrashed_post', array( $this, 'flush_rules') );
 
 		// filter hooks
 		add_filter( 'tiny_mce_before_init', array($this, 'tinymce_init') );
@@ -123,29 +126,51 @@ class STB_Admin {
 		$opts = $_POST['stb'];
 
 		// sanitize settings
-		$opts['css']['width'] = absint($opts['css']['width']);
-		$opts['css']['border_width'] = absint($opts['css']['border_width']);
-		$opts['cookie'] = absint($opts['cookie']);
-		$opts['trigger_percentage'] = absint($opts['trigger_percentage']);
-		$opts['trigger_element'] = trim($opts['trigger_element']);
-
-		// store rules in option
-		$rules = get_option('stb_rules', array());
-
-		// only save box rules if the status is publish
-		if($post->post_status != 'publish') {
-			if(isset($rules[$post_id])) {
-				unset($rules[$post_id]);
-			}
-		} else {
-			$rules[$post_id] = $opts['rules'];
-		}
-		
-		update_option('stb_rules', $rules);
+		$opts['css']['width'] = absint( $opts['css']['width'] );
+		$opts['css']['border_width'] = absint( $opts['css']['border_width'] );
+		$opts['cookie'] = absint( $opts['cookie'] );
+		$opts['trigger_percentage'] = absint( $opts['trigger_percentage'] );
+		$opts['trigger_element'] = trim( $opts['trigger_element'] );
 
 		// save box settings
 		update_post_meta( $post_id, 'stb_options', $opts );
+
+		$this->flush_rules();
 	}
 
+	/**
+	* Flush all box rules
+	*
+	* Loops through all published boxes and fills the rules option
+	*/
+	public function flush_rules() {
+
+		// get all published boxes
+		$boxes = get_posts(
+			array(
+				'post_type' => 'scroll-triggered-box',
+				'post_status' => 'publish'
+			)
+		);
+
+		// setup empty array of rules
+		$rules = array();
+
+		// fill rules array
+		if( $boxes && is_array( $boxes ) ) {
+
+			foreach( $boxes as $box ) {
+				// get box meta data
+				$box_meta = get_post_meta( $box->ID, 'stb_options', true );
+
+				// add box rules to all rules
+				$rules[ $box->ID ] = $box_meta['rules'];
+
+			}
+
+		}
+
+		update_option( 'stb_rules', $rules );
+	}
 
 }

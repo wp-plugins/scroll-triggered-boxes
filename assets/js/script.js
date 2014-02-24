@@ -99,6 +99,8 @@ jQuery(window).load(function() {
 	window.STB = (function($) {
 
 		var windowHeight = $(window).height();
+		var documentHeight = $(document).height();
+
 		var isLoggedIn = $("body").hasClass('logged-in');
 
 		$(".stb-content").children().first().css({
@@ -124,15 +126,19 @@ jQuery(window).load(function() {
 			if(triggerMethod == 'element') {
 				var selector = $box.data('trigger-element');
 				var $triggerElement = $(selector);
-			}
 
-			// calculate trigger height
-			if(triggerMethod == 'element' && $triggerElement.length > 0) {
+				// can't find trigger element, abandon.
+				if( $triggerElement.length == 0 ) {
+					console.info( 'Scroll Triggered Boxes: Can\'t find element "'+ selector +'". Not showing box.' );
+					return;
+				}
+
 				var triggerHeight = $triggerElement.offset().top;
 			} else {
-				var triggerPercentage = (triggerMethod == 'percentage') ? (parseInt($box.data('trigger-percentage')) / 100) : 0.8;
-				var triggerHeight = (triggerPercentage * $(document).height());
+				var triggerPercentage = ( triggerMethod == 'percentage' ) ? ( parseInt( $box.data('trigger-percentage'), 10 ) / 100 ) : 0.8;
+				var triggerHeight = ( triggerPercentage * $(document).height() );
 			}
+
 
 			// functions
 			var checkBoxCriteria = function() 
@@ -163,42 +169,55 @@ jQuery(window).load(function() {
 
 			var toggleBox = function(show) 
 			{	
-				if(!$box.is(':animated') && ( ( show && $box.is(':hidden') ) || ( ! show && $box.is(':visible') ) ) ) {
-					// show box
-					if(animation == 'fade') {
-						$box.fadeToggle('slow');
-					} else {
-						$box.slideToggle('slow');
-					}
-				} 
+				// don't do anything if box is undergoing an animation
+				if( $box.is( ":animated" ) ) {
+					return false;
+				}
+
+				// is box already at desired visibility?
+				if( ( show === true && $box.is( ":visible" ) ) || ( show === false && $box.is( ":hidden" ) ) ) {
+					return false;
+				}
+
+				// show box
+				if( animation == 'fade' ) {
+					$box.fadeToggle( 'slow' );
+				} else {
+					$box.slideToggle( 'slow' );
+				}
 			}
 
-			// events
-
 			// show box if cookie not set or if in test mode
-			var cookieValue = $.cookie('stb_box_' + id);
-			if(cookieValue == undefined || (isLoggedIn && testMode)) {
-				$(window).bind('scroll', checkBoxCriteria);
+			var cookieValue = $.cookie( 'stb_box_' + id );
+			if( cookieValue == undefined || ( isLoggedIn && testMode ) ) {
+				$(window).bind( 'scroll', checkBoxCriteria );
 
 				// init, check box criteria once
 				checkBoxCriteria();
 
 				// shows the box when hash refers an element inside the box
-				if(window.location.hash && ($box.attr('id') == window.location.hash.substring(1) || (($element = $box.find(window.location.hash)) && $element.length > 0))) {
-					setTimeout(function() { toggleBox(true); }, 100);
+				if(window.location.hash && window.location.hash.length > 0) {
+					var hash = window.location.hash;
+					var $element;
+
+					if( hash.substring(1) === $box.attr( 'id' ) || ( ( $element = $box.find( hash ) ) && $element.length > 0 ) ) {
+						setTimeout(function() {
+							toggleBox( true );
+						}, 100);
+					}
 				}
 			}		
 
 			$box.find(".stb-close").click(function() {
 
-				// unbind 
-				$(window).unbind('scroll', checkBoxCriteria);
-
 				// hide box
-				toggleBox(false);
+				toggleBox( false );
+
+				// unbind 
+				$(window).unbind( 'scroll', checkBoxCriteria );
 
 				// set cookie
-				var boxCookieTime = parseInt($box.data('cookie'));
+				var boxCookieTime = parseInt( $box.data('cookie') );
 				if(boxCookieTime > 0) {
 					$.cookie('stb_box_' + id, true, { expires: boxCookieTime, path: '/' });
 				}

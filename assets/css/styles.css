@@ -1,4 +1,8 @@
-html, body{ min-height: 100% !important; height: auto !important; }
+html, 
+body { 
+	min-height: 100% !important; 
+	height: auto !important; 
+}
 
 .stb { 
 	position:fixed; 

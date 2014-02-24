@@ -6,7 +6,14 @@ if( ! defined("STB_VERSION") ) {
 	exit;
 }
 
-function stb_get_box_options($id)
+/**
+* Get the box options for box with given ID.
+*
+* @param int $id
+*
+* @return array Array of box options
+*/
+function stb_get_box_options( $id )
 {
 	static $defaults = array(
 		'css' => array(

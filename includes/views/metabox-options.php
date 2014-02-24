@@ -67,7 +67,7 @@ if( ! defined("STB_VERSION") ) {
 		</td>
 		<td>
 			<input type="number" class="stb-trigger-percentage" name="stb[trigger_percentage]" min="0" max="100" value="<?php echo esc_attr($opts['trigger_percentage']); ?>" <?php if($opts['trigger'] != 'percentage') {  echo 'style="display: none;"'; } ?> />
-			<input type="text" class="stb-trigger-element widefat" name="stb[trigger_element]" value="<?php echo esc_attr($opts['trigger_element']); ?>" placeholder="Example: #comments" <?php if($opts['trigger'] != 'element') { echo 'style="display: none;"'; } ?> />
+			<input type="text" class="stb-trigger-element widefat" name="stb[trigger_element]" value="<?php echo esc_attr($opts['trigger_element']); ?>" placeholder="Example: #comments (element must exist or box won't be shown)" <?php if($opts['trigger'] != 'element') { echo 'style="display: none;"'; } ?> />
 		</td>
 	</tr>
 	<tr valign="top">

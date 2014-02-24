@@ -12,6 +12,9 @@ class STB
 		add_action('init', array($this, 'register_post_type'));
 	}
 
+	/**
+	* Registers the Scroll Triggered Boxes post type
+	*/
 	public function register_post_type()
 	{
 		$args = array(

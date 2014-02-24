@@ -22,6 +22,10 @@ class STB_Public {
 		add_filter( 'stb_content', 'do_shortcode', 11 );
 	}
 
+	/**
+	* Filter box rules, decides if a box should be shown
+	* @uses `wp` hook
+	*/
 	public function filter_boxes() {
 		$rules = get_option( 'stb_rules' );
 
@@ -85,6 +89,9 @@ class STB_Public {
 
 	}
 
+	/**
+	* Register plugin scripts
+	*/
 	public function register_scripts() {
 
 		// stylesheets
@@ -94,10 +101,16 @@ class STB_Public {
 		wp_register_script( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/js/script.js', array( 'jquery' ), STB_VERSION, true );
 	}
 
+	/**
+	* Load plugin styles
+	*/
 	public function load_styles() {
 		wp_enqueue_style('scroll-triggered-boxes');
 	}
 
+	/**
+	* Outputs the boxes in the footer
+	*/
 	public function load_boxes() {
 		if ( empty( $this->matched_box_ids ) ) { return; }
 
@@ -108,7 +121,10 @@ class STB_Public {
 
 			$box = get_post( $box_id );
 
-			if ( !$box || $box->post_status != 'publish' ) { continue; }
+			// has box with this id been found?
+			if ( ! $box || $box->post_status != 'publish' ) { 
+				continue; 
+			}
 
 			$opts = stb_get_box_options( $box->ID );
 			$css = $opts['css'];
