@@ -1,10 +1,14 @@
-html, body{ min-height: 100%; }
+html, 
+body { 
+	min-height: 100% !important; 
+	height: auto !important; 
+}
 
 .stb { 
 	position:fixed; 
 	right: 10px; 
 	bottom: 10px; 
-	z-index:999;
+	z-index: 999999;
 	-moz-box-shadow: 0 0 10px 1px #888;
 	-webkit-box-shadow: 0 0 10px 1px #888;
 	box-shadow: 0 0 10px 1px #888;

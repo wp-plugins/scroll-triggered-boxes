@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Scroll Triggered Boxes
-Version: 1.1.5
+Version: 1.1.9.3
 Plugin URI: http://dannyvankooten.com/
 Description: Call-To-Action Boxes that display after visitors scroll down far enough. Highly conversing, not so annoying!
 Author: Danny van Kooten
@@ -28,27 +28,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	header( 'HTTP/1.0 403 Forbidden' );
-	header( 'X-Robots-Tag: noindex' );
+	header( 'Status: 403 Forbidden' );
+	header( 'HTTP/1.1 403 Forbidden' );
 	exit;
 }
 
-define("STB_VERSION", "1.1.5");
-define("STB_PLUGIN_DIR", plugin_dir_path(__FILE__)); 
-define("STB_PLUGIN_URL", plugins_url( '/' , __FILE__ ));
+define( "STB_VERSION", "1.1.9.3" );
+define( "STB_PLUGIN_DIR", plugin_dir_path(__FILE__) ); 
+define( "STB_PLUGIN_URL", plugins_url( '/' , __FILE__ ) );
 
 // FRONTEND + BACKEND
 require STB_PLUGIN_DIR . 'includes/class-stb.php';
 require STB_PLUGIN_DIR . 'includes/helper-functions.php';
 new STB();
 
-if(!is_admin()) {
+if( ! is_admin() ) {
 
 	// FRONTEND
 	require STB_PLUGIN_DIR . 'includes/class-public.php';
 	new STB_Public();
 
-} elseif(!defined("DOING_AJAX") || !DOING_AJAX) {
+} elseif( ! defined("DOING_AJAX") || ! DOING_AJAX ) {
 	
 	// BACKEND (NOT AJAX)
 	require STB_PLUGIN_DIR . 'includes/class-admin.php';
