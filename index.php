@@ -33,9 +33,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "STB_VERSION", "1.1.9.3" );
+define( "STB_VERSION", "1.2" );
 define( "STB_PLUGIN_DIR", plugin_dir_path(__FILE__) ); 
 define( "STB_PLUGIN_URL", plugins_url( '/' , __FILE__ ) );
+define( "STB_PLUGIN_FILE" , __FILE__ );
 
 // FRONTEND + BACKEND
 require STB_PLUGIN_DIR . 'includes/class-stb.php';
