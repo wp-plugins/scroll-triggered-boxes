@@ -9,6 +9,8 @@ class STB_Admin {
 
 	public function __construct() {
 		// action hooks
+		add_action( 'init', array( $this, 'load_textdomain' ) );
+
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
 
@@ -19,9 +21,19 @@ class STB_Admin {
 		// filter hooks
 		add_filter( 'tiny_mce_before_init', array($this, 'tinymce_init') );
 	}
+
+	/**
+	 * Load the plugin textdomain
+	 */
+	public function load_textdomain() {
+		load_plugin_textdomain( 'scroll-triggered-boxes', false, dirname( plugin_basename( STB_PLUGIN_FILE ) ) . '/languages/' );
+	}
 	
 	public function tinymce_init($args) {
-		if(get_post_type() != 'scroll-triggered-box') { return $args; }
+
+		if( get_post_type() != 'scroll-triggered-box') {
+			return $args;
+		}
 
 		$args['setup'] = 'function(ed) { if(typeof STB === \'undefined\') { return; } ed.onInit.add(STB.onTinyMceInit); }';
 
@@ -29,7 +41,9 @@ class STB_Admin {
 	}
 
 	public function load_assets() {
-		if ( get_post_type() != 'scroll-triggered-box' ) { return; }
+		if ( get_post_type() != 'scroll-triggered-box' ) {
+			return;
+		}
 
 		// load stylesheets
 		wp_enqueue_style( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/css/admin-styles.css', array( 'wp-color-picker' ), STB_VERSION );
