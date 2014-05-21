@@ -4,5 +4,5 @@ if( ! defined("STB_VERSION") ) {
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit;
 } ?>
-<p>Please use the <a href="http://wordpress.org/support/plugin/scroll-triggered-boxes/">plugin support forums</a> on WordPress.org.</p>
+<p><?php printf( __( 'Please use the <a href="%s">plugin support forums</a> on WordPress.org.', 'scroll-triggered-boxes' ), 'http://wordpress.org/support/plugin/scroll-triggered-boxes/' ); ?></p>
 

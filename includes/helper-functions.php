@@ -36,7 +36,7 @@ function stb_get_box_options( $id )
 		'auto_hide' => 0
 	);
 	
-	$opts = get_post_meta($id, 'stb_options', true);
+	$opts = get_post_meta( $id, 'stb_options', true );
 
-	return wp_parse_args($opts, $defaults);
+	return wp_parse_args( $opts, $defaults );
 }

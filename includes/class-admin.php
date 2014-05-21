@@ -7,7 +7,15 @@ if( ! defined("STB_VERSION") ) {
 
 class STB_Admin {
 
+	/**
+	 * @var string
+	 */
+	private $plugin_file = '';
+
 	public function __construct() {
+
+		$this->plugin_file = plugin_basename( STB_PLUGIN_FILE );
+
 		// action hooks
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 
@@ -17,6 +25,9 @@ class STB_Admin {
 		add_action( 'save_post', array( $this, 'save_meta_options' ), 20 );
 		add_action( 'trashed_post', array( $this, 'flush_rules') );
 		add_action( 'untrashed_post', array( $this, 'flush_rules') );
+
+		add_filter( 'plugin_action_links', array( $this, 'add_plugin_settings_link' ), 10, 2 );
+		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_meta_links'), 10, 2 );
 
 		// filter hooks
 		add_filter( 'tiny_mce_before_init', array($this, 'tinymce_init') );
@@ -31,7 +42,7 @@ class STB_Admin {
 	
 	public function tinymce_init($args) {
 
-		if( get_post_type() != 'scroll-triggered-box') {
+		if( get_post_type() !== 'scroll-triggered-box') {
 			return $args;
 		}
 
@@ -41,7 +52,7 @@ class STB_Admin {
 	}
 
 	public function load_assets() {
-		if ( get_post_type() != 'scroll-triggered-box' ) {
+		if ( get_post_type() !== 'scroll-triggered-box' ) {
 			return;
 		}
 
@@ -110,7 +121,7 @@ class STB_Admin {
 	*/
 	public function save_meta_options( $post_id ) {		
 		// Verify that the nonce is set and valid.
-		if ( !isset( $_POST['stb_options_nonce'] ) || !wp_verify_nonce( $_POST['stb_options_nonce'], 'stb_options' ) ) {
+		if ( !isset( $_POST['stb_options_nonce'] ) || ! wp_verify_nonce( $_POST['stb_options_nonce'], 'stb_options' ) ) {
 			return $post_id;
 		}
 
@@ -136,20 +147,54 @@ class STB_Admin {
 			return $post_id;
 		}
 
-		$post = get_post($post_id);
+		$post = get_post( $post_id );
 		$opts = $_POST['stb'];
+		unset( $_POST['stb'] );
 
 		// sanitize settings
-		$opts['css']['width'] = absint( $opts['css']['width'] );
-		$opts['css']['border_width'] = absint( $opts['css']['border_width'] );
-		$opts['cookie'] = absint( $opts['cookie'] );
-		$opts['trigger_percentage'] = absint( $opts['trigger_percentage'] );
-		$opts['trigger_element'] = trim( $opts['trigger_element'] );
+		$opts['css']['width'] = absint( sanitize_text_field( $opts['css']['width'] ) );
+		$opts['css']['border_width'] = absint( sanitize_text_field( $opts['css']['border_width'] ) );
+		$opts['cookie'] = absint( sanitize_text_field( $opts['cookie'] ) );
+		$opts['trigger_percentage'] = absint( sanitize_text_field( $opts['trigger_percentage'] ) );
+		$opts['trigger_element'] = sanitize_text_field( $opts['trigger_element'] );
 
 		// save box settings
 		update_post_meta( $post_id, 'stb_options', $opts );
 
 		$this->flush_rules();
+	}
+
+	/**
+	 * Add the settings link to the Plugins overview
+	 * @param array $links
+	 * @return array
+	 */
+	public function add_plugin_settings_link( $links, $file )
+	{
+		if( $file !== $this->plugin_file ) {
+			return $links;
+		}
+
+		$settings_link = '<a href="' . admin_url( 'edit.php?post_type=scroll-triggered-box' ) . '">'. __( 'Boxes' ) . '</a>';
+		array_unshift( $links, $settings_link );
+		return $links;
+	}
+
+	/**
+	 * Adds meta links to the plugin in the WP Admin > Plugins screen
+	 *
+	 * @param array $links
+	 * @param string $file
+	 *
+	 * @return array
+	 */
+	public function add_plugin_meta_links( $links, $file ) {
+		if( $file !== $this->plugin_file ) {
+			return $links;
+		}
+
+		$links[] = '<a href="http://wordpress.org/plugins/scroll-triggered-boxes/faq/">FAQ</a>';
+		return $links;
 	}
 
 	/**
