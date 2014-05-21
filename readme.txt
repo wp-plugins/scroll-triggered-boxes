@@ -2,9 +2,9 @@
 Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
-Requires at least: 3.5
-Tested up to: 3.8.1
-Stable tag: 1.1.9.3
+Requires at least: 3.5.1
+Tested up to: 3.9.1
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,14 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 **Demo**
 
 I'm using the plugin myself on [the website for one of my other plugins: MailChimp for WordPress](http://dannyvankooten.com/mailchimp-for-wordpress/). Scroll down to the bottom and you'll see a box slide in in the bottom right corner, asking you to sign-up to the plugin newsletter.
+
+**Translators**
+
+- English (en_US) - Danny van Kooten
+- Dutch (nl_NL) - Danny van Kooten
+
+If you have created your own language pack (or have an update of an existing one) you can send in your .PO and .MO files so we can bundle it into Scroll Triggered Boxes. You can [download the latest POT file](http://plugins.svn.wordpress.org/scroll-triggered-boxes/trunk/languages/scroll-triggered-boxes.po), and [PO files in each language](http://plugins.svn.wordpress.org/scroll-triggered-boxes/trunk/languages/).
+
 
 **Other Links**
 
@@ -162,6 +170,21 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
+
+= 1.2.1 - May 21, 2014 =
+
+**Additions**
+
+- You can now use JavaScript functions like `STB.show( 42 )` or `STB.hide( 42 )` to show/hide boxes.
+
+**Improvements**
+
+- Box is now more responsive, it will now never stretch beyond the screen width.
+- Various minor code improvements.
+- Wrapped remaining strings in translation calls.
+
+= 1.2 - April 18, 2014 =
+* Improved: Plugin is now fully translatable. Fixed various string typo's.
 
 = 1.1.9.3 - March 7, 2014 =
 * Fixed: Box not overlapping content in some themes

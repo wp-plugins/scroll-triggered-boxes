@@ -105,16 +105,18 @@ class STB_Public {
 	* Load plugin styles
 	*/
 	public function load_styles() {
-		wp_enqueue_style('scroll-triggered-boxes');
+		wp_enqueue_style( 'scroll-triggered-boxes' );
 	}
 
 	/**
 	* Outputs the boxes in the footer
 	*/
 	public function load_boxes() {
-		if ( empty( $this->matched_box_ids ) ) { return; }
+		if ( empty( $this->matched_box_ids ) ) {
+			return;
+		}
 
-		wp_enqueue_script('scroll-triggered-boxes');
+		wp_enqueue_script( 'scroll-triggered-boxes' );
 		?><!-- Scroll Triggered Boxes v<?php echo STB_VERSION; ?> - http://wordpress.org/plugins/scroll-triggered-boxes/--><?php
 
 		foreach ( $this->matched_box_ids as $box_id ) {
@@ -122,7 +124,7 @@ class STB_Public {
 			$box = get_post( $box_id );
 
 			// has box with this id been found?
-			if ( ! $box || $box->post_status != 'publish' ) { 
+			if ( ! $box instanceof WP_Post || $box->post_status !== 'publish' ) {
 				continue; 
 			}
 
@@ -132,18 +134,18 @@ class STB_Public {
 
 			// run filters
 			$content = apply_filters( 'stb_content', $content, $box );
-			$auto_hide_small_screens = apply_filters('stb_auto_hide_small_screens', true, $box );
+			$auto_hide_small_screens = apply_filters('stb_auto_hide_small_screens', true, $box->ID );
 ?>
 			<style type="text/css">
 				#stb-<?php echo $box->ID; ?> {
 					background: <?php echo ( !empty( $css['background_color'] ) ) ? $css['background_color'] : 'white'; ?>;
 					<?php if ( !empty( $css['color'] ) ) { ?>color: <?php echo $css['color']; ?>;<?php } ?>
 					<?php if ( !empty( $css['border_color'] ) && !empty( $css['border_width'] ) ) { ?>border: <?php echo $css['border_width'] . 'px' ?> solid <?php echo $css['border_color']; ?>;<?php } ?>
-					width: <?php echo ( !empty( $css['width'] ) ) ? absint( $css['width'] ) . 'px': 'auto'; ?>;
+					max-width: <?php echo ( !empty( $css['width'] ) ) ? absint( $css['width'] ) . 'px': 'auto'; ?>;
 				}
 
 				<?php if($auto_hide_small_screens) { ?>
-					@media(max-width: <?php echo ( !empty( $css['width'] ) ) ? ( absint($css['width']) + 150): '719'; ?>px) {
+					@media only screen and (max-width: 480px) {
 						#stb-<?php echo $box->ID; ?> { display: none !important; }
 					}
 				<?php } ?>
