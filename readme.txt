@@ -2,9 +2,9 @@
 Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
-Requires at least: 3.5.1
+Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,7 @@ I'm using the plugin myself on [the website for one of my other plugins: MailChi
 
 - English (en_US) - Danny van Kooten
 - Dutch (nl_NL) - Danny van Kooten
+- Spanish (es_ES) - [Paul Benitez - Tecnofilos](http://www.tecnofilos.net/)
 
 If you have created your own language pack (or have an update of an existing one) you can send in your .PO and .MO files so we can bundle it into Scroll Triggered Boxes. You can [download the latest POT file](http://plugins.svn.wordpress.org/scroll-triggered-boxes/trunk/languages/scroll-triggered-boxes.po), and [PO files in each language](http://plugins.svn.wordpress.org/scroll-triggered-boxes/trunk/languages/).
 
@@ -170,6 +171,18 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
+
+= 1.2.2 - July 7, 2014 =
+
+**Additions**
+
+- Added Spanish translations, thanks to [Paul Benitez of Tecnofilos](http://www.tecnofilos.net/)
+
+**Improvements**
+
+- Now using native JS cookies, greatly reducing the script size.
+- Added various debugging statements to the script.
+
 
 = 1.2.1 - May 21, 2014 =
 

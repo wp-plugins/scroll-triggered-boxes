@@ -94,11 +94,13 @@ class STB_Public {
 	*/
 	public function register_scripts() {
 
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'js' : '.min.js';
+
 		// stylesheets
 		wp_register_style( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/css/styles.css', array(), STB_VERSION );
 
 		// scripts
-		wp_register_script( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/js/script.js', array( 'jquery' ), STB_VERSION, true );
+		wp_register_script( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/js/script' . $suffix , array( 'jquery' ), STB_VERSION, true );
 	}
 
 	/**
