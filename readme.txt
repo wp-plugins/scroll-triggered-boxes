@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: DvanKooten
+Contributors: DvanKooten, 12notions
 Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.7
