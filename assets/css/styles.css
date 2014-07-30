@@ -4,8 +4,35 @@ body {
 	height: auto !important; 
 }
 
+.stb-bottom-center-container,
+.stb-top-center-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: auto;
+	text-align: center;
+	z-index: 999999;
+}
+
+.stb-bottom-center-container {
+	bottom: 0;
+	top: auto;
+}
+
+.stb-top-center-container {
+	top: 0;
+	bottom: auto;
+}
+
+.stb-bottom-center-container > div,
+.stb-top-center-container > div {
+	display: inline-block;
+	text-align: left;
+}
+
 .stb { 
-	position:fixed; 
+	position: fixed;
 	right: 10px; 
 	bottom: 10px; 
 	z-index: 999999;
@@ -13,22 +40,29 @@ body {
 	-webkit-box-shadow: 0 0 10px 1px #888;
 	box-shadow: 0 0 10px 1px #888;
 	padding: 25px;
+	margin: 10px;
 }
 
 .stb.stb-top-left{ 
-	top: 10px; left: 10px; bottom: auto; right: auto;
+	top: 0; left: 0; bottom: auto; right: auto;
+}
+
+.stb.stb-top-center,
+.stb.stb-bottom-center {
+	position: relative;
+	bottom: 0; top: 0; right: 0; left: 0;
 }
 
 .stb.stb-top-right{ 
-	top: 10px; right: 10px; bottom: auto; left: auto;
+	top: 0; right: 0; bottom: auto; left: auto;
 }
 
 .stb.stb-bottom-left{ 
-	bottom: 10px; left: 10px; top: auto; right: auto;
+	bottom: 0; left: 0; top: auto; right: auto;
 }
 
 .stb.stb-bottom-right{ 
-	bottom: 10px; right: 10px; top: auto; left: auto;
+	bottom: 0; right: 0; top: auto; left: auto;
 }
 
 .stb-content > *:first-child {	
