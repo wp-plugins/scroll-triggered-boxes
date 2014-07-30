@@ -1,5 +1,5 @@
 <?php
-if( ! defined("STB_VERSION") ) {
+if( ! defined( 'STB::VERSION' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit;
@@ -14,11 +14,9 @@ class STB_Admin {
 
 	public function __construct() {
 
-		$this->plugin_file = plugin_basename( STB_PLUGIN_FILE );
+		$this->plugin_file = plugin_basename( STB::FILE );
 
 		// action hooks
-		add_action( 'init', array( $this, 'load_textdomain' ) );
-
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
 
@@ -30,15 +28,10 @@ class STB_Admin {
 		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_meta_links'), 10, 2 );
 
 		// filter hooks
-		add_filter( 'tiny_mce_before_init', array($this, 'tinymce_init') );
+		add_filter( 'tiny_mce_before_init', array( $this, 'tinymce_init' ) );
 	}
 
-	/**
-	 * Load the plugin textdomain
-	 */
-	public function load_textdomain() {
-		load_plugin_textdomain( 'scroll-triggered-boxes', false, dirname( plugin_basename( STB_PLUGIN_FILE ) ) . '/languages/' );
-	}
+
 	
 	public function tinymce_init($args) {
 
@@ -46,21 +39,25 @@ class STB_Admin {
 			return $args;
 		}
 
-		$args['setup'] = 'function(ed) { if(typeof STB === \'undefined\') { return; } ed.onInit.add(STB.onTinyMceInit); }';
+		$args['setup'] = 'function( editor ) { if(typeof STB === \'undefined\') { return; } editor.on("PreInit", STB.onTinyMceInit ); }';
 
 		return $args;
 	}
 
 	public function load_assets() {
+
+		// only load on "edit box" pages
 		if ( get_post_type() !== 'scroll-triggered-box' ) {
 			return;
 		}
 
+		$pre_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
 		// load stylesheets
-		wp_enqueue_style( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/css/admin-styles.css', array( 'wp-color-picker' ), STB_VERSION );
+		wp_enqueue_style( 'scroll-triggered-boxes', STB::$url . 'assets/css/admin-styles' . $pre_suffix . '.css', array( 'wp-color-picker' ), STB::VERSION );
 
 		// load scripts
-		wp_enqueue_script( 'scroll-triggered-boxes', STB_PLUGIN_URL . 'assets/js/admin-script.js', array( 'jquery', 'wp-color-picker' ), STB_VERSION, true );
+		wp_enqueue_script( 'scroll-triggered-boxes', STB::$url . 'assets/js/admin-script' . $pre_suffix . '.js', array( 'jquery', 'wp-color-picker' ), STB::VERSION, true );
 	}
 
 	public function add_meta_boxes() {
@@ -99,27 +96,28 @@ class STB_Admin {
 	}
 
 	public function show_meta_options( $post, $metabox ) {
-		$opts = stb_get_box_options($post->ID);
-		include STB_PLUGIN_DIR . 'includes/views/metabox-options.php';
+		$opts = STB::get_box_options($post->ID);
+		include STB::$dir . '/includes/views/metabox-options.php';
 	}
 
 	public function show_dvk_info_donate( $post, $metabox ) {
-		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-donate.php';
+		include STB::$dir . '/includes/views/metabox-dvk-donate.php';
 	}
 
 	public function show_dvk_info_support( $post, $metabox ) {
-		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-support.php';
+		include STB::$dir . '/includes/views/metabox-dvk-support.php';
 	}
 
 	public function show_dvk_info_links( $post, $metabox ) {
-		include STB_PLUGIN_DIR . 'includes/views/metabox-dvk-links.php';
+		include STB::$dir . '/includes/views/metabox-dvk-links.php';
 	}
 
 
 	/**
 	* Saves box options and rules
 	*/
-	public function save_meta_options( $post_id ) {		
+	public function save_meta_options( $post_id ) {
+
 		// Verify that the nonce is set and valid.
 		if ( !isset( $_POST['stb_options_nonce'] ) || ! wp_verify_nonce( $_POST['stb_options_nonce'], 'stb_options' ) ) {
 			return $post_id;
@@ -130,14 +128,11 @@ class STB_Admin {
 			return $post_id;
 		}
 
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-        	return $post_id;
-		}
-
     	if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
        	 	return $post_id;
     	}
 
+		// is this a revision save?
     	if ( wp_is_post_revision( $post_id ) ) {
         	return $post_id; 
     	}
@@ -147,9 +142,21 @@ class STB_Admin {
 			return $post_id;
 		}
 
-		$post = get_post( $post_id );
 		$opts = $_POST['stb'];
 		unset( $_POST['stb'] );
+
+		// sanitize rules
+		if( is_array( $opts['rules'] ) ) {
+			foreach( $opts['rules'] as $key => $rule ) {
+
+				// set value to 0 when condition is everywhere
+				if( $rule['condition'] === 'everywhere' ) {
+					$opts['rules'][$key]['value'] = '';
+					break;
+				}
+
+			}
+		}
 
 		// sanitize settings
 		$opts['css']['width'] = absint( sanitize_text_field( $opts['css']['width'] ) );
