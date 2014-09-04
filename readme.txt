@@ -3,7 +3,7 @@ Contributors: DvanKooten, 12notions
 Donate link: http://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.7
-Tested up to: 3.9.1
+Tested up to: 4.0
 Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -47,8 +47,8 @@ I'm using the plugin myself on [the website for one of my other plugins: MailChi
 
 **Translators**
 
-- English (en_US) - Danny van Kooten
-- Dutch (nl_NL) - Danny van Kooten
+- English (en_US) - [Danny van Kooten](http://dannyvankooten.com/)
+- Dutch (nl_NL) - [Danny van Kooten](http://dannyvankooten.com/)
 - Spanish (es_ES) - [Paul Benitez - Tecnofilos](http://www.tecnofilos.net/)
 
 If you have created your own language pack (or have an update of an existing one) you can send in your .PO and .MO files so we can bundle it into Scroll Triggered Boxes. You can [download the latest POT file](http://plugins.svn.wordpress.org/scroll-triggered-boxes/trunk/languages/scroll-triggered-boxes.po), and [PO files in each language](http://plugins.svn.wordpress.org/scroll-triggered-boxes/trunk/languages/).
@@ -56,8 +56,7 @@ If you have created your own language pack (or have an update of an existing one
 
 **Other Links**
 
-- More information about the [Scroll Triggered Boxes plugin for WordPress](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/)
-- Have a look at some other [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by [Danny van Kooten](http://dannyvankooten.com/).
+- Have a look at some other [WordPress plugins by Danny van Kooten](http://dannyvankooten.com/wordpress-plugins/).
 - Contribute to the [Scroll Triggered Boxes plugin on GitHub](https://github.com/dannyvankooten/scroll-triggered-boxes-for-wordpress).
 
 == Frequently Asked Questions ==
