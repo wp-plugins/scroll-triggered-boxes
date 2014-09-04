@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Scroll Triggered Boxes
-Version: 1.1.9.3
+Version: 1.3.1
 Plugin URI: http://dannyvankooten.com/
 Description: Call-To-Action Boxes that display after visitors scroll down far enough. Highly conversing, not so annoying!
 Author: Danny van Kooten
@@ -33,25 +33,104 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "STB_VERSION", "1.1.9.3" );
-define( "STB_PLUGIN_DIR", plugin_dir_path(__FILE__) ); 
-define( "STB_PLUGIN_URL", plugins_url( '/' , __FILE__ ) );
+final class STB
+{
+	const VERSION = '1.3.1';
+	const FILE = __FILE__;
 
-// FRONTEND + BACKEND
-require STB_PLUGIN_DIR . 'includes/class-stb.php';
-require STB_PLUGIN_DIR . 'includes/helper-functions.php';
-new STB();
+	public static $dir = '';
+	public static $url = '';
 
-if( ! is_admin() ) {
+	public static function bootstrap() {
 
-	// FRONTEND
-	require STB_PLUGIN_DIR . 'includes/class-public.php';
-	new STB_Public();
+		self::$dir = dirname( __FILE__ );
+		self::$url = plugins_url( '/' , __FILE__ );
 
-} elseif( ! defined("DOING_AJAX") || ! DOING_AJAX ) {
-	
-	// BACKEND (NOT AJAX)
-	require STB_PLUGIN_DIR . 'includes/class-admin.php';
-	new STB_Admin();
+		add_action( 'init', array( __CLASS__, 'init' ) );
+
+		if( ! is_admin() ) {
+
+			// FRONTEND
+			require_once self::$dir . '/includes/class-public.php';
+			new STB_Public();
+
+		} elseif( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+
+			// BACKEND (NOT AJAX)
+			require_once self::$dir . '/includes/class-admin.php';
+			new STB_Admin();
+
+		}
+	}
+
+	public static function init() {
+
+		// Load the plugin textdomain
+		load_plugin_textdomain( 'scroll-triggered-boxes', false, STB::$dir . '/languages/' );
+
+		// Register custom post type
+		$args = array(
+			'public' => false,
+			'labels'  =>  array(
+				'name'               => __( 'Scroll Triggered Boxes', 'scroll-triggered-boxes' ),
+				'singular_name'      => __( 'Scroll Triggered Box', 'scroll-triggered-boxes' ),
+				'add_new'            => __( 'Add New', 'scroll-triggered-boxes' ),
+				'add_new_item'       => __( 'Add New Box', 'scroll-triggered-boxes' ),
+				'edit_item'          => __( 'Edit Box', 'scroll-triggered-boxes' ),
+				'new_item'           => __( 'New Box', 'scroll-triggered-boxes' ),
+				'all_items'          => __( 'All Boxes', 'scroll-triggered-boxes' ),
+				'view_item'          => __( 'View Box', 'scroll-triggered-boxes' ),
+				'search_items'       => __( 'Search Boxes', 'scroll-triggered-boxes' ),
+				'not_found'          => __( 'No Boxes found', 'scroll-triggered-boxes' ),
+				'not_found_in_trash' => __( 'No Boxes found in Trash', 'scroll-triggered-boxes' ),
+				'parent_item_colon'  => '',
+				'menu_name'          => __( 'Scroll Triggered Boxes', 'scroll-triggered-boxes' )
+			),
+			'show_ui' => true,
+			'menu_position' => 108,
+			'menu_icon' => STB::$url . '/assets/img/menu-icon.png'
+		);
+
+		register_post_type( 'scroll-triggered-box', $args );
+
+
+	}
+
+	/**
+	 * Get the box options for box with given ID.
+	 *
+	 * @param int $id
+	 *
+	 * @return array Array of box options
+	 */
+	public static function get_box_options( $id ) {
+
+		static $defaults = array(
+			'css' => array(
+				'background_color' => '',
+				'color' => '',
+				'width' => '',
+				'border_color' => '',
+				'border_width' => '',
+				'position' => 'bottom-right'
+			),
+			'rules' => array(
+				array('condition' => '', 'value' => '')
+			),
+			'cookie' => 0,
+			'trigger' => 'percentage',
+			'trigger_percentage' => 65,
+			'trigger_element' => '',
+			'animation' => 'fade',
+			'test_mode' => 0,
+			'auto_hide' => 0
+		);
+
+		$opts = get_post_meta( $id, 'stb_options', true );
+
+		return wp_parse_args( $opts, $defaults );
+	}
 
 }
+
+add_action( 'plugins_loaded', array( 'STB', 'bootstrap' ) );
