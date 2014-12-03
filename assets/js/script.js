@@ -1,108 +1,13 @@
 jQuery(window).load(function() {
 
-	/*!
-	 * jQuery Cookie Plugin v1.4.0
-	 * https://github.com/carhartl/jquery-cookie
-	 *
-	 * Copyright 2013 Klaus Hartl
-	 * Released under the MIT license
-	 */
-	(function($) {
-
-		if($.cookie) { return; }
-
-		var pluses = /\+/g;
-
-		function encode(s) {
-			return config.raw ? s : encodeURIComponent(s);
-		}
-
-		function decode(s) {
-			return config.raw ? s : decodeURIComponent(s);
-		}
-
-		function stringifyCookieValue(value) {
-			return encode(config.json ? JSON.stringify(value) : String(value));
-		}
-
-		function parseCookieValue(s) {
-			if (s.indexOf('"') === 0) {
-				s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-			}
-
-			try {
-				s = decodeURIComponent(s.replace(pluses, ' '));
-				return config.json ? JSON.parse(s) : s;
-			} catch(e) {}
-		}
-
-		function read(s, converter) {
-			var value = config.raw ? s : parseCookieValue(s);
-			return $.isFunction(converter) ? converter(value) : value;
-		}
-
-		var config = $.cookie = function (key, value, options) {
-
-			// Write
-			if (value !== undefined && !$.isFunction(value)) {
-				options = $.extend({}, config.defaults, options);
-
-				if (typeof options.expires === 'number') {
-					var days = options.expires, t = options.expires = new Date();
-					t.setTime(+t + days * 864e+5);
-				}
-
-				return (document.cookie = [
-					encode(key), '=', stringifyCookieValue(value),
-					options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-					options.path    ? '; path=' + options.path : '',
-					options.domain  ? '; domain=' + options.domain : '',
-					options.secure  ? '; secure' : ''
-				].join(''));
-			}
-
-			// Read
-			var result = key ? undefined : {};
-			var cookies = document.cookie ? document.cookie.split('; ') : [];
-
-			for (var i = 0, l = cookies.length; i < l; i++) {
-				var parts = cookies[i].split('=');
-				var name = decode(parts.shift());
-				var cookie = parts.join('=');
-
-				if (key && key === name) {
-					result = read(cookie, value);
-					break;
-				}
-
-				if (!key && (cookie = read(cookie)) !== undefined) {
-					result[name] = cookie;
-				}
-			}
-
-			return result;
-		};
-
-		config.defaults = {};
-
-		$.removeCookie = function (key, options) {
-			if ($.cookie(key) === undefined) {
-				return false;
-			}
-
-			$.cookie(key, '', $.extend({}, options, { expires: -1 }));
-			return !$.cookie(key);
-		};
-
-	})(jQuery);
-
 	window.STB = (function($) {
 
-		var windowHeight = $(window).height();
-		var documentHeight = $(document).height();
+		var windowHeight = $(window).height(),
+			isLoggedIn = $("body").hasClass('logged-in'),
+			$boxes = [],
+			console = window.console || { log: function() { } };
 
-		var isLoggedIn = $("body").hasClass('logged-in');
-
+		// remove top and bottom margin from all boxes
 		$(".stb-content").children().first().css({
 			"margin-top": 0,
 			"padding-top": 0
@@ -110,6 +15,37 @@ jQuery(window).load(function() {
 			'margin-bottom': 0,
 			'padding-bottom': 0
 		});
+
+		function toggleBox( id, show ) {
+
+			var $box = $boxes[id];
+
+			if( $box === undefined ) {
+				console.log( "Scroll Triggered Boxes: Box #" + id + " is not present in the current page." );
+				return;
+			}
+
+			// don't do anything if box is undergoing an animation
+			if( $box.is( ":animated" ) ) {
+				return false;
+			}
+
+			// is box already at desired visibility?
+			if( ( show === true && $box.is( ":visible" ) ) || ( show === false && $box.is( ":hidden" ) ) ) {
+				return false;
+			}
+
+			// show box
+			var animation = $box.data('animation');
+
+			if( animation === 'fade' ) {
+				$box.fadeToggle( 'slow' );
+			} else {
+				$box.slideToggle( 'slow' );
+			}
+
+			return show;
+		}
 
 		// loop through boxes
 		$(".scroll-triggered-box").each(function() {
@@ -122,6 +58,11 @@ jQuery(window).load(function() {
 			var testMode = (parseInt($box.data('test-mode')) === 1);
 			var id = $box.data('box-id');
 			var autoHide = (parseInt($box.data('auto-hide')) === 1);
+			var boxCookieTime = parseInt( $box.data('cookie') );
+
+			// add box to global boxes array
+			$boxes[id] = $box;
+
 
 			if(triggerMethod == 'element') {
 				var selector = $box.data('trigger-element');
@@ -139,57 +80,42 @@ jQuery(window).load(function() {
 				var triggerHeight = ( triggerPercentage * $(document).height() );
 			}
 
-
 			// functions
-			var checkBoxCriteria = function() 
-			{
-				if(timer) { 
-					clearTimeout(timer); 
+			var checkBoxCriteria = function() {
+				if (timer) {
+					clearTimeout(timer);
 				}
 
-				timer = window.setTimeout(function() { 
+				timer = window.setTimeout(function () {
 					var scrollY = $(window).scrollTop();
 					var triggered = ((scrollY + windowHeight) >= triggerHeight);
 
 					// show box when criteria for this box is matched
-					if( triggered ) {
+					if (triggered) {
 
 						// remove listen event if box shouldn't be hidden again
-						if( ! autoHide ) {
+						if (!autoHide) {
 							$(window).unbind('scroll', checkBoxCriteria);
 						}
 
-						toggleBox( true );
+						toggleBox(id, true);
 					} else {
-						toggleBox( false );
+						toggleBox(id, false);
 					}
 
 				}, 100);
-			}
-
-			var toggleBox = function(show) 
-			{	
-				// don't do anything if box is undergoing an animation
-				if( $box.is( ":animated" ) ) {
-					return false;
-				}
-
-				// is box already at desired visibility?
-				if( ( show === true && $box.is( ":visible" ) ) || ( show === false && $box.is( ":hidden" ) ) ) {
-					return false;
-				}
-
-				// show box
-				if( animation == 'fade' ) {
-					$box.fadeToggle( 'slow' );
-				} else {
-					$box.slideToggle( 'slow' );
-				}
-			}
+			};
 
 			// show box if cookie not set or if in test mode
-			var cookieValue = $.cookie( 'stb_box_' + id );
-			if( cookieValue == undefined || ( isLoggedIn && testMode ) ) {
+			var cookieSet = document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + 'stb_box_' + id + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1") === "true";
+			var addBoxListener = ( cookieSet === false && boxCookieTime > 0 );
+
+			if ( true === isLoggedIn && true === testMode ) {
+				addBoxListener = true;
+				console.log( 'Scroll Triggered Boxes: Test mode is enabled. Please disable test mode if you\'re done testing.' );
+			}
+
+			if( addBoxListener ) {
 				$(window).bind( 'scroll', checkBoxCriteria );
 
 				// init, check box criteria once
@@ -197,12 +123,13 @@ jQuery(window).load(function() {
 
 				// shows the box when hash refers an element inside the box
 				if(window.location.hash && window.location.hash.length > 0) {
+
 					var hash = window.location.hash;
 					var $element;
 
 					if( hash.substring(1) === $box.attr( 'id' ) || ( ( $element = $box.find( hash ) ) && $element.length > 0 ) ) {
 						setTimeout(function() {
-							toggleBox( true );
+							toggleBox( id, true );
 						}, 100);
 					}
 				}
@@ -211,25 +138,33 @@ jQuery(window).load(function() {
 			$box.find(".stb-close").click(function() {
 
 				// hide box
-				toggleBox( false );
+				toggleBox( id, false );
 
 				// unbind 
 				$(window).unbind( 'scroll', checkBoxCriteria );
 
 				// set cookie
-				var boxCookieTime = parseInt( $box.data('cookie') );
 				if(boxCookieTime > 0) {
-					$.cookie('stb_box_' + id, true, { expires: boxCookieTime, path: '/' });
+					var expiryDate = new Date();
+					expiryDate.setDate( expiryDate.getDate() + boxCookieTime );
+					document.cookie = 'stb_box_'+ id + '=true; expires='+ expiryDate.toUTCString() +'; path=/';
 				}
 				
 			});
 			
 			// add link listener for this box
-			$('a[href="#' + $box.attr('id') +'"]').click(function() { toggleBox(true); return false; });
+			$('a[href="#' + $box.attr('id') +'"]').click(function() { toggleBox(id, true); return false; });
 
 		});
 
-	return {}
+	return {
+		show: function( box_id ) {
+			return toggleBox( box_id, true );
+		},
+		hide: function( box_id ) {
+			return toggleBox( box_id, false );
+		}
+	}
 
 	})(window.jQuery);
 
