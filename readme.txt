@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: DvanKooten
-Donate link: http://dannyvankooten.com/donate/
+Donate link: https://dannyvankooten.com/donate/
 Tags: scroll triggered box, cta, social, newsletter, call to action, mailchimp, contact form 7, social media
-Requires at least: 3.5
-Tested up to: 3.8.1
-Stable tag: 1.1.9.3
+Requires at least: 3.7
+Tested up to: 4.1.1
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,16 +39,25 @@ Really anything is possible, from social media sharing options to sign-up or con
 - Set the number of days a box should not be shown if a visitor closes it
 - Open a box right after loading a page or have it open when clicking a link or button
 
-Have a look at the [frequently asked questions](http://wordpress.org/plugins/scroll-triggered-boxes/faq/) as well, this plugin is really flexible.
+Have a look at the [frequently asked questions](https://wordpress.org/plugins/scroll-triggered-boxes/faq/) as well, this plugin is really flexible.
 
 **Demo**
 
-I'm using the plugin myself on [the website for one of my other plugins: MailChimp for WordPress](http://dannyvankooten.com/mailchimp-for-wordpress/). Scroll down to the bottom and you'll see a box slide in in the bottom right corner, asking you to sign-up to the plugin newsletter.
+I'm using the plugin myself on [the website for one of my other plugins: MailChimp for WordPress](https://mc4wp.com/). Scroll down to the bottom and you'll see a box slide in in the bottom right corner, asking you to sign-up to the plugin newsletter.
+
+**Translators**
+
+- English (en_US) - [Danny van Kooten](https://dannyvankooten.com/)
+- Dutch (nl_NL) - [Danny van Kooten](https://dannyvankooten.com/)
+- Spanish (es_ES) - [Paul Benitez - Tecnofilos](http://www.tecnofilos.net/)
+
+If you have created your own language pack (or have an update of an existing one) you can send in your .PO and .MO files so we can bundle it into Scroll Triggered Boxes. You can [download the latest POT file](https://plugins.svn.wordpress.org/scroll-triggered-boxes/trunk/languages/scroll-triggered-boxes.po), and [PO files in each language](https://plugins.svn.wordpress.org/scroll-triggered-boxes/trunk/languages/).
+
 
 **Other Links**
 
-- More information about the [Scroll Triggered Boxes plugin for WordPress](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/)
-- Have a look at some other [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by [Danny van Kooten](http://dannyvankooten.com/).
+- Have a look at some other [WordPress plugins by Danny van Kooten](https://dannyvankooten.com/wordpress-plugins/).
+- Contribute to the [Scroll Triggered Boxes plugin on GitHub](https://github.com/dannyvankooten/wp-scroll-triggered-boxes).
 
 == Frequently Asked Questions ==
 
@@ -56,23 +65,23 @@ I'm using the plugin myself on [the website for one of my other plugins: MailChi
 
 The plugin is tested with the plugins below but will work with any plugin that uses shortcodes.
 
-- [MailChimp for WordPress](http://wordpress.org/plugins/mailchimp-for-wp/)
-- [Contact Form 7](http://wordpress.org/plugins/contact-form-7/)
-- [Newsletter Sign-Up](http://wordpress.org/plugins/newsletter-sign-up/)
+- [MailChimp for WordPress](https://wordpress.org/plugins/mailchimp-for-wp/)
+- [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
+- [Newsletter Sign-Up](https://wordpress.org/plugins/newsletter-sign-up/)
 
 = How to display sharing options in the box? =
 
 The plugin is tested with the plugins below but will work with any plugin that uses shortcodes.
 
-- [Social Sharing By Danny](http://wordpress.org/plugins/dvk-social-sharing/)
-- [Shareaholic](http://wordpress.org/plugins/shareaholic/)
-- [Social Media Feather](http://wordpress.org/plugins/social-media-feather/)
-- [WP Socializer](http://wordpress.org/plugins/wp-socializer/)
-- [Tweet, Like, Google +1 and Share](http://wordpress.org/plugins/only-tweet-like-share-and-google-1/)
+- [Social Sharing By Danny](https://wordpress.org/plugins/dvk-social-sharing/)
+- [Shareaholic](https://wordpress.org/plugins/shareaholic/)
+- [Social Media Feather](https://wordpress.org/plugins/social-media-feather/)
+- [WP Socializer](https://wordpress.org/plugins/wp-socializer/)
+- [Tweet, Like, Google +1 and Share](https://wordpress.org/plugins/only-tweet-like-share-and-google-1/)
 
 = How do I set more advanced rules for on which pages to show a box? =
 
-You can use [conditional tags](http://codex.wordpress.org/Conditional_Tags) to set super-customized rules.
+You can use [conditional tags](https://codex.wordpress.org/Conditional_Tags) to set super-customized rules.
 
 *Example: only show for posts in category 'cars'*
 `
@@ -150,7 +159,7 @@ remove_filter( 'stb_content', 'shortcode_unautop' );
 
 = Additional Customization =
 
-Have a look at the [frequently asked questions](http://wordpress.org/plugins/scroll-triggered-boxes/faq/) section for some examples of additional customization.
+Have a look at the [frequently asked questions](https://wordpress.org/plugins/scroll-triggered-boxes/faq/) section for some examples of additional customization.
 
 == Screenshots ==
 
@@ -159,9 +168,87 @@ Have a look at the [frequently asked questions](http://wordpress.org/plugins/scr
 3. A differently styled social triggered box.
 4. Configuring and customizing your boxes is easy.
 
-Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](http://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
+Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on my website](https://dannyvankooten.com/wordpress-plugins/scroll-triggered-boxes/).
 
 == Changelog ==
+
+= 1.4.3 - January 29, 2015 =
+
+**Improvements**
+
+- Various performance improvements
+- Updated all links to use `https` protocol
+
+= 1.4.2 - December 4, 2014 =
+
+**Fixes**
+
+- Box not automatically appearing if cookie time was set, caused by yesterdays update.
+
+= 1.4.1 - December 3, 2014 =
+
+**Fixes**
+
+- CSS Height issue breaking SIDR navigation in some themes.
+
+**Improvements**
+
+- If cookie lifetime option is set to 0, existing cookies will be ignored now too.
+
+= 1.4 - November 17, 2014 =
+
+**Additions**
+
+- Added option to disable box for smaller screen sizes, defaults to box width.
+
+= 1.3.1 - September 4, 2014 =
+
+**Bugfixes**
+
+- Fixed an issue with rules disappearing when having more than 5 posts.
+
+**Improvements**
+
+- Some textual improvements.
+
+= 1.3 - July 30, 2014 =
+
+**Improvements**
+
+- Various code improvements
+- Minified all assets (scripts and styles)
+- You can now contribute to the [Scroll Triggered Boxes plugin on GitHub](https://github.com/dannyvankooten/scroll-triggered-boxes-for-wordpress).
+
+**Additions**
+
+- Add "bottom center" and "top center" position options
+
+= 1.2.2 - July 7, 2014 =
+
+**Additions**
+
+- Added Spanish translations, thanks to [Paul Benitez of Tecnofilos](http://www.tecnofilos.net/)
+
+**Improvements**
+
+- Now using native JS cookies, greatly reducing the script size.
+- Added various debugging statements to the script.
+
+
+= 1.2.1 - May 21, 2014 =
+
+**Additions**
+
+- You can now use JavaScript functions like `STB.show( 42 )` or `STB.hide( 42 )` to show/hide boxes.
+
+**Improvements**
+
+- Box is now more responsive, it will now never stretch beyond the screen width.
+- Various minor code improvements.
+- Wrapped remaining strings in translation calls.
+
+= 1.2 - April 18, 2014 =
+* Improved: Plugin is now fully translatable. Fixed various string typo's.
 
 = 1.1.9.3 - March 7, 2014 =
 * Fixed: Box not overlapping content in some themes
@@ -241,7 +328,7 @@ Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on
 - Fixed: Script now checks trigger criteria for multiple boxes at once.
 - Improved: Script performance.
 - Improved: All the default WordPress filters that run on posts do now run on the box content as well, meaning you can use smileys etc. in the box content. Filters are added to the `stb_content` hook, you can remove them from your theme its `functions.php` if you want.
-- Added: Option to choose which animation to use: slide or fade.
+- Added: Option to choose which animation to use: slide or fade.∑∑
 - Added: Box now automatically shows when an element inside the box is referenced in the browser hash. This is especially useful for forms that do not use AJAX.
 - Added: Menu icon in WP Admin
 
@@ -265,11 +352,5 @@ Some more screenshots can be found at the [Scroll Triggered Boxes plugin page on
 
 == Upgrade Notice ==
 
-= 1.0.5 =
-Improvement to the script to check for the (box closed) cookie as well, to work with pages from browser cache.
-
-= 1.0.4 =
-Two important bugfixes for when using an element as the trigger point.
-
-= 1.0.3 =
-Fixed incorrect calculation of page height for some themes.
+= 1.4.2 =
+Fixes cookie issue with yesterdays update. Please update.
