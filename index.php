@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Scroll Triggered Boxes
-Version: 1.4.2
+Version: 1.4.3
 Plugin URI: https://dannyvankooten.com/
 Description: Call-To-Action Boxes that display after visitors scroll down far enough. Highly conversing, not so annoying!
 Author: Danny van Kooten
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class STB
 {
-	const VERSION = '1.4.2';
+	const VERSION = '1.4.3';
 	const FILE = __FILE__;
 
 	public static $dir = '';
@@ -46,7 +46,7 @@ final class STB
 		self::$dir = dirname( __FILE__ );
 		self::$url = plugins_url( '/' , __FILE__ );
 
-		add_action( 'init', array( __CLASS__, 'init' ) );
+		add_action( 'init', array( __CLASS__, 'init' ), 11 );
 
 		if( ! is_admin() ) {
 
@@ -63,10 +63,10 @@ final class STB
 		}
 	}
 
+	/**
+	 * Initializes the plugin
+	 */
 	public static function init() {
-
-		// Load the plugin textdomain
-		load_plugin_textdomain( 'scroll-triggered-boxes', false, STB::$dir . '/languages/' );
 
 		// Register custom post type
 		$args = array(
@@ -92,8 +92,6 @@ final class STB
 		);
 
 		register_post_type( 'scroll-triggered-box', $args );
-
-
 	}
 
 	/**
