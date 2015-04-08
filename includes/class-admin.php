@@ -67,7 +67,7 @@ class STB_Admin {
 		}
 
 		print '<div class="updated"><p>';
-		printf ('<strong>Scroll Triggered Boxes</strong> is not checking for plugin updates since new versions of the plugin require <strong>PHP version 5.3 or higher</strong>, while your server is running PHP v%s. <a href="%s">Updating your PHP version</a> makes your site faster, more secure and should be easy for your host.', PHP_VERSION, 'http://www.wpupdatephp.com/update/' );
+		printf ('<strong>Scroll Triggered Boxes</strong> is not checking for plugin updates since new versions of the plugin require <strong>PHP version 5.3 or higher</strong>, while your server is running PHP v%s. <a href="%s">Updating your PHP version</a> makes your site faster, more secure and should be easy for your host.', PHP_VERSION, 'http://www.wpupdatephp.com/update/#utm_source=wp-plugin&utm_medium=link&utm_campaign=php-version-requirement-notice' );
 		print ' &nbsp; ';
 		printf( '<a class="button" href="%s">Got it</a>', add_query_arg( array( 'stb-dismiss-php-notice' => 1 ) ) );
 		print '</p></div>';
@@ -213,7 +213,7 @@ class STB_Admin {
 
 		// is this a revision save?
     	if ( wp_is_post_revision( $post_id ) ) {
-        	return $post_id; 
+        	return $post_id;
     	}
 
 		// can user edit this post?
