@@ -1,1 +1,0 @@
-window.STB = require('./STB.js');
