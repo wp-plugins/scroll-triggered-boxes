@@ -34,7 +34,7 @@ class BoxLoader {
 		if( count( $this->matched_box_ids ) > 0 ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'load_assets' ) );
 			add_action( 'wp_head', array( $this, 'print_boxes_css' ), 90 );
-			add_action( 'wp_footer', array( $this, 'print_boxes_html' ), 90 );
+			add_action( 'wp_footer', array( $this, 'print_boxes_html' ) );
 
 			add_filter( 'stb_box_content', 'wptexturize') ;
 			add_filter( 'stb_box_content', 'convert_smilies' );
@@ -72,13 +72,27 @@ class BoxLoader {
 
 		$matched = false;
 
+		// cast value to array with trimmed value if needed
+		if ( $condition !== 'manual' && $condition !== 'everywhere' ) {
+			$value = array_map( 'trim', explode( ',', $value ) );
+		}
+
 		switch ( $condition ) {
 			case 'everywhere';
 				$matched = true;
 				break;
 
+			case 'is_url':
+				$matched = in_array( $_SERVER['REQUEST_URI'], $value );
+				break;
+
+			case 'is_referer':
+				$matched = ! empty( $_SERVER['HTTP_REFERER'] ) && in_array( $_SERVER['HTTP_REFERER'], $value );
+				break;
+
 			case 'is_post_type':
-				$matched = in_array( get_post_type(), $value );
+				$post_type = (string) get_post_type();
+				$matched = in_array( $post_type, $value );
 				break;
 
 			case 'is_single':
@@ -90,7 +104,7 @@ class BoxLoader {
 				break;
 
 			case 'is_not_page':
-				$matched = !is_page( $value );
+				$matched = ! is_page( $value );
 				break;
 
 			case 'manual':

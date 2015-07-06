@@ -1,67 +1,70 @@
 === Plugin Name ===
-Contributors: DvanKooten, ibericode, iMazed, hchouhan
-Donate link: https://scrolltriggeredboxes.com/#utm_source=wp-plugin-repo&utm-medium=scroll-triggered-boxes&utm_campaign=donate-link
+Contributors: Ibericode, DvanKooten, iMazed, hchouhan
+Donate link: https://scrolltriggeredboxes.com/#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=donate-link
 Tags: scroll triggered box, cta, social, pop-up, newsletter, call to action, mailchimp, contact form 7, social media
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 1.4.4
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Call to actions for engaged visitors, a less obtrusive alternative to pop-ups.
+Flexible call to actions for engaged visitors, a less obtrusive alternative to pop-ups.
 
 == Description ==
 
-= Scroll Triggered Boxes =
+Scroll Triggered Boxes is a *lightweight* plugin for adding flexible call-to-actions to your WordPress site. Boxes can slide or fade in at any point and can contain whatever content you like.
 
-**Call to action boxes which appear once a visitor has scrolled down far enough. Highly converting, less annoying!**
+= Features =
 
-Scroll Triggered are boxes which slide or fade-in once a visitor has scrolled down far enough on your page.
+- Create boxes containing whatever content you like: shortcodes, links, custom HTML, anything really.
+- Show boxes automatically after scrolling down based on a percentage point or a certain element (like your comment section).
+- Show boxes using a button or link.
+- Choose the box position: centered or in any corner of the screen.
+- Choose between a fading or sliding animation for showing the box.
+- Customize the box appearance using a few simple color & dimension controls.
+- Only load the box on certain pages, posts, etc.
+- Control how long dismissed boxes should stay hidden.
+- Control whether boxes should show on small screens.
 
-Visitors who scroll down far enough have already engaged with your content and most likely got value out of it, making them more receptive to your offer. Plus, human eyes react to movement. Having a box slide-in at a corner of the screen is a sure way to get their attention while staying relatively unobtrusive and certainly less annoying than a pop-up.
+[Read more about Scroll Triggered Boxes](https://scrolltriggeredboxes.com/#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=description).
 
-= Any Call To Action =
+= Documentation =
 
-Boxes can contain any content you like, even shortcodes for third-party plugins.
+Please have a look at the [frequently asked questions](https://wordpress.org/plugins/scroll-triggered-boxes/faq/).
 
-- Newsletter sign-up form
-- Contact form
-- Buttons or links
-- Shortcodes
-- Social sharing options
-- Anything really. You decide.
+= Demo =
 
-= Scroll Triggered Boxes, at a glance.. =
+There's a [Scroll Triggered Boxes demo site](http://demo.scrolltriggeredboxes.com#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=description), showcasing the vast amount of possibilities for you to gather your leads.
 
-- Unlimited amount of boxes
-- Page level targeting
-- Multiple animations
-- Appearance control, control when and where your box should appear.
-- Hide boxes for visitors who dismissed it
-- Show boxes by clicking a link or button
+= Add-ons =
 
-Have a look at the [frequently asked questions](https://wordpress.org/plugins/scroll-triggered-boxes/faq/) as well, this plugin is really flexible.
+The core Scroll Triggered Boxes plugin is free and always will be. Additional advanced functionality is available through several add-ons. Not only do they extend the core functionality of the plugin, they also help to fund further development of the core (free) plugin.
 
-**Add-on plugins**
+[Browse available add-ons for Scroll Triggered Boxes](https://scrolltriggeredboxes.com/plugins#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=description).
 
-There are several [premium add-on plugins available for Scroll Triggered Boxes](https://scrolltriggeredboxes.com/plugins#utm_source=wp-plugin-repo&utm-medium=scroll-triggered-boxes&utm_campaign=description), which help you get even more out of your site.
+Some popular add-ons include:
 
-**Translations**
+**[Theme Pack](https://scrolltriggeredboxes.com/plugins/theme-pack#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=description)**
 
-Please submit your new or improved translations [using a pull request on GitHub](https://github.com/ibericode/scroll-triggered-boxes).
+A set of beautiful plug & play themes which make your boxes really stand out.
 
-**Bug Reports**
+= Contributing and reporting bugs =
 
-Bug reports for [Scroll Triggered Boxes are welcomed on GitHub](https://github.com/ibericode/scroll-triggered-boxes). Please note that GitHub is _not_ a support forum.
+You can contribute to this plugin using GitHub: [ibericode/scroll-triggered-boxes](https://github.com/ibericode/scroll-triggered-boxes)
 
-**Other Links**
+= Support =
 
-- Have a look at some other [WordPress plugins by Danny van Kooten](https://dannyvankooten.com/wordpress-plugins/)
-- Contribute to the [Scroll Triggered Boxes plugin on GitHub](https://github.com/ibericode/scroll-triggered-boxes)
-- [Add-on plugins for Scroll Triggered Boxes](https://scrolltriggeredboxes.com/plugins#utm_source=wp-plugin-repo&utm-medium=scroll-triggered-boxes&utm_campaign=description)
-- The [Scroll Triggered Boxes site](https://scrolltriggeredboxes.com/#utm_source=wp-plugin-repo&utm-medium=scroll-triggered-boxes&utm_campaign=description)
+Please use the [WordPress.org plugin support forums](https://wordpress.org/support/plugin/scroll-triggered-boxes) for community support where we try to help all users.
+
+If you think you've found a bug, please [report it on GitHub](https://github.com/ibericode/scroll-triggered-boxes/issues).
+
+If you're on [one of the available premium plans](https://scrolltriggeredboxes.com/pricing#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=description), please use the support email for a guaranteed & faster response.
 
 == Frequently Asked Questions ==
+
+= What does this plugin do? =
+
+Have a look at the [Scroll Triggered Boxes demo site](http://demo.scrolltriggeredboxes.com/#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=description).
 
 = How to display a form in the box? =
 
@@ -86,12 +89,12 @@ You can use [conditional tags](https://codex.wordpress.org/Conditional_Tags) to 
 
 *Example: only show for posts in category 'cars'*
 `
-is_single() && in_category('cars')
+is_single() && in_category( 'cars' )
 `
 
 *Example: show everywhere except on pages with slug 'contact' and 'checkout'
 `
-!is_page( array( 'contact', 'checkout') ) 
+! is_page( array( 'contact', 'checkout' ) )
 `
 
 = Can I have a box to open after clicking a certain link or button? =
@@ -162,13 +165,52 @@ Have a look at the [frequently asked questions](https://wordpress.org/plugins/sc
 
 == Changelog ==
 
+= 2.0.4 - July 6, 2015 =
+
+**Fixes**
+
+- Boxes were not showing if any other resource (images, scripts, etc.) on the page failed to load.
+
+**Improvements**
+
+- Extension thumbnails are now clickable.
+- Prevent notice for empty string values in box rules.
+
+**Additions**
+
+- The plugin now creates a sample box upon plugin installation.
+
+= 2.0.3 - July 2, 2015 =
+
+**Fixes**
+
+- The cookie for closing a box was always set to expire at the end of the session
+
+= 2.0.2 - May 18, 2015 =
+
+**Fixes**
+
+- JavaScript error when loading box editor in HTML mode
+- Remove type hint for function that adds metaboxes, as this differs for new (unpublished) boxes
+
+**Improvements**
+
+- Output HTML for boxes at a slightly earlier hook, for better [MailChimp for WordPress](https://mc4wp.com/) compatibility.
+
+
+= 2.0.1 - May 12, 2015 =
+
+**Fixes**
+
+- Fix page level targeting no longer working
+
 = 2.0 - May 12, 2015 =
 
 Major revamp of the plugin, maintaining backwards compatibility.
 
 **Important changes**
 
-- The plugin now comes with several [premium add-on plugins which further enhance the functionality of the plugin](https://scrolltriggeredboxes.com/plugins#utm_source=wp-plugin-repo&utm-medium=scroll-triggered-boxes&utm_campaign=changelog).
+- The plugin now comes with several [premium add-on plugins which further enhance the functionality of the plugin](https://scrolltriggeredboxes.com/plugins#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=changelog).
 - PHP 5.3 or higher is required.
 - "Test mode" is now a global setting.
 - Various UX improvements.
@@ -243,7 +285,6 @@ If you encounter a bug, please [open an issue on GitHub](https://github.com/iber
 - Now using native JS cookies, greatly reducing the script size.
 - Added various debugging statements to the script.
 
-
 = 1.2.1 - May 21, 2014 =
 
 **Additions**
@@ -259,107 +300,7 @@ If you encounter a bug, please [open an issue on GitHub](https://github.com/iber
 = 1.2 - April 18, 2014 =
 * Improved: Plugin is now fully translatable. Fixed various string typo's.
 
-= 1.1.9.3 - March 7, 2014 =
-* Fixed: Box not overlapping content in some themes
-
-= 1.1.9.2 - February 24, 2014 =
-* Fixed: Box rules not deleted when box was trashed
-* Changed: When using element selector and element doesn't exist, box won't be shown.
-
-= 1.1.9.1 - February 12, 2014 =
-* Fixed: Box re-appearing after closing
-
-= 1.1.9 - February 7, 2014 =
-* Added: option to auto-hide the box again
-* Improved: direct file access security
-
-= 1.1.8 - January 22, 2014 =
-* Fixed: Setting a box width is now really optional.
-* Fixed: Page height not being calculated correctly for some themes
-
-= 1.1.7 - January 8, 2014 =
-* Fixed: Issue with box showing up regardless of whether a cookie had been set
-* Improved: Box rules are now deleted when post_status is anything other than "publish"
-
-= 1.1.6 - January 6, 2014 =
-* Fixed: Issue with manual conditions where some servers added slashes (to escape quotes)
-
-= 1.1.5 - January 3, 2014 =
-* Fixed: JS eror when using a trigger element.
-* Added: `stb_auto_hide_small_screens` filter to disable automatically hiding the box on small screens.
-
-= 1.1.4 - December 24, 2013 =
-* Added: If page NOT is rule.
-* Added: Filter for even more advanced box criteria
-* Improved: JavaScript now waits for full page load
-
-= 1.1.3 - December 20, 2013 =
-* Fixed: Paragraphs when using shortcodes in the box its content.
-
-= 1.1.2 - December 17, 2013 =
-* Fixed: multiple rules not working when last rule returned false
-* Fixed: JavaScript error for old WordPress verions, breaking TinyMCE editor.
-
-= 1.1.1 - December 13, 2013 =
-* Fixed: box not showing up when test mode is disabled
-
-= 1.1 - December 13, 2013 =
-* Added: test mode option to box settings
-* Improved: Only published boxes will now be shown
-* Improved: Added sanitizing of settings
-
-= 1.0.6 - December 9, 2013 =
-* Fixed: Box showing up on devices where it didn't fit.
-* Fixed: Box cookie not working.
-* Improved: Cookie check now JS only, to make it possible to open box from button.
-* Improved: Minified JavaScript file.
-* Improved: Settings pages now compatible with WP 3.8 styles
-* Improved: Other minor CSS and JS improvements.
-* Improved: Prevented search engines indexing plugin files.
-
-= 1.0.5 - December 2, 2013 =
-* Improved: Cookie check now both server + client side to work with pages from browser cache.
-* Improved: Minor JavaScript and CSS improvements
-
-= 1.0.4 - November 17, 2013 =
-
-* Fixed: element selector input field now appears in box settings
-* Fixed: script error when using element selector
-
-= 1.0.3 - November 13, 2013 =
-
-- Fixed: incorrect calculating of page height for some themes, which made the box show up right away
-- Improved: better polling for listener to scroll event
-- Added: you can now link to a box element to have it open. 
-
-= 1.0.2 - November 12, 2013 =
-
-- Fixed: Script now checks trigger criteria for multiple boxes at once.
-- Improved: Script performance.
-- Improved: All the default WordPress filters that run on posts do now run on the box content as well, meaning you can use smileys etc. in the box content. Filters are added to the `stb_content` hook, you can remove them from your theme its `functions.php` if you want.
-- Added: Option to choose which animation to use: slide or fade.∑∑
-- Added: Box now automatically shows when an element inside the box is referenced in the browser hash. This is especially useful for forms that do not use AJAX.
-- Added: Menu icon in WP Admin
-
-= 1.0.1 - November 11, 2013 =
-
-- Improved: fix that removes unwanted linebreaks from shortcode output
-
-= 1.0 - November 10, 2013 =
-
-- Added: custom trigger points
-
-= 1.0-beta2 - November 8, 2013 =
-
-- Fixed: Box position bottom right is now selectable
-- Fixed: Post type filter now works.
-- Improved: Box settings on small screens
-
-= 1.0-beta1 - November 6, 2013 =
-
-- Initial release, things like settings might still change without backwards compatibility.
-
 == Upgrade Notice ==
 
-= 1.4.2 =
-Fixes cookie issue with yesterdays update. Please update.
+= 2.0.4 =
+Bugfix for boxes not showing if any resource on page failed to load.
