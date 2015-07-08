@@ -34,7 +34,7 @@ class BoxLoader {
 		if( count( $this->matched_box_ids ) > 0 ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'load_assets' ) );
 			add_action( 'wp_head', array( $this, 'print_boxes_css' ), 90 );
-			add_action( 'wp_footer', array( $this, 'print_boxes_html' ), 90 );
+			add_action( 'wp_footer', array( $this, 'print_boxes_html' ) );
 
 			add_filter( 'stb_box_content', 'wptexturize') ;
 			add_filter( 'stb_box_content', 'convert_smilies' );
@@ -72,30 +72,55 @@ class BoxLoader {
 
 		$matched = false;
 
+		$value = trim( $value );
+
+		// cast value to array if needed
+		if ( $value !== '' && $condition !== 'manual' && $condition !== 'everywhere' ) {
+			$value = array_map( 'trim', explode( ',', rtrim( $value, ',' ) ) );
+		}
+
 		switch ( $condition ) {
 			case 'everywhere';
 				$matched = true;
 				break;
 
+			case 'is_url':
+				$matched = in_array( $_SERVER['REQUEST_URI'], (array) $value );
+				break;
+
+			case 'is_referer':
+				$matched = ! empty( $_SERVER['HTTP_REFERER'] ) && in_array( $_SERVER['HTTP_REFERER'], (array) $value );
+				break;
+
 			case 'is_post_type':
-				$matched = in_array( get_post_type(), $value );
+				$post_type = (string) get_post_type();
+				$matched = in_array( $post_type, (array) $value );
 				break;
 
 			case 'is_single':
+			case 'is_post':
 				$matched = is_single( $value );
 				break;
+
+			case 'is_post_in_category':
+				$matched = is_singular( 'post' ) && has_category( $value );
+				break;
+
 
 			case 'is_page':
 				$matched = is_page( $value );
 				break;
 
+			/**
+			 * @deprecated 2.1
+			 */
 			case 'is_not_page':
-				$matched = !is_page( $value );
+				$matched = ! is_page( $value );
 				break;
 
 			case 'manual':
 				// eval for now...
-				$value = stripslashes(trim($value));
+				$value = stripslashes( trim( $value ) );
 				$matched = eval( "return (" . $value . ");" );
 				break;
 
@@ -120,6 +145,12 @@ class BoxLoader {
 
 			// loop through all rules for all boxes
 			foreach ( $box_rules as $rule ) {
+
+				// skip faulty values
+				if( empty( $rule['condition'] ) ) {
+					continue;
+				}
+
 				$matched = $this->match_rule( $rule['condition'], $rule['value'] );
 
 				// break out of loop if we've already matched

@@ -61,7 +61,7 @@ class Admin {
 		add_action( 'untrashed_post', array( $this, 'flush_rules') );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10, 2 );
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_filter( 'tiny_mce_before_init', array( $this, 'tinymce_init' ) );
 
 		if( $pagenow === 'plugins.php' ) {
@@ -88,7 +88,7 @@ class Admin {
 		// register scripts
 		$pre_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script( 'scroll-triggered-boxes-admin', $this->plugin->url( '/assets/js/admin-script' . $pre_suffix . '.js' ), array( 'jquery', 'wp-color-picker' ), $this->plugin->version(), true );
+		wp_register_script( 'scroll-triggered-boxes-admin', $this->plugin->url( '/assets/js/admin-script' . $pre_suffix . '.js' ), array( 'jquery', 'wp-color-picker', 'suggest' ), $this->plugin->version(), true );
 
 		// load stylesheets
 		wp_register_style( 'scroll-triggered-boxes-admin', $this->plugin->url( '/assets/css/admin-styles' . $pre_suffix . '.css' ), array(), $this->plugin->version() );
@@ -193,10 +193,9 @@ class Admin {
 	/**
 	 * Register meta boxes
 	 * @param string $post_type
-	 * @param WP_Post $post
 	 * @return bool
 	 */
-	public function add_meta_boxes( $post_type, WP_Post $post ) {
+	public function add_meta_boxes( $post_type ) {
 
 		if( $post_type !== 'scroll-triggered-box' ) {
 			return false;
@@ -422,7 +421,7 @@ class Admin {
 			return $links;
 		}
 
-		$links[] = '<a href="https://scrolltriggeredboxes.com/kb#utm_source=wp-plugin&utm-medium=scroll-triggered-boxes&utm_campaign=plugin-page">Documentation</a>';
+		$links[] = '<a href="https://scrolltriggeredboxes.com/kb#utm_source=wp-plugin&utm_medium=scroll-triggered-boxes&utm_campaign=plugins-page">Documentation</a>';
 		return $links;
 	}
 

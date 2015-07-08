@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Scroll Triggered Boxes
-Version: 2.0
-Plugin URI: https://scrolltriggeredboxes.com/#utm_source=wp-plugin&utm-medium=scroll-triggered-boxes&utm_campaign=plugin-page
+Version: 2.1
+Plugin URI: https://scrolltriggeredboxes.com/#utm_source=wp-plugin&utm_medium=scroll-triggered-boxes&utm_campaign=plugins-page
 Description: Call-To-Action Boxes that display after visitors scroll down far enough. Unobtrusive, but highly conversing!
-Author: Ibericode
-Author URI: https://ibericode.com/
+Author: ibericode
+Author URI: http://ibericode.com/
 Text Domain: scroll-triggered-boxes
 Domain Path: /languages/
 License: GPL v3
@@ -34,27 +34,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * @return ScrollTriggeredBoxes\Plugin
+ */
+function scroll_triggered_boxes() {
+	static $instance;
+
+	if( is_null( $instance ) ) {
+		$id = 0;
+		$file = __FILE__;
+		$dir = dirname( __FILE__ );
+		$name = 'Scroll Triggered Boxes';
+		$version = '2.1';
+
+		$reflect  = new ReflectionClass( 'ScrollTriggeredBoxes\\Plugin' );
+		$instance = $reflect->newInstanceArgs( array(
+				$id,
+				$name,
+				$version,
+				$file,
+				$dir
+			)
+		);
+	}
+
+	return $instance;
+}
+
 // wrapper function to move out of global namespace
 function __load_scroll_triggered_boxes() {
+
 	// load autoloader & init plugin
 	require dirname( __FILE__ ) . '/vendor/autoload.php';
 
-	// we need this constant later on
-	$id = 0;
-	$file = __FILE__;
-	$dir = dirname( __FILE__ );
-	$name = 'Scroll Triggered Boxes';
-	$version = '2.0';
+	// fetch instance and store in global
+	$GLOBALS['stb'] = scroll_triggered_boxes();
 
-	$reflect  = new ReflectionClass( 'ScrollTriggeredBoxes\\Plugin' );
-	$GLOBALS['stb'] = $reflect->newInstanceArgs( array(
-			$id,
-			$name,
-			$version,
-			$file,
-			$dir
-		)
-	);
+	// register activation hook
+	register_activation_hook( __FILE__, array( 'ScrollTriggeredBoxes\\Admin\\Installer', 'run' ) );
+
 }
 
 function __load_scroll_triggered_boxes_fallback() {
