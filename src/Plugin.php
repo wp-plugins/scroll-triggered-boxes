@@ -29,6 +29,8 @@ final class Plugin extends PluginBase {
 			add_action('init', function() use( $container ) {
 				$container['admin']->init();
 			});
+		} else {
+			$container['filter.autocomplete']->add_hooks();
 		}
 	}
 

@@ -19,6 +19,9 @@ module.exports = (function($) {
 		}
 	});
 
+	// call contextual helper method for each row
+	$('.stb-rule-row').each(setContextualHelpers);
+
 	function toggleTriggerOptions() {
 		$optionControls.find('.stb-trigger-options').toggle( this.value !== '' );
 	}
@@ -28,36 +31,66 @@ module.exports = (function($) {
 	}
 
 	function setContextualHelpers() {
-		var $context = $(this).parents('tr');
+
+		var $context;
+
+		if( this.tagName.toLowerCase() === "tr" ) {
+			$context = $(this);
+		} else {
+			$context = $(this).parents('tr');
+		}
+
+		var $condition = $context.find('.stb-rule-condition');
+
+		// remove previously added helpers
+		$context.find('.stb-helper').remove();
+
 		var $valueInput = $context.find('.stb-rule-value');
+		var $betterInput = $valueInput.clone().attr('name','').addClass('stb-helper').insertAfter($valueInput).show();
+		$betterInput.change(function() {
+			$valueInput.attr('value', $(this).val() );
+		});
+		$valueInput.hide();
 		$manualTip.hide();
-		$valueInput.show();
 
 		// change placeholder for textual help
-		switch(this.value) {
+		switch($condition.val()) {
 			case '':
 			default:
-				$valueInput.attr('placeholder', 'Leave empty to match anything or enter a comma-separated list of IDs or slugs');
+				$betterInput.attr('placeholder', 'Enter a comma-separated list of slugs..');
 				break;
 
 			case 'everywhere':
-				$valueInput.hide();
+				$valueInput.val('');
+				$betterInput.hide();
 				break;
 
 			case 'is_single':
-				$valueInput.attr('placeholder', 'Leave empty to match any post or enter a comma-separated list of post IDs or slugs');
+			case 'is_post':
+				$betterInput.attr('placeholder', "Enter a comma-separated list of post slugs or post ID's..");
+				$betterInput.suggest(ajaxurl + "?action=stb_autocomplete&type=post", {multiple:true, multipleSep: ","});
 				break;
 
 			case 'is_page':
-				$valueInput.attr('placeholder', 'Leave empty to match any page or enter a comma-separated list of page IDs or slugs');
+				$betterInput.attr('placeholder', "Enter a comma-separated list of page slugs or page ID's..");
+				$betterInput.suggest(ajaxurl + "?action=stb_autocomplete&type=page", {multiple:true, multipleSep: ","});
 				break;
 
 			case 'is_post_type':
-				$valueInput.attr('placeholder', 'Leave empty to match any post type or enter a comma-separated list of post type names');
+				$betterInput.attr('placeholder', "Enter a comma-separated list of post types.." );
+				$betterInput.suggest(ajaxurl + "?action=stb_autocomplete&type=post_type", {multiple:true, multipleSep: ","});
+				break;
+
+			case 'is_url':
+				$betterInput.attr('placeholder', 'Enter a comma-separated list of relative URLs, eg /contact/');
+				break;
+
+			case 'is_post_in_category':
+				$betterInput.suggest(ajaxurl + "?action=stb_autocomplete&type=category", {multiple:true, multipleSep: ","});
 				break;
 
 			case 'manual':
-				$valueInput.attr('placeholder', 'Example: is_single(1, 3)');
+				$betterInput.attr('placeholder', 'Example: is_single(1, 3)');
 				$manualTip.show();
 				break;
 		}
@@ -66,7 +99,10 @@ module.exports = (function($) {
 	function addRuleFields() {
 		var $row = $optionControls.find(".stb-rule-row").last();
 		var $newRow = $row.clone();
-		$newRow.find('th > label').text("Or");
+		$newRow.find('th').css({
+			'text-align': 'right',
+			'font-weight': 'normal'
+		}).find('label').text("or");
 		$newRow.insertAfter($row).find(":input").val('').each(function () {
 			this.name = this.name.replace(/\[(\d+)\]/, function (str, p1) {
 				return '[' + (parseInt(p1, 10) + 1) + ']';

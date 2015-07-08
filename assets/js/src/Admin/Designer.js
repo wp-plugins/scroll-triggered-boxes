@@ -23,6 +23,11 @@ var Designer = function($, Option, events) {
 	// functions
 	function init() {
 
+		// Only run if TinyMCE has actually inited
+		if( typeof( window.tinyMCE ) !== "object" || tinyMCE.get('content') === null ) {
+			return;
+		}
+
 		// add classes to TinyMCE <html>
 		$editorFrame = $("#content_ifr");
 		$editor = $editorFrame.contents().find('html');
@@ -56,6 +61,7 @@ var Designer = function($, Option, events) {
 
 		/* @deprecated 2.0.3 */
 		$(document).trigger('editorInit.stb');
+
 	}
 
 	/**

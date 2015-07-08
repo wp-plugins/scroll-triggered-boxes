@@ -72,9 +72,11 @@ class BoxLoader {
 
 		$matched = false;
 
-		// cast value to array with trimmed value if needed
-		if ( $condition !== 'manual' && $condition !== 'everywhere' ) {
-			$value = array_map( 'trim', explode( ',', $value ) );
+		$value = trim( $value );
+
+		// cast value to array if needed
+		if ( $value !== '' && $condition !== 'manual' && $condition !== 'everywhere' ) {
+			$value = array_map( 'trim', explode( ',', rtrim( $value, ',' ) ) );
 		}
 
 		switch ( $condition ) {
@@ -83,33 +85,42 @@ class BoxLoader {
 				break;
 
 			case 'is_url':
-				$matched = in_array( $_SERVER['REQUEST_URI'], $value );
+				$matched = in_array( $_SERVER['REQUEST_URI'], (array) $value );
 				break;
 
 			case 'is_referer':
-				$matched = ! empty( $_SERVER['HTTP_REFERER'] ) && in_array( $_SERVER['HTTP_REFERER'], $value );
+				$matched = ! empty( $_SERVER['HTTP_REFERER'] ) && in_array( $_SERVER['HTTP_REFERER'], (array) $value );
 				break;
 
 			case 'is_post_type':
 				$post_type = (string) get_post_type();
-				$matched = in_array( $post_type, $value );
+				$matched = in_array( $post_type, (array) $value );
 				break;
 
 			case 'is_single':
+			case 'is_post':
 				$matched = is_single( $value );
 				break;
+
+			case 'is_post_in_category':
+				$matched = is_singular( 'post' ) && has_category( $value );
+				break;
+
 
 			case 'is_page':
 				$matched = is_page( $value );
 				break;
 
+			/**
+			 * @deprecated 2.1
+			 */
 			case 'is_not_page':
 				$matched = ! is_page( $value );
 				break;
 
 			case 'manual':
 				// eval for now...
-				$value = stripslashes(trim($value));
+				$value = stripslashes( trim( $value ) );
 				$matched = eval( "return (" . $value . ");" );
 				break;
 
@@ -134,6 +145,12 @@ class BoxLoader {
 
 			// loop through all rules for all boxes
 			foreach ( $box_rules as $rule ) {
+
+				// skip faulty values
+				if( empty( $rule['condition'] ) ) {
+					continue;
+				}
+
 				$matched = $this->match_rule( $rule['condition'], $rule['value'] );
 
 				// break out of loop if we've already matched
