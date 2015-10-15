@@ -29,7 +29,11 @@ module.exports = (function() {
 
 		// if a trigger was given, calculate some values which might otherwise be expensive)
 		if( this.config.autoShow && this.config.trigger !== '' ) {
-			this.triggerHeight = this.calculateTriggerHeight( config.triggerPercentage, config.triggerElementSelector );
+
+			if( this.config.trigger === 'percentage' || this.config.trigger === 'element' ) {
+				this.triggerHeight = this.calculateTriggerHeight( config.triggerPercentage, config.triggerElementSelector );
+			}
+
 			this.cookieSet = this.isCookieSet();
 		}
 
@@ -63,12 +67,19 @@ module.exports = (function() {
 			return false;
 		});
 
-		// auto-show the box if box is referenced from URL
-		if( this.locationHashRefersBox() ) {
-			window.setTimeout(function() {
-				box.show();
-			}, 300);
+
+		if( this.config.trigger === 'instant' && ! this.cookieSet ) {
+			this.show();
+		} else {
+			// auto-show the box if box is referenced from URL
+			if( this.locationHashRefersBox() ) {
+				window.setTimeout(function() {
+					box.show();
+				}, 300);
+			}
 		}
+
+
 	};
 
 
@@ -395,18 +406,47 @@ module.exports = (function($) {
 		}
 	}
 
+	// dismiss a single box (or all by omitting id param)
+	function dismiss(id) {
+		// if no id given, dismiss all current open boxes
+		if( typeof(id) === "undefined" ) {
+			dismissAllBoxes();
+		} else if( typeof( boxes[id] ) === "object" ) {
+			boxes[id].dismiss();
+		}
+	}
+
+	function hideBox(id) {
+		if( typeof( boxes[id] ) === "object" ) {
+			boxes[id].hide();
+		}
+	}
+
+	function showBox(id) {
+		if( typeof( boxes[id] ) === "object" ) {
+			boxes[id].show();
+		}
+	}
+
+	function toggleBox(id) {
+		if( typeof( boxes[id] ) === "object" ) {
+			boxes[id].toggle();
+		}
+	}
+
 	// init on document.ready
 	$(document).ready(init);
 
 	// expose a simple API to control all registered boxes
 	return {
 		boxes: boxes,
-		showBox: function(id) { boxes[id].show(); },
-		hideBox: function(id) { boxes[id].hide(); },
-		toggleBox: function(id) { boxes[id].toggle(); },
+		showBox: showBox,
+		hideBox: hideBox,
+		toggleBox: toggleBox,
 		showAllBoxes: showAllBoxes,
 		hideAllBoxes: hideAllBoxes,
 		dismissAllBoxes: dismissAllBoxes,
+		dismiss: dismiss,
 		events: events
 	}
 

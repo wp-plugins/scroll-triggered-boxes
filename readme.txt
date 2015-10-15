@@ -1,16 +1,18 @@
-=== Plugin Name ===
+=== Scroll Triggered Boxes ===
 Contributors: Ibericode, DvanKooten, iMazed, hchouhan
 Donate link: https://scrolltriggeredboxes.com/#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=donate-link
-Tags: scroll triggered box, cta, social, pop-up, newsletter, call to action, mailchimp, contact form 7, social media
-Requires at least: 3.7
-Tested up to: 4.2.2
-Stable tag: 2.1
+Tags: scroll triggered box, cta, social, pop-up, newsletter, call to action, mailchimp, contact form 7, social media,mc4wp
+Requires at least: 3.8
+Tested up to: 4.3.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Flexible call to actions for engaged visitors, a less obtrusive alternative to pop-ups.
 
 == Description ==
+
+= Call-To-Action Boxes =
 
 Scroll Triggered Boxes is a *lightweight* plugin for adding flexible call-to-actions to your WordPress site. Boxes can slide or fade in at any point and can contain whatever content you like.
 
@@ -47,6 +49,10 @@ Some popular add-ons include:
 **[Theme Pack](https://scrolltriggeredboxes.com/plugins/theme-pack#utm_source=wp-plugin-repo&utm_medium=scroll-triggered-boxes&utm_campaign=description)**
 
 A set of beautiful plug & play themes which make your boxes really stand out.
+
+**[MailChimp for WordPress](https://mc4wp.com/)**
+
+An easy way to show a MailChimp sign-up form inside your boxes.
 
 = Contributing and reporting bugs =
 
@@ -164,6 +170,26 @@ Have a look at the [frequently asked questions](https://wordpress.org/plugins/sc
 4. Configuring and customizing your boxes is easy.
 
 == Changelog ==
+
+= 2.1.2 - October 15, 2015 =
+
+**Fixes**
+
+- Sample boxes were no longer being created on plugin installation
+
+**Improvements**
+
+- Added "Box ID" column to boxes overview page so it's easier to find your box ID.
+
+= 2.1.1 - August 20, 2015 =
+
+**Fixes**
+
+- Activation error on Multisite.
+
+**Additions**
+
+- Added an "instant" option as the box trigger, which shows the box immediately after loading a page.
 
 = 2.1 - July 8, 2015 =
 
