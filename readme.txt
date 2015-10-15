@@ -4,7 +4,7 @@ Donate link: https://scrolltriggeredboxes.com/#utm_source=wp-plugin-repo&utm_med
 Tags: scroll triggered box, cta, social, pop-up, newsletter, call to action, mailchimp, contact form 7, social media,mc4wp
 Requires at least: 3.8
 Tested up to: 4.3.1
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -180,6 +180,11 @@ Have a look at the [frequently asked questions](https://wordpress.org/plugins/sc
 **Improvements**
 
 - Added "Box ID" column to boxes overview page so it's easier to find your box ID.
+
+**Additions**
+
+- The box cookie is now set after each form submissions, preventing it from showing up again
+- When using [MailChimp for WordPress](https://mc4wp.com), the box will now auto-show again after submitting the page.
 
 = 2.1.1 - August 20, 2015 =
 
