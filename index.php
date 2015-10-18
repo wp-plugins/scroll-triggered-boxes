@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Scroll Triggered Boxes
-Version: 2.0
-Plugin URI: https://scrolltriggeredboxes.com/#utm_source=wp-plugin&utm-medium=scroll-triggered-boxes&utm_campaign=plugin-page
+Version: 2.1.2
+Plugin URI: https://scrolltriggeredboxes.com/#utm_source=wp-plugin&utm_medium=scroll-triggered-boxes&utm_campaign=plugins-page
 Description: Call-To-Action Boxes that display after visitors scroll down far enough. Unobtrusive, but highly conversing!
-Author: Ibericode
-Author URI: https://ibericode.com/
+Author: ibericode
+Author URI: https://ibericode.com/#utm_source=wp-plugin&utm_medium=scroll-triggered-boxes&utm_campaign=plugins-page
 Text Domain: scroll-triggered-boxes
 Domain Path: /languages/
 License: GPL v3
@@ -34,27 +34,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// wrapper function to move out of global namespace
-function __load_scroll_triggered_boxes() {
-	// load autoloader & init plugin
-	require dirname( __FILE__ ) . '/vendor/autoload.php';
+/**
+ * @return ScrollTriggeredBoxes\Plugin
+ */
+function scroll_triggered_boxes() {
+	static $instance;
 
-	// we need this constant later on
-	$id = 0;
-	$file = __FILE__;
-	$dir = dirname( __FILE__ );
-	$name = 'Scroll Triggered Boxes';
-	$version = '2.0';
+	if( is_null( $instance ) ) {
 
-	$reflect  = new ReflectionClass( 'ScrollTriggeredBoxes\\Plugin' );
-	$GLOBALS['stb'] = $reflect->newInstanceArgs( array(
+		$classname =  'ScrollTriggeredBoxes\\Plugin';
+		$id = 0;
+		$file = __FILE__;
+		$dir = dirname( __FILE__ );
+		$name = 'Scroll Triggered Boxes';
+		$version = '2.1.2';
+
+		$instance = new $classname(
 			$id,
 			$name,
 			$version,
 			$file,
 			$dir
-		)
-	);
+		);
+	}
+
+	return $instance;
+}
+
+// wrapper function to move out of global namespace
+function __load_scroll_triggered_boxes() {
+
+	// load autoloader & init plugin
+	require dirname( __FILE__ ) . '/vendor/autoload.php';
+
+	// fetch instance and store in global
+	$GLOBALS['scroll_triggered_boxes'] = scroll_triggered_boxes();
+
+	// register activation hook
+	register_activation_hook( __FILE__, array( 'ScrollTriggeredBoxes\\Admin\\Installer', 'run' ) );
 }
 
 function __load_scroll_triggered_boxes_fallback() {

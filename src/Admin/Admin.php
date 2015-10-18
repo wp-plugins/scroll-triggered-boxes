@@ -6,6 +6,7 @@ use ScrollTriggeredBoxes\Licensing\LicenseServiceProvider,
 	ScrollTriggeredBoxes\iPlugin,
 	ScrollTriggeredBoxes\Box;
 use WP_Post;
+use WP_Screen;
 
 class Admin {
 
@@ -51,8 +52,8 @@ class Admin {
 	 * Add necessary hooks
 	 */
 	protected function add_hooks() {
-		global $pagenow;
 
+		add_action( 'admin_init', array( $this, 'lazy_add_hooks' ) );
 		add_action( 'admin_init', array( $this, 'register' ) );
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 
@@ -60,21 +61,59 @@ class Admin {
 		add_action( 'trashed_post', array( $this, 'flush_rules') );
 		add_action( 'untrashed_post', array( $this, 'flush_rules') );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10, 2 );
-		add_filter( 'tiny_mce_before_init', array( $this, 'tinymce_init' ) );
-
-		if( $pagenow === 'plugins.php' ) {
-			add_filter( 'plugin_action_links', array( $this, 'add_plugin_settings_link' ), 10, 2 );
-			add_filter( 'plugin_row_meta', array( $this, 'add_plugin_meta_links'), 10, 2 );
-		}
-
 		// if a premium add-on is installed, instantiate dependencies
 		if( count( $this->plugin['plugins'] ) > 0 ) {
 			$this->plugin['license_manager']->add_hooks();
 			$this->plugin['update_manager']->add_hooks();
 			$this->plugin['api_authenticator']->add_hooks();
 		}
+	}
+
+	public function lazy_add_hooks() {
+		global $pagenow;
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+		add_filter( 'tiny_mce_before_init', array( $this, 'tinymce_init' ) );
+		add_filter( 'manage_edit-scroll-triggered-box_columns', array( $this, 'post_type_column_titles' ) ) ;
+		add_action( 'manage_scroll-triggered-box_posts_custom_column', array( $this, 'post_type_column_content' ), 10, 2 );
+
+
+		if( $pagenow === 'plugins.php' ) {
+			add_filter( 'plugin_action_links', array( $this, 'add_plugin_settings_link' ), 10, 2 );
+			add_filter( 'plugin_row_meta', array( $this, 'add_plugin_meta_links'), 10, 2 );
+		}
+	}
+
+	/**
+	 * @param $post_id
+	 */
+	public function post_type_column_box_id_content( $post_id ) {
+		echo $post_id;
+	}
+
+	/**
+	 * @param $column
+	 * @param $post_id
+	 */
+	public function post_type_column_content( $column, $post_id ) {
+		if( method_exists( $this, 'post_type_column_' . $column . '_content' ) ) {
+			call_user_func( array( $this, 'post_type_column_' . $column . '_content' ), $post_id );
+		}
+	}
+
+	/**
+	 * @param $columns
+	 *
+	 * @return mixed
+	 */
+	public function post_type_column_titles( $columns ) {
+		$columns = self::array_insert( $columns, array(
+			'box_id' => __( 'Box ID', 'scroll-triggered-box' )
+		), 1 );
+
+		$columns['title'] = __( 'Box Title', 'scroll-triggered-box' );
+		return $columns;
 	}
 
 	/**
@@ -88,7 +127,7 @@ class Admin {
 		// register scripts
 		$pre_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script( 'scroll-triggered-boxes-admin', $this->plugin->url( '/assets/js/admin-script' . $pre_suffix . '.js' ), array( 'jquery', 'wp-color-picker' ), $this->plugin->version(), true );
+		wp_register_script( 'scroll-triggered-boxes-admin', $this->plugin->url( '/assets/js/admin-script' . $pre_suffix . '.js' ), array( 'jquery', 'wp-color-picker', 'suggest' ), $this->plugin->version(), true );
 
 		// load stylesheets
 		wp_register_style( 'scroll-triggered-boxes-admin', $this->plugin->url( '/assets/css/admin-styles' . $pre_suffix . '.css' ), array(), $this->plugin->version() );
@@ -171,15 +210,23 @@ class Admin {
 	 */
 	public function load_assets() {
 
-		// load the following only when editing a box
-		if( $this->on_edit_box_page() ) {
+		$screen = get_current_screen();
+
+		if( ! $screen instanceof WP_Screen ) {
+			return false;
+		}
+
+		if( $screen->base === 'edit' && $screen->post_type === 'scroll-triggered-box' ) {
+			// load stylesheets
+			wp_enqueue_style( 'scroll-triggered-boxes-admin' );
+		}
+
+		if( $screen->base === 'post' && $screen->post_type === 'scroll-triggered-box' ) {
+			// color picker
 			wp_enqueue_style( 'wp-color-picker' );
 
 			// load scripts
 			wp_enqueue_script( 'scroll-triggered-boxes-admin' );
-		}
-
-		if( $this->on_edit_box_page() || ( isset( $_GET['page'] ) && $_GET['page'] === 'stb-settings' ) ) {
 
 			// load stylesheets
 			wp_enqueue_style( 'scroll-triggered-boxes-admin' );
@@ -188,15 +235,19 @@ class Admin {
 			do_action( 'stb_load_admin_assets' );
 		}
 
+		if( isset( $_GET['page'] ) && $_GET['page'] === 'stb-settings' ) {
+			// load stylesheets
+			wp_enqueue_style( 'scroll-triggered-boxes-admin' );
+		}
+
 	}
 
 	/**
 	 * Register meta boxes
 	 * @param string $post_type
-	 * @param WP_Post $post
 	 * @return bool
 	 */
-	public function add_meta_boxes( $post_type, WP_Post $post ) {
+	public function add_meta_boxes( $post_type ) {
 
 		if( $post_type !== 'scroll-triggered-box' ) {
 			return false;
@@ -422,7 +473,7 @@ class Admin {
 			return $links;
 		}
 
-		$links[] = '<a href="https://scrolltriggeredboxes.com/kb#utm_source=wp-plugin&utm-medium=scroll-triggered-boxes&utm_campaign=plugin-page">Documentation</a>';
+		$links[] = '<a href="https://scrolltriggeredboxes.com/kb#utm_source=wp-plugin&utm_medium=scroll-triggered-boxes&utm_campaign=plugins-page">Documentation</a>';
 		return $links;
 	}
 
@@ -497,6 +548,28 @@ class Admin {
 		}
 
 		return array();
+	}
+
+	/**
+	 * @param $arr
+	 * @param $insert
+	 * @param $position
+	 *
+	 * @return array
+	 */
+	public static function array_insert($arr, $insert, $position) {
+		$i = 0;
+		$ret = array();
+		foreach ($arr as $key => $value) {
+			if ($i == $position) {
+				foreach ($insert as $ikey => $ivalue) {
+					$ret[$ikey] = $ivalue;
+				}
+			}
+			$ret[$key] = $value;
+			$i++;
+		}
+		return $ret;
 	}
 
 }
