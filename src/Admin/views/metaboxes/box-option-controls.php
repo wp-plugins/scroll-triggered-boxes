@@ -4,24 +4,34 @@
 	do_action( 'stb_before_box_option_controls', $box, $opts );
 
 	$key = 0;
-	foreach($opts['rules'] as $rule) { ?>
+	foreach($opts['rules'] as $rule) { if( ! array_key_exists( 'condition', $rule ) ) { continue; } ?>
 		<tr valign="top" class="stb-rule-row">
-			<th><label><?php _e( 'Show this box', 'scroll-triggered-boxes' ); ?></label></th>
+			<th style="<?php if( $key > 0 ) { echo 'text-align: right; font-weight: normal;'; } ?>">
+				<?php if( $key === 0 ) { ?>
+					<label><?php _e( 'Show this box', 'scroll-triggered-boxes' ); ?></label>
+				<?php } else { ?>
+					<label><?php _e( 'or', 'scroll-triggered-boxes' ); ?></label>
+				<?php } ?>
+			</th>
 			<td class="stb-sm">
 				<select class="widefat stb-rule-condition" name="stb[rules][<?php echo $key; ?>][condition]">
 					<optgroup label="<?php _e( 'Basic', 'scroll-triggered-boxes' ); ?>">
-						<option value="everywhere" <?php selected($rule['condition'], 'everywhere')?>><?php _e( 'Everywhere', 'scroll-triggered-boxes' ); ?></option>
-						<option value="is_post_type" <?php selected($rule['condition'], 'is_post_type'); ?>><?php _e( 'if Post Type is', 'scroll-triggered-boxes' ); ?></option>
-						<option value="is_page" <?php selected($rule['condition'], 'is_page'); ?>><?php _e( 'if Page is', 'scroll-triggered-boxes' ); ?></option>
-						<option value="is_not_page" <?php selected($rule['condition'], 'is_not_page'); ?>><?php _e( 'if Page is not', 'scroll-triggered-boxes' ); ?></option>
-						<option value="is_single" <?php selected($rule['condition'], 'is_single'); ?>><?php _e( 'if Post is', 'scroll-triggered-boxes' ); ?></option>
+						<option value="everywhere" <?php selected($rule['condition'], 'everywhere'); ?>><?php _e( 'everywhere', 'scroll-triggered-boxes' ); ?></option>
+						<option value="is_page" <?php selected($rule['condition'], 'is_page'); ?>><?php _e( 'if page is', 'scroll-triggered-boxes' ); ?></option>
+						<option value="is_single" <?php selected($rule['condition'], 'is_single'); ?>><?php _e( 'if post is', 'scroll-triggered-boxes' ); ?></option>
+						<option value="is_post_in_category" <?php selected($rule['condition'], 'is_post_in_category'); ?>><?php _e( 'if is post in category', 'scroll-triggered-boxes' ); ?></option>
+						<option value="is_post_type" <?php selected($rule['condition'], 'is_post_type'); ?>><?php _e( 'if post type is', 'scroll-triggered-boxes' ); ?></option>
+						<option value="is_url" <?php selected($rule['condition'], 'is_url' ); ?>><?php _e( 'if URL is', 'scroll-triggered-boxes' ); ?></option>
+
 					</optgroup>
 					<optgroup label="<?php _e( 'Advanced', 'scroll-triggered-boxes' ); ?>">
-						<option value="manual" <?php selected($rule['condition'], 'manual'); ?>><?php _e( 'Manual conditon', 'scroll-triggered-boxes' ); ?></option>
+						<option value="manual" <?php selected($rule['condition'], 'manual'); ?>><?php _e( 'manual conditon', 'scroll-triggered-boxes' ); ?></option>
+						<option value="is_referer" <?php selected($rule['condition'], 'is_referer' ); ?>><?php _e( 'if referer is', 'scroll-triggered-boxes' ); ?></option>
 					</optgroup>
 				</select>
 			</td>
 			<td>
+
 				<input class="stb-rule-value widefat" name="stb[rules][<?php echo $key; ?>][value]" type="text" value="<?php echo esc_attr($rule['value']); ?>" placeholder="<?php _e( 'Leave empty for any or enter (comma-separated) names or ID\'s', 'scroll-triggered-boxes' ); ?>" <?php if( $rule['condition'] == 'everywhere' ) { echo 'style="display: none;"'; } ?> />
 			</td>
 			<td class="stb-xsm" width="1"><span class="stb-close stb-remove-rule">×</span></td>
@@ -60,7 +70,9 @@
 	<tr valign="top">
 		<th><label for="stb_trigger"><?php _e( 'Auto-show box?', 'scroll-triggered-boxes' ); ?></label></th>
 		<td colspan="3">
+			<?php // todo: build the actual logic behind this ?>
 			<label><input type="radio" class="stb-auto-show-trigger" name="stb[trigger]" value="" <?php checked( $opts['trigger'], '' ); ?> /> <?php _e( 'Never', 'scroll-triggered-boxes' ); ?></label><br />
+			<label><input type="radio" class="stb-auto-show-trigger" name="stb[trigger]" value="instant" <?php checked( $opts['trigger'], 'instant' ); ?> /> <?php print __( 'Yes, immediately after loading the page.', 'scroll-triggered-boxes' ); ?><input type="number" style="visibility: hidden;" /></label><br />
 			<label><input type="radio" class="stb-auto-show-trigger" name="stb[trigger]" value="percentage" <?php checked( $opts['trigger'], 'percentage' ); ?> /> <?php printf( __( 'Yes, when at %s of page height', 'scroll-triggered-boxes' ), '<input type="number" name="stb[trigger_percentage]" min="0" max="100" value="' . esc_attr( $opts['trigger_percentage'] ) . '" />%' ); ?></label><br />
 			<label><input type="radio" class="stb-auto-show-trigger" name="stb[trigger]" value="element" <?php checked( $opts['trigger'], 'element' ); ?> /> <?php printf( __( 'Yes, when at element %s', 'scroll-triggered-boxes' ), '<input type="text" name="stb[trigger_element]" value="' . esc_attr( $opts['trigger_element'] ) . '" placeholder="' . __( 'Example: #comments', 'scroll-triggered-boxes') .'" />' ); ?></label>
 		</td>

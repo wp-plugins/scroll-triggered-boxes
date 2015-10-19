@@ -22,12 +22,30 @@ module.exports = (function($) {
 		// event binds
 		$(window).bind('scroll.stb', onScroll);
 		$(window).bind('resize.stb', onWindowResize);
+		$(window).bind('load', onLoad );
 		$(document).keyup(onKeyUp);
 		$(overlay).click(dismissAllBoxes);
 
 		// print message when test mode is enabled
 		if( options.testMode ) {
 			console.log( 'Scroll Triggered Boxes: Test mode is enabled. Please disable test mode if you\'re done testing.' );
+		}
+	}
+
+	function onLoad() {
+		recalculateHeights();
+
+		// show box if MailChimp for WordPress printed a request object in JS
+		// todo: decouple this, make it better..
+		if( typeof( window.mc4wpFormRequest ) === "object" && typeof( window.mc4wpFormRequest.element ) === "object" ) {
+			var request = window.mc4wpFormRequest;
+			var $parentBox = $(request.element).parents('.stb');
+
+			// check if form is inside box
+			if( $parentBox.length ) {
+				showBox( parseInt( $parentBox.attr('id').substring(4) ) );
+			}
+
 		}
 	}
 
@@ -116,24 +134,55 @@ module.exports = (function($) {
 
 	// recalculate heights and variables based on height
 	function recalculateHeights() {
+		windowHeight = window.innerHeight;
+
 		for( var boxId in boxes ) {
 			var box = boxes[boxId];
 			box.setCustomBoxStyling();
 		}
 	}
 
-	// init on window.load
-	$(window).load(init);
+	// dismiss a single box (or all by omitting id param)
+	function dismiss(id) {
+		// if no id given, dismiss all current open boxes
+		if( typeof(id) === "undefined" ) {
+			dismissAllBoxes();
+		} else if( typeof( boxes[id] ) === "object" ) {
+			boxes[id].dismiss();
+		}
+	}
+
+	function hideBox(id) {
+		if( typeof( boxes[id] ) === "object" ) {
+			boxes[id].hide();
+		}
+	}
+
+	function showBox(id) {
+		if( typeof( boxes[id] ) === "object" ) {
+			boxes[id].show();
+		}
+	}
+
+	function toggleBox(id) {
+		if( typeof( boxes[id] ) === "object" ) {
+			boxes[id].toggle();
+		}
+	}
+
+	// init on document.ready
+	$(document).ready(init);
 
 	// expose a simple API to control all registered boxes
 	return {
 		boxes: boxes,
-		showBox: function(id) { boxes[id].show(); },
-		hideBox: function(id) { boxes[id].hide(); },
-		toggleBox: function(id) { boxes[id].toggle(); },
+		showBox: showBox,
+		hideBox: hideBox,
+		toggleBox: toggleBox,
 		showAllBoxes: showAllBoxes,
 		hideAllBoxes: hideAllBoxes,
 		dismissAllBoxes: dismissAllBoxes,
+		dismiss: dismiss,
 		events: events
 	}
 
